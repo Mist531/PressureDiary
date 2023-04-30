@@ -11,10 +11,11 @@ val red = Color(0xFFEE675C)
 val red4: Color = Color(0xFFEE675C).copy(alpha = 0.4f)
 
 internal val wearColorPalette: Colors = Colors(
-    primary = black,
-    primaryVariant = white,
-    secondary = green,
-    secondaryVariant = greenLight,
+    background = black,
+    primary = green,
+    primaryVariant = greenLight,
+    secondary = black,
+    secondaryVariant = white,
     error = red,
     onError = red4
 )

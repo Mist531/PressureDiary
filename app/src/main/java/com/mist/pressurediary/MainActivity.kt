@@ -13,6 +13,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -25,9 +26,17 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.wear.compose.material.MaterialTheme
+import androidx.wear.compose.material.SwipeToDismissBoxState
 import androidx.wear.compose.material.Text
 import androidx.wear.compose.material.TimeText
+import androidx.wear.compose.navigation.composable
+import androidx.wear.compose.navigation.rememberSwipeDismissableNavController
+import androidx.wear.compose.navigation.rememberSwipeDismissableNavHostState
+import com.google.android.horologist.compose.navscaffold.WearNavScaffold
+import com.google.android.horologist.compose.navscaffold.scrollStateComposable
 import com.mist.pressurediary.data.stores.PressureDiaryStore
+import com.mist.pressurediary.navigation.MasterNavHost
+import com.mist.pressurediary.navigation.Screen
 import com.mist.pressurediary.theme.PressureDiaryTheme
 import kotlinx.coroutines.delay
 import kotlinx.datetime.Clock
@@ -39,17 +48,33 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-
             PressureDiaryTheme {
-                WearApp("Android")
+                MasterApp()
             }
         }
     }
 }
 
 @Composable
+fun MasterApp(
+    modifier: Modifier = Modifier,
+){
+    val navController = rememberSwipeDismissableNavController()
+
+    MasterNavHost(
+        navController = navController,
+        modifier = modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colors.background)
+    )
+}
+
+
+
+//region EXAMPLES AND TEST
+@Composable
 fun WearApp(greetingName: String) {
-    LaunchedEffect(Unit){
+    LaunchedEffect(Unit) {
         PressureDiaryStore.addNewEntry(
             PressureDiaryStore.PressureDiaryTable(
                 id = UUID(),
@@ -67,21 +92,19 @@ fun WearApp(greetingName: String) {
         mutableStateOf("")
     }
 
-    LaunchedEffect(Unit){
+    LaunchedEffect(Unit) {
         delay(5000)
         text = PressureDiaryStore.getAllEntry().toString()
     }
 
-    PressureDiaryTheme {
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(MaterialTheme.colors.primary),
-            contentAlignment = Alignment.Center
-        ) {
-            TimeText()
-            Greeting(greetingName = text)
-        }
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colors.primary),
+        contentAlignment = Alignment.Center
+    ) {
+        TimeText()
+        Greeting(greetingName = text)
     }
 }
 
@@ -100,3 +123,4 @@ fun Greeting(greetingName: String) {
 fun DefaultPreview() {
     WearApp("Preview Android")
 }
+//endregion
