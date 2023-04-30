@@ -16,9 +16,9 @@ import org.koin.core.component.KoinComponent
     exportSchema = false
 )
 @TypeConverters(
-    Converters.UUIDConverter::class,
-    Converters.LocalDateConverter::class,
-    Converters.LocalTimeConverter::class
+    StoreConverters.UUIDConverter::class,
+    StoreConverters.LocalDateConverter::class,
+    StoreConverters.LocalTimeConverter::class
 )
 abstract class AppDatabase : RoomDatabase() {
     abstract fun pressureDiaryDao(): PressureDiaryStore.PressureDiaryDao

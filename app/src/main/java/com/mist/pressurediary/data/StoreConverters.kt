@@ -5,7 +5,7 @@ import kotlinx.datetime.LocalDate
 import kotlinx.datetime.LocalTime
 import kotlinx.uuid.UUID
 
-interface Converters {
+interface StoreConverters {
     class UUIDConverter {
         @TypeConverter
         fun uuidToString(uuid: UUID?): String? =
