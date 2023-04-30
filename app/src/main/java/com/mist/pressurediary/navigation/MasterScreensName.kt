@@ -1,11 +1,11 @@
 package com.mist.pressurediary.navigation
 
 sealed class Screen(open val route: String) {
-    object Main : Screen(route = "main")
+    object Main : Screen(route = "Main")
 
-    object AddPressure : Screen(route = "add_pressure")
+    object CreatePressure : Screen(route = "Create Entry")
 
-    object History : Screen(route = "history")
+    object History : Screen(route = "History")
 
-    object Settings : Screen(route = "settings")
+    object Settings : Screen(route = "Settings")
 }

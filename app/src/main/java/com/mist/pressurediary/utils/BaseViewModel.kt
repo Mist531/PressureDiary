@@ -1,4 +1,4 @@
-package com.mist.pressurediary.ui
+package com.mist.pressurediary.utils
 
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow

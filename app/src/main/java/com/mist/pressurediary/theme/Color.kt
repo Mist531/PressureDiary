@@ -9,6 +9,7 @@ val green: Color = Color(0xFF6DD58C)
 val greenLight: Color = Color(0xFF24BE52)
 val red = Color(0xFFEE675C)
 val red4: Color = Color(0xFFEE675C).copy(alpha = 0.4f)
+val placeholderColor: Color = Color(0xFF2F8772)
 
 internal val wearColorPalette: Colors = Colors(
     background = black,
@@ -17,5 +18,6 @@ internal val wearColorPalette: Colors = Colors(
     secondary = black,
     secondaryVariant = white,
     error = red,
-    onError = red4
+    onError = red4,
+    surface = placeholderColor
 )

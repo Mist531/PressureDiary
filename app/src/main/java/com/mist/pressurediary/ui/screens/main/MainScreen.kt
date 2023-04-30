@@ -25,15 +25,15 @@ fun MainScreen(
     onGoToSettings: () -> Unit
 ) {
     val listButton: List<Pair<Int, () -> Unit>> = listOf(
-        Pair(R.drawable.add, onGoToCreate),
-        Pair(R.drawable.history, onGoToHistory),
-        Pair(R.drawable.settings, onGoToSettings)
+        Pair(R.drawable.ic_add, onGoToCreate),
+        Pair(R.drawable.ic_history, onGoToHistory),
+        Pair(R.drawable.ic_settings, onGoToSettings)
     )
 
     Box(
         modifier = modifier.fillMaxSize(),
         contentAlignment = Alignment.Center,
-        propagateMinConstraints = true //TODO: check if this is needed
+        propagateMinConstraints = true
     ) {
         Row(
             modifier = Modifier
