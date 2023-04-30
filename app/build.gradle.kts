@@ -1,6 +1,8 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("org.jetbrains.kotlin.plugin.serialization") version "1.8.10" apply false
+    id("kotlin-kapt")
 }
 
 android {
@@ -20,7 +22,6 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
-
     }
 
     buildTypes {
@@ -33,11 +34,11 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "17"
     }
     buildFeatures {
         compose = true
@@ -75,9 +76,11 @@ dependencies {
 
     //region Room
     val roomVersion = "2.5.1"
-    
+
+    kapt("androidx.room:room-compiler:$roomVersion") //TODO: migrate to ksp
     implementation("androidx.room:room-runtime:$roomVersion")
     implementation("androidx.room:room-ktx:$roomVersion")
+    testImplementation("androidx.room:room-testing:$roomVersion")
     //endregion
 
     //region ComposeForWearOs
@@ -88,6 +91,7 @@ dependencies {
     implementation("androidx.legacy:legacy-support-v4:1.0.0")
     implementation("androidx.recyclerview:recyclerview:1.3.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.1")
+    implementation("androidx.wear.compose:compose-navigation:$wearComposeVersion")
     //endregion
 
     //region Compose
@@ -127,6 +131,7 @@ dependencies {
     //region Serialization
     implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.4.0")
     implementation("app.softwork:kotlinx-uuid-core:0.0.16")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.3")
     //endregion
 
     //region Other
