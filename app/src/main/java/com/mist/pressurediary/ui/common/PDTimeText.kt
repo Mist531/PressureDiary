@@ -2,6 +2,7 @@ package com.mist.pressurediary.ui.common
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
 import androidx.wear.compose.material.Text
 import androidx.wear.compose.material.TimeText
@@ -13,12 +14,15 @@ fun PDTimeText(
     modifier: Modifier = Modifier,
     navController: NavController,
 ) {
-    val destinationName =
-        if (navController.currentDestination?.route == Screen.Main.route) {
-            null
-        } else {
-            navController.currentDestination?.route
-        }
+    val route = navController.currentDestination?.route ?: ""
+
+    val destinationName: String? = Screen.screensNeedShowName.runCatching {
+        this.firstOrNull { screen ->
+            route.contains(screen.route)
+        }?.id
+    }.getOrNull()?.let { id ->
+        stringResource(id = id)
+    }
 
     if (destinationName == null) {
         TimeText(

@@ -2,43 +2,96 @@ package com.mist.pressurediary.ui.screens.create
 
 import androidx.lifecycle.viewModelScope
 import arrow.core.Option
+import arrow.core.none
 import arrow.core.some
 import com.mist.pressurediary.data.stores.PressureDiaryStore
 import com.mist.pressurediary.models.PressureDiaryModel
 import com.mist.pressurediary.utils.BaseViewModel
+import de.palm.composestateevents.StateEvent
+import de.palm.composestateevents.consumed
+import de.palm.composestateevents.triggered
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.supervisorScope
 import kotlinx.coroutines.withContext
-import kotlinx.datetime.LocalDate
-import kotlinx.datetime.LocalTime
-import kotlinx.serialization.Serializable
+import kotlinx.uuid.UUID
+import java.time.LocalDate
+import java.time.LocalTime
 
-@Serializable
 data class CreateOrUpdateEntryState(
-    val entry: PressureDiaryModel,
+    val entry: PressureDiaryModel = PressureDiaryModel(),
+    val datePickerEvent: StateEvent = consumed,
+    val timePickerEvent: StateEvent = consumed,
+    val saveEvent: StateEvent = consumed,
+    val deleteEvent: StateEvent = consumed,
+    val updateEvent: StateEvent = consumed
 )
 
 class CreateOrUpdateEntryViewModel(
-    private val entry: Option<PressureDiaryModel>
+    private val id: Option<UUID> = none()
 ) : BaseViewModel<CreateOrUpdateEntryState>() {
 
-    override val initialState = CreateOrUpdateEntryState(
-        entry = entry.fold(
-            ifSome = { it },
-            ifEmpty = { PressureDiaryModel() }
-        )
-    )
+    override val initialState = CreateOrUpdateEntryState()
 
     init {
         viewModelScope.launch {
             supervisorScope {
                 launch {
-
+                    id.fold(
+                        ifEmpty = {},
+                        ifSome = { id ->
+                            getPressureDiary(id)
+                        }
+                    )
                 }
             }
         }
     }
+
+    //region Get Entry
+    private suspend fun getPressureDiary(
+        id: UUID
+    ) {
+        val entry = PressureDiaryStore.getEntryById(id)
+        state = state.copy(
+            entry = entry
+        )
+    }
+    //endregion
+
+    //region DatePickerEvent
+    fun onDatePickerEvent() {
+        state = state.copy(
+            datePickerEvent = triggered
+        )
+    }
+
+    fun onConsumedDatePickerEventWithSave(
+        localDate: LocalDate
+    ) {
+        onDateChanged(localDate)
+        state = state.copy(
+            datePickerEvent = consumed
+        )
+    }
+    //endregion
+
+    //region TimePickerEvent
+    fun onTimePickerEvent() {
+        state = state.copy(
+            timePickerEvent = triggered
+        )
+    }
+
+    fun onConsumedTimePickerEventWithSave(
+        localTime: LocalTime
+    ) {
+        onTimeChanged(localTime)
+        state = state.copy(
+            timePickerEvent = consumed
+        )
+    }
+    //endregion
 
     //region Post Entry
     fun onPostEntry() {
@@ -57,11 +110,9 @@ class CreateOrUpdateEntryViewModel(
     //endregion
 
     //region Update Entry
-    fun onUpdateEntry(
-        entry: PressureDiaryModel
-    ) {
+    fun onUpdateEntry() {
         viewModelScope.launch {
-            updateEntry(entry)
+            updateEntry(state.entry)
         }
     }
 
@@ -70,6 +121,64 @@ class CreateOrUpdateEntryViewModel(
     ) = withContext(Dispatchers.IO) {
         PressureDiaryStore.updateEntry(
             entry = entry.mapToTable()
+        )
+    }
+    //endregion
+
+    //region DeleteEntry
+    fun onDeleteEntry() {
+        viewModelScope.launch {
+            deleteEntry(state.entry)
+        }
+    }
+
+    private suspend fun deleteEntry(
+        entry: PressureDiaryModel
+    ) = withContext(Dispatchers.IO) {
+        PressureDiaryStore.deleteEntry(
+            entry = entry.mapToTable()
+        )
+    }
+    //endregion
+
+    //region SaveEvent
+    fun onSaveEvent() {
+        state = state.copy(
+            saveEvent = triggered
+        )
+    }
+
+    fun onConsumedSaveEvent() {
+        state = state.copy(
+            saveEvent = consumed
+        )
+    }
+    //endregion
+
+    //region DeleteEvent
+    fun onDeleteEvent() {
+        state = state.copy(
+            deleteEvent = triggered
+        )
+    }
+
+    fun onConsumedDeleteEvent() {
+        state = state.copy(
+            deleteEvent = consumed
+        )
+    }
+    //endregion
+
+    //region UpdateEvent
+    fun onUpdateEvent() {
+        state = state.copy(
+            updateEvent = triggered
+        )
+    }
+
+    fun onConsumedUpdateEvent() {
+        state = state.copy(
+            updateEvent = consumed
         )
     }
     //endregion
@@ -99,7 +208,7 @@ class CreateOrUpdateEntryViewModel(
         )
     }
 
-    fun onDateChanged(date: LocalDate) {
+    private fun onDateChanged(date: LocalDate) {
         state = state.copy(
             entry = state.entry.copy(
                 date = date
@@ -107,7 +216,7 @@ class CreateOrUpdateEntryViewModel(
         )
     }
 
-    fun onTimeChanged(time: LocalTime) {
+    private fun onTimeChanged(time: LocalTime) {
         state = state.copy(
             entry = state.entry.copy(
                 time = time

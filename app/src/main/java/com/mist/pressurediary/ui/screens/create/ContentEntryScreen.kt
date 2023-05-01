@@ -1,24 +1,36 @@
 package com.mist.pressurediary.ui.screens.create
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.wear.compose.foundation.lazy.ScalingLazyColumn
 import androidx.wear.compose.foundation.lazy.ScalingLazyListScope
 import androidx.wear.compose.foundation.lazy.ScalingLazyListState
-import androidx.wear.compose.foundation.lazy.items
 import com.mist.pressurediary.R
-import com.mist.pressurediary.models.ContentEntryModel
 import com.mist.pressurediary.ui.common.PDBlockEntry
-import com.mist.pressurediary.ui.common.PDBlockEntryText
+import com.mist.pressurediary.ui.common.PDBlockEntryBottomText
+import com.mist.pressurediary.ui.common.PDDatePicker
+import com.mist.pressurediary.ui.common.PDTimePicker
+import com.mist.pressurediary.utils.ScalingLazyColumnPadding
+import com.mist.pressurediary.utils.isTriggered
+import de.palm.composestateevents.StateEvent
+import java.time.LocalDate
+import java.time.LocalTime
 
 @Composable
 fun ContentEntryScreen(
     modifier: Modifier = Modifier,
+    datePickerEvent: StateEvent,
+    onDatePickerEvent: () -> Unit,
+    onConsumedDatePickerWithSave: (LocalDate) -> Unit,
+    timePickerEvent: StateEvent,
+    onTimePickerEvent: () -> Unit,
+    onConsumedTimePickerWithSave: (LocalTime) -> Unit,
     diastolicValue: String,
     onDiastolicValueChange: (String) -> Unit,
     systolicValue: String,
@@ -26,90 +38,104 @@ fun ContentEntryScreen(
     pulseValue: String,
     onPulseValueChange: (String) -> Unit,
     dateValue: String,
-    //onDateValueChange = ,
     timeValue: String,
-    //onTimeValueChange = ,
     commentValue: String,
     onCommentValueChange: (String) -> Unit,
     scalingLazyListState: ScalingLazyListState,
     bottomContent: ScalingLazyListScope.() -> Unit
 ) {
-    val contentEntryList = listOf(
-        ContentEntryModel(
-            iconId = R.drawable.ic_diastolic,
-            title = "Diastolic",
-            value = diastolicValue,
-            onValueChange = onDiastolicValueChange,
-            horizontalPadding = 18.dp,
-            placeholder = "Entry diastolic"
-        ),
-        ContentEntryModel(
-            iconId = R.drawable.ic_systolic,
-            title = "Systolic",
-            value = systolicValue,
-            onValueChange = onSystolicValueChange,
-            horizontalPadding = 18.dp,
-            placeholder = "Entry systolic"
-        ),
-        ContentEntryModel(
-            iconId = R.drawable.ic_heart,
-            title = "Heart Rate",
-            value = pulseValue,
-            onValueChange = onPulseValueChange,
-            placeholder = "Entry heart rate"
-        ),
-        ContentEntryModel(
-            iconId = R.drawable.ic_calendar,
-            title = "Date",
-            value = dateValue,
-            onValueChange = { /*TODO*/ },
-            horizontalPadding = 17.dp,
-            placeholder = "Entry date",
-            onClick = {
-                /*TODO*/
-            }
-        ),
-        ContentEntryModel(
-            iconId = R.drawable.ic_clock,
-            title = "Time",
-            value = timeValue,
-            onValueChange = { /*TODO*/ },
-            placeholder = "Entry time",
-            onClick = {
-                /*TODO*/
-            }
-        ),
-    )
+    AnimatedVisibility(visible = timePickerEvent.isTriggered()) {
+        PDTimePicker(
+            onTimeChange = onConsumedTimePickerWithSave
+        )
+    }
 
-    ScalingLazyColumn(
-        state = scalingLazyListState,
-        modifier = modifier.fillMaxWidth(),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(10.dp),
-        contentPadding = PaddingValues(20.dp)
+    AnimatedVisibility(visible = datePickerEvent.isTriggered()) {
+        PDDatePicker(
+            onDateChange = onConsumedDatePickerWithSave
+        )
+    }
+
+    AnimatedVisibility(
+        visible = !datePickerEvent.isTriggered() && !timePickerEvent.isTriggered()
     ) {
-        items(contentEntryList) { model ->
-            PDBlockEntry(
-                modifier = Modifier,
-                iconId = model.iconId,
-                value = model.value,
-                title = model.title,
-                onValueChange = model.onValueChange,
-                horizontalPadding = model.horizontalPadding,
-                placeholder = model.placeholder,
-                onClick = model.onClick
-            )
+        ScalingLazyColumn(
+            state = scalingLazyListState,
+            modifier = modifier
+                .fillMaxWidth(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(10.dp),
+            contentPadding = ScalingLazyColumnPadding,
+        ) {
+            item {
+                PDBlockEntry(
+                    modifier = Modifier,
+                    iconId = R.drawable.ic_diastolic,
+                    value = diastolicValue,
+                    title = stringResource(R.string.content_entry_diastolic),
+                    onValueChange = onDiastolicValueChange,
+                    horizontalPadding = 18.dp,
+                    placeholder = stringResource(R.string.content_entry_entry_diastolic),
+                    onClick = null
+                )
+            }
+            item {
+                PDBlockEntry(
+                    modifier = Modifier,
+                    iconId = R.drawable.ic_systolic,
+                    value = systolicValue,
+                    title = stringResource(R.string.content_entry_systolic),
+                    onValueChange = onSystolicValueChange,
+                    horizontalPadding = 18.dp,
+                    placeholder = stringResource(R.string.content_entry_entry_systolic),
+                    onClick = null
+                )
+            }
+            item {
+                PDBlockEntry(
+                    modifier = Modifier,
+                    iconId = R.drawable.ic_heart,
+                    value = pulseValue,
+                    horizontalPadding = 15.dp,
+                    title = stringResource(R.string.content_entry_heart_rate),
+                    onValueChange = onPulseValueChange,
+                    placeholder = stringResource(R.string.content_entry_pl_entry_heart_rate),
+                    onClick = null
+                )
+            }
+            item {
+                PDBlockEntry(
+                    modifier = Modifier,
+                    iconId = R.drawable.ic_calendar,
+                    value = dateValue,
+                    title = stringResource(R.string.content_entry_date),
+                    horizontalPadding = 17.dp,
+                    placeholder = stringResource(R.string.content_entry_pl_entry_date),
+                    onClick = onDatePickerEvent
+                )
+            }
+            item {
+                PDBlockEntry(
+                    modifier = Modifier,
+                    iconId = R.drawable.ic_clock,
+                    value = timeValue,
+                    title = stringResource(R.string.content_entry_time),
+                    placeholder = stringResource(R.string.content_entry_pl_entry_time),
+                    horizontalPadding = 15.dp,
+                    onClick = onTimePickerEvent
+                )
+            }
+            item {
+                PDBlockEntryBottomText(
+                    modifier = Modifier,
+                    iconId = R.drawable.ic_comment,
+                    value = commentValue,
+                    title = stringResource(R.string.content_entry_comment),
+                    placeholder = stringResource(R.string.content_entry_pl_entry_comment),
+                    onValueChange = onCommentValueChange
+                )
+            }
+            bottomContent()
         }
-        item {
-            PDBlockEntryText(
-                modifier = Modifier,
-                iconId = R.drawable.ic_comment,
-                value = commentValue,
-                title = "Comment",
-                placeholder = "Entry comment",
-                onValueChange = onCommentValueChange
-            )
-        }
-        bottomContent()
     }
 }

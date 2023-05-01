@@ -4,21 +4,18 @@ import arrow.core.Option
 import arrow.core.none
 import arrow.optics.optics
 import com.mist.pressurediary.data.stores.PressureDiaryStore
-import com.mist.pressurediary.utils.getLocalDateTimeNow
-import kotlinx.datetime.LocalDate
-import kotlinx.datetime.LocalTime
-import kotlinx.serialization.Serializable
 import kotlinx.uuid.UUID
+import java.time.LocalDate
+import java.time.LocalTime
 
-@Serializable
 @optics
 data class PressureDiaryModel(
     val id: UUID = UUID(),
     val diastolic: Option<Int> = none(),
     val systolic: Option<Int> = none(),
     val pulse: Option<Int> = none(),
-    val date: LocalDate = getLocalDateTimeNow().date,
-    val time: LocalTime = getLocalDateTimeNow().time,
+    val date: LocalDate = LocalDate.now(),
+    val time: LocalTime = LocalTime.now(),
     val comment: String = ""
 ){
     fun mapToTable() = PressureDiaryStore.PressureDiaryTable(

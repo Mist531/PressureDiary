@@ -3,12 +3,15 @@ package com.mist.pressurediary.navigation
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
+import androidx.navigation.navArgument
 import androidx.wear.compose.navigation.composable
 import com.google.android.horologist.compose.navscaffold.WearNavScaffold
 import com.mist.pressurediary.ui.common.PDTimeText
-import com.mist.pressurediary.ui.screens.create.CreateEntryScreen
+import com.mist.pressurediary.ui.screens.create.CreateOrUpdateEntryScreen
 import com.mist.pressurediary.ui.screens.history.HistoryScreen
 import com.mist.pressurediary.ui.screens.main.MainScreen
+import kotlinx.uuid.UUID
 
 @Composable
 fun MasterNavHost(
@@ -20,7 +23,7 @@ fun MasterNavHost(
         modifier = modifier,
         startDestination = Screen.Main.route,
         navController = navController,
-        timeText = {modifierTime->
+        timeText = { modifierTime ->
             PDTimeText(
                 modifier = modifierTime,
                 navController = navController
@@ -44,7 +47,24 @@ fun MasterNavHost(
         }
 
         composable(Screen.CreatePressure.route) {
-            CreateEntryScreen(
+            CreateOrUpdateEntryScreen(
+                onGoBack = {
+                    navController.popBackStack()
+                }
+            )
+        }
+
+        composable(
+            route = "${Screen.UpdatePressure.route}/{uuid}",
+            arguments = listOf(navArgument("uuid") { type = NavType.StringType })
+        ) { backStackEntry ->
+            val id = backStackEntry.arguments?.getString("uuid")
+            CreateOrUpdateEntryScreen(
+                id = if (id != null) {
+                    UUID(id)
+                } else {
+                    null
+                },
                 onGoBack = {
                     navController.popBackStack()
                 }
@@ -52,12 +72,13 @@ fun MasterNavHost(
         }
 
         composable(Screen.History.route) {
-            HistoryScreen()
+            HistoryScreen(
+                onEntryClick = { id ->
+                    navController.navigate(
+                        "${Screen.UpdatePressure.route}/$id"
+                    )
+                }
+            )
         }
-
-        /*
-        composable(Screen.History.route) {
-            HistoryScreen()
-        }*/
     }
 }

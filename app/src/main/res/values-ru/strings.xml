@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">PressureDiary</string>
+
+    <!--Screen Name-->
+    <string name="screen_main">Main</string>
+    <string name="screen_create_entry">Создать</string>
+    <string name="screen_update_entry">Редактировать</string>
+    <string name="screen_history">История</string>
+    <string name="screen_settings">Настройки</string>
+
+    <!--Content Entry-->
+    <string name="content_entry_diastolic">Диастолическое</string>
+    <string name="content_entry_entry_diastolic">Введите значение</string>
+    <string name="content_entry_systolic">Систолическое</string>
+    <string name="content_entry_entry_systolic">Введите значение</string>
+    <string name="content_entry_heart_rate">Пульс</string>
+    <string name="content_entry_pl_entry_heart_rate">Введите значение</string>
+    <string name="content_entry_date">Дата</string>
+    <string name="content_entry_pl_entry_date">Введите дату</string>
+    <string name="content_entry_time">Время</string>
+    <string name="content_entry_pl_entry_time">Введите время</string>
+    <string name="content_entry_comment">Заметка</string>
+    <string name="content_entry_pl_entry_comment">Напшите заметку</string>
+
+    <!--Button-->
+    <string name="btn_save">Сохранить</string>
+
+    <!--History-->
+    <string name="history_date">Дата</string>
+    <string name="history_empty">Пусто</string>
+    <string name="error_please_enter_a_valid_number">Пожалуйста, введите число</string>
+
+</resources>

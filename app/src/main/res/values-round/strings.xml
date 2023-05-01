@@ -1,3 +1,32 @@
 <resources>
-    <string name="hello_world">From the Round world,\nHello, %1$s!</string>
+    <string name="app_name">PressureDiary</string>
+
+    <!--Screen Name-->
+    <string name="screen_main">Main</string>
+    <string name="screen_create_entry">Create Entry</string>
+    <string name="screen_update_entry">Update Entry</string>
+    <string name="screen_history">History</string>
+    <string name="screen_settings">Settings</string>
+
+    <!--Content Entry-->
+    <string name="content_entry_diastolic">Diastolic</string>
+    <string name="content_entry_entry_diastolic">Entry diastolic</string>
+    <string name="content_entry_systolic">Systolic</string>
+    <string name="content_entry_entry_systolic">Entry systolic</string>
+    <string name="content_entry_heart_rate">Heart Rate</string>
+    <string name="content_entry_pl_entry_heart_rate">Entry heart rate</string>
+    <string name="content_entry_date">Date</string>
+    <string name="content_entry_pl_entry_date">Entry date</string>
+    <string name="content_entry_time">Time</string>
+    <string name="content_entry_pl_entry_time">Entry time</string>
+    <string name="content_entry_comment">Comment</string>
+    <string name="content_entry_pl_entry_comment">Entry comment</string>
+
+    <!--History-->
+    <string name="history_date">Date</string>
+
+    <!--Button-->
+    <string name="btn_save">Save</string>
+    <string name="history_empty">Empty</string>
+    <string name="error_please_enter_a_valid_number">Please enter a valid number</string>
 </resources>

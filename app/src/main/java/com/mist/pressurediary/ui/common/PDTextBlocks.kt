@@ -3,22 +3,17 @@ package com.mist.pressurediary.ui.common
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.sizeIn
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -67,33 +62,7 @@ fun PDBlockWithTitle(
 }
 
 @Composable
-fun PDBackgroundBlock(
-    modifier: Modifier = Modifier,
-    shape: Shape = CircleShape,
-    onClick: (() -> Unit)? = null,
-    content: @Composable () -> Unit,
-) {
-    Box(
-        modifier = modifier
-            .clip(shape)
-            .then(
-                if (onClick != null) {
-                    Modifier.clickable {
-                        onClick()
-                    }
-                } else {
-                    Modifier
-                }
-            ),
-        contentAlignment = Alignment.Center,
-        propagateMinConstraints = true
-    ) {
-        content()
-    }
-}
-
-@Composable
-fun PDBlockEntryText(
+fun PDBlockEntryBottomText(
     modifier: Modifier = Modifier,
     title: String,
     iconId: Int,
@@ -187,7 +156,7 @@ fun PDBlockEntry(
     horizontalPadding: Dp,
     placeholder: String,
     onClick: (() -> Unit)? = null,
-    onValueChange: (String) -> Unit,
+    onValueChange: (String) -> Unit = {},
 ) {
     val voiceLauncher =
         rememberLauncherForActivityResult(

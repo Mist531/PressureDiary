@@ -1,7 +1,7 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
-    id("org.jetbrains.kotlin.plugin.serialization") version "1.8.10" apply false
+    id("org.jetbrains.kotlin.plugin.serialization") version "1.8.10"
     id("kotlin-kapt")
 }
 
@@ -129,12 +129,13 @@ dependencies {
     //endregion
 
     //region Serialization
-    implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.4.0")
     implementation("app.softwork:kotlinx-uuid-core:0.0.16")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.3")
     //endregion
 
     //region Other
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.0-RC")
+    implementation("com.github.leonard-palm:compose-state-events:1.2.3")
     implementation("com.google.android.gms:play-services-wearable:18.0.0")
     implementation("androidx.recyclerview:recyclerview:1.3.0")
     implementation("androidx.recyclerview:recyclerview-selection:1.1.0")

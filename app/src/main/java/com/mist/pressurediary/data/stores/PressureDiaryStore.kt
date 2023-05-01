@@ -1,17 +1,18 @@
 package com.mist.pressurediary.data.stores
 
 import androidx.room.*
+import arrow.core.some
 import com.mist.pressurediary.data.Database
+import com.mist.pressurediary.models.PressureDiaryModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
-import kotlinx.datetime.LocalDate
-import kotlinx.datetime.LocalTime
-import kotlinx.serialization.Serializable
 import kotlinx.uuid.UUID
+import java.time.LocalDate
+import java.time.LocalTime
 
 object PressureDiaryStore {
 
-    @Serializable //TODO: wtf is this?
     @Entity(tableName = "pressure_diary_info")
     data class PressureDiaryTable(
         @PrimaryKey
@@ -28,18 +29,34 @@ object PressureDiaryStore {
         val time: LocalTime,
         @ColumnInfo
         val comment: String
-    )
+    ){
+        fun mapToModel() = PressureDiaryModel(
+            id = id,
+            diastolic = diastolic.some(),
+            systolic = systolic.some(),
+            pulse = pulse.some(),
+            date = date,
+            time = time,
+            comment = comment
+        )
+    }
 
     @Dao
     interface PressureDiaryDao {
         @Insert(onConflict = OnConflictStrategy.REPLACE)
         suspend fun addNewEntry(newEntry: PressureDiaryTable)
 
-        @get:Query("SELECT * FROM pressure_diary_info")
-        val allEntry: List<PressureDiaryTable>
+        @get:Query("SELECT * FROM pressure_diary_info ORDER BY date DESC, time DESC")
+        val allEntry: Flow<List<PressureDiaryTable>>
 
         @Update
         suspend fun updateEntry(entry: PressureDiaryTable)
+
+        @Delete
+        suspend fun deleteEntry(entry: PressureDiaryTable)
+
+        @Query("SELECT * FROM pressure_diary_info WHERE id = :id")
+        suspend fun getEntryById(id: UUID): PressureDiaryTable
     }
 
     @Transaction
@@ -50,7 +67,7 @@ object PressureDiaryStore {
     }
 
     @Transaction
-    suspend fun getAllEntry(): List<PressureDiaryTable> = withContext(Dispatchers.IO) {
+    suspend fun getAllEntry(): Flow<List<PressureDiaryTable>> = withContext(Dispatchers.IO) {
         Database.localDatabase.pressureDiaryDao().allEntry
     }
 
@@ -59,5 +76,19 @@ object PressureDiaryStore {
         entry: PressureDiaryTable
     ) = withContext(Dispatchers.IO) {
         Database.localDatabase.pressureDiaryDao().updateEntry(entry)
+    }
+
+    @Transaction
+    suspend fun deleteEntry(
+        entry: PressureDiaryTable
+    ) = withContext(Dispatchers.IO) {
+        Database.localDatabase.pressureDiaryDao().deleteEntry(entry)
+    }
+
+    @Transaction
+    suspend fun getEntryById(
+        id: UUID
+    ): PressureDiaryModel = withContext(Dispatchers.IO) {
+        Database.localDatabase.pressureDiaryDao().getEntryById(id).mapToModel()
     }
 }

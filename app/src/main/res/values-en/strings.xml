@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">PressureDiary</string>
 
@@ -22,11 +23,11 @@
     <string name="content_entry_comment">Comment</string>
     <string name="content_entry_pl_entry_comment">Entry comment</string>
 
-    <!--Button-->
-    <string name="btn_save">Save</string>
-
     <!--History-->
     <string name="history_date">Date</string>
+
+    <!--Button-->
+    <string name="btn_save">Save</string>
     <string name="history_empty">Empty</string>
     <string name="error_please_enter_a_valid_number">Please enter a valid number</string>
 </resources>

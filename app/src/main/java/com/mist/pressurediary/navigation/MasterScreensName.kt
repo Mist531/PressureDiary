@@ -1,11 +1,44 @@
 package com.mist.pressurediary.navigation
 
-sealed class Screen(open val route: String) {
-    object Main : Screen(route = "Main")
+import androidx.annotation.StringRes
+import com.mist.pressurediary.R
 
-    object CreatePressure : Screen(route = "Create Entry")
+sealed class Screen(
+    open val route: String,
+    @StringRes open val id: Int
+) {
+    
+    object Main : Screen(
+        route = "main",
+        id = R.string.screen_main
+    )
 
-    object History : Screen(route = "History")
+    object CreatePressure : Screen(
+        route = "create_entry",
+        id = R.string.screen_create_entry
+    )
 
-    object Settings : Screen(route = "Settings")
+    object UpdatePressure : Screen(
+        route = "update_entry",
+        id = R.string.screen_update_entry
+    )
+
+    object History : Screen(
+        route = "history",
+        id = R.string.screen_history
+    )
+
+    object Settings : Screen(
+        route = "settings",
+        id = R.string.screen_settings
+    )
+
+    companion object {
+        val screensNeedShowName: List<Screen> = listOf(
+            CreatePressure,
+            UpdatePressure,
+            History,
+            Settings
+        )
+    }
 }

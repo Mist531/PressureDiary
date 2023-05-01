@@ -1,9 +1,9 @@
 package com.mist.pressurediary.data
 
 import androidx.room.TypeConverter
-import kotlinx.datetime.LocalDate
-import kotlinx.datetime.LocalTime
 import kotlinx.uuid.UUID
+import java.time.LocalDate
+import java.time.LocalTime
 
 interface StoreConverters {
     class UUIDConverter {
