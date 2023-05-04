@@ -15,5 +15,6 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "PressureDiary"
-include(":app")
- 
+include(":wear_os")
+include(":common")
+include(":mobile")
