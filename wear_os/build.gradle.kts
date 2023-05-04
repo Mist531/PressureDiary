@@ -12,7 +12,7 @@ android {
         val versionMinor = 1
 
         applicationId = "com.mist.wear_os"
-        minSdk = 28
+        minSdk = 26
         targetSdk = 33
         versionCode = 1
         versionName = "${versionMajor}.${versionMinor}.${versionCode}"
@@ -20,6 +20,8 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+
+        resourceConfigurations += listOf("ru","en")
     }
 
     buildTypes {
@@ -29,6 +31,9 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            isCrunchPngs = false
+            isMinifyEnabled = true
+            isShrinkResources = true
         }
     }
     compileOptions {
