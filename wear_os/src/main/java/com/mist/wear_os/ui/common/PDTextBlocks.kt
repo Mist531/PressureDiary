@@ -30,7 +30,7 @@ fun PDBlockWithTitle(
     modifier: Modifier = Modifier,
     value: String,
     title: String,
-    placeholder: String,
+    placeholder: String? = null,
 ) {
     Column(
         modifier = modifier,
@@ -47,11 +47,11 @@ fun PDBlockWithTitle(
         )
         Text(
             text = value.ifEmpty {
-                placeholder
+                placeholder ?: ""
             },
             overflow = TextOverflow.Ellipsis,
             textAlign = TextAlign.Start,
-            color = if (value.isEmpty()) {
+            color = if (value.isEmpty() && placeholder != null) {
                 MaterialTheme.colors.surface
             } else {
                 MaterialTheme.colors.background

@@ -11,6 +11,8 @@ import com.mist.wear_os.ui.common.PDTimeText
 import com.mist.wear_os.ui.screens.create.CreateOrUpdateEntryScreen
 import com.mist.wear_os.ui.screens.history.HistoryScreen
 import com.mist.wear_os.ui.screens.main.MainScreen
+import com.mist.wear_os.ui.screens.settings.main.SettingsScreen
+import com.mist.wear_os.ui.screens.settings.theme.SelectThemeScreen
 import kotlinx.uuid.UUID
 
 @Composable
@@ -40,8 +42,7 @@ fun MasterNavHost(
                     navController.navigate(Screen.History.route)
                 },
                 onGoToSettings = {
-                    //TODO
-                    //navController.navigate(Screen.Settings.route)
+                    navController.navigate(Screen.Settings.route)
                 },
             )
         }
@@ -79,6 +80,18 @@ fun MasterNavHost(
                     )
                 }
             )
+        }
+
+        composable(Screen.Settings.route) {
+            SettingsScreen(
+                navigateToSelectTheme = {
+                    navController.navigate(Screen.Settings.Theme.route)
+                }
+            )
+        }
+
+        composable(Screen.Settings.Theme.route) {
+            SelectThemeScreen()
         }
     }
 }

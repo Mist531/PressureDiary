@@ -15,14 +15,20 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.wear.compose.material.MaterialTheme
 import androidx.wear.compose.navigation.rememberSwipeDismissableNavController
+import com.mist.wear_os.data.settings.SettingsDataStore
 import com.mist.wear_os.navigation.MasterNavHost
 import com.mist.wear_os.theme.PressureDiaryTheme
+import org.koin.android.ext.android.inject
 
 class MainActivityWear : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val settingsDataStore: SettingsDataStore by inject()
         setContent {
-            PressureDiaryTheme {
+            PressureDiaryTheme(
+                settingsDataStore = settingsDataStore
+            ) {
                 MasterApp()
             }
         }

@@ -107,4 +107,8 @@ dependencies {
     //region other
     api("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.0-RC")
     //endregion
+
+    //region DataStore
+    api("androidx.datastore:datastore-preferences:1.0.0")
+    //endregion
 }

@@ -8,6 +8,7 @@
     <string name="screen_update_entry">Редактировать</string>
     <string name="screen_history">История</string>
     <string name="screen_settings">Настройки</string>
+    <string name="screen_theme">Тема</string>
 
     <!--Content Entry-->
     <string name="content_entry_diastolic">Диастолическое</string>

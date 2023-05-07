@@ -31,14 +31,20 @@ sealed class Screen(
     object Settings : Screen(
         route = "settings",
         id = R.string.screen_settings
-    )
+    ){
+        object Theme : Screen(
+            route = "theme",
+            id = R.string.screen_theme
+        )
+    }
 
     companion object {
         val screensNeedShowName: List<Screen> = listOf(
             CreatePressure,
             UpdatePressure,
             History,
-            Settings
+            Settings,
+            Settings.Theme
         )
     }
 }
