@@ -3,8 +3,8 @@
 
     <!--Screen Name-->
     <string name="screen_main">Main</string>
-    <string name="screen_create_entry">Create Entry</string>
-    <string name="screen_update_entry">Update Entry</string>
+    <string name="screen_create_entry">Create</string>
+    <string name="screen_update_entry">Update</string>
     <string name="screen_history">History</string>
     <string name="screen_settings">Settings</string>
 
@@ -23,10 +23,17 @@
     <string name="content_entry_pl_entry_comment">Entry comment</string>
 
     <!--History-->
-    <string name="history_date">Date</string>
+    <string name="history_date">Date: %s</string>
+    <string name="history_time">Time: %s</string>
+    <string name="history_diastolic">Diastolic: %s</string>
+    <string name="history_systolic">Systolic: %s</string>
+    <string name="history_heart_rate">Heart Rate: %s</string>
+    <string name="history_comment">Comment: %s</string>
+    <string name="history_empty">Empty</string>
 
     <!--Button-->
     <string name="btn_save">Save</string>
-    <string name="history_empty">Empty</string>
-    <string name="error_please_enter_a_valid_number">Please enter a valid number</string>
+
+    <!--Error-->
+    <string name="error_please_enter_a_valid_number">Please enter a valid entry</string>
 </resources>

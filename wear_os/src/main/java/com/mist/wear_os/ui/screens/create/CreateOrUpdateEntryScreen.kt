@@ -192,7 +192,7 @@ fun ScalingLazyListScope.createOrUpdateEntryBottomContent(
         item {
             PDBackgroundBlock(
                 modifier = Modifier
-                    .width(80.dp)
+                    .width(100.dp)
                     .clip(CircleShape)
                     .background(MaterialTheme.colors.primary),
                 onClick = onSaveClick
@@ -200,7 +200,7 @@ fun ScalingLazyListScope.createOrUpdateEntryBottomContent(
                 Text(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(vertical = 5.dp),
+                        .padding(vertical = 8.dp),
                     text = stringResource(id = R.string.btn_save),
                     maxLines = 1,
                     textAlign = TextAlign.Center,

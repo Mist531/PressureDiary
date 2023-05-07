@@ -12,7 +12,7 @@ android {
         val versionMinor = 1
 
         applicationId = "com.mist.wear_os"
-        minSdk = 26
+        minSdk = 27
         targetSdk = 33
         versionCode = 1
         versionName = "${versionMajor}.${versionMinor}.${versionCode}"
@@ -25,15 +25,19 @@ android {
     }
 
     buildTypes {
-        release {
+        debug {
+            isCrunchPngs = false
+            isShrinkResources = false
             isMinifyEnabled = false
+        }
+        release {
+            isCrunchPngs = true
+            isShrinkResources = true
+            isMinifyEnabled = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-            isCrunchPngs = false
-            isMinifyEnabled = true
-            isShrinkResources = true
         }
     }
     compileOptions {
@@ -72,15 +76,12 @@ dependencies {
 
     implementation("androidx.wear.compose:compose-material:$wearComposeVersion")
     implementation("androidx.wear.compose:compose-foundation:$wearComposeVersion")
-    implementation("androidx.legacy:legacy-support-v4:1.0.0")
     implementation("androidx.recyclerview:recyclerview:1.3.0")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.1")
+    implementation("androidx.recyclerview:recyclerview-selection:1.1.0")
     implementation("androidx.wear.compose:compose-navigation:$wearComposeVersion")
     //endregion
 
     //region Other
     implementation("com.google.android.gms:play-services-wearable:18.0.0")
-    implementation("androidx.recyclerview:recyclerview:1.3.0")
-    implementation("androidx.recyclerview:recyclerview-selection:1.1.0")
     //endregion
 }

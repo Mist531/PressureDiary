@@ -13,7 +13,7 @@ val MIN_DATE: LocalDate = LocalDate.of(1900, 1, 1)
 @Composable
 fun PDDatePicker(
     onDateChange: (LocalDate) -> Unit
-){
+) {
     DatePicker(
         modifier = Modifier.fillMaxSize(),
         onDateConfirm = { date ->
@@ -28,7 +28,7 @@ fun PDDatePicker(
 @Composable
 fun PDTimePicker(
     onTimeChange: (LocalTime) -> Unit
-){
+) {
     TimePicker(
         modifier = Modifier.fillMaxSize(),
         onTimeConfirm = { time ->

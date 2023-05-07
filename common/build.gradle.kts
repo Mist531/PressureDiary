@@ -9,8 +9,7 @@ android {
     compileSdk = 33
 
     defaultConfig {
-        minSdk = 26
-        targetSdk = 33
+        minSdk = 27
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
@@ -40,9 +39,9 @@ dependencies {
     api("androidx.appcompat:appcompat:1.6.1")
     api("com.google.android.material:material:1.8.0")
 
+    //region Compose
     val composeBom = platform("androidx.compose:compose-bom:2023.03.00")
 
-    //region Compose
     api(composeBom)
     api("androidx.compose.ui:ui")
     api("androidx.compose.ui:ui-tooling-preview")
@@ -89,10 +88,11 @@ dependencies {
     //region Room
     val roomVersion = "2.5.1"
 
-    kapt("androidx.room:room-compiler:$roomVersion") //TODO: migrate to ksp
-    implementation("androidx.room:room-runtime:$roomVersion")
-    implementation("androidx.room:room-ktx:$roomVersion")
-    testImplementation("androidx.room:room-testing:$roomVersion")
+    api("androidx.legacy:legacy-support-v4:1.0.0")
+    kapt("androidx.room:room-compiler:$roomVersion")
+    api("androidx.room:room-runtime:$roomVersion")
+    api("androidx.room:room-ktx:$roomVersion")
+    testApi("androidx.room:room-testing:$roomVersion")
     //endregion
 
     //region Serialization

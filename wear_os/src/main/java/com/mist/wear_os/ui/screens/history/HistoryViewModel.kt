@@ -12,7 +12,8 @@ import kotlinx.coroutines.withContext
 import java.time.LocalDate
 
 data class HistoryState(
-    val groupList: Map<LocalDate, List<PressureDiaryModel>> = mapOf()
+    val groupList: Map<LocalDate, List<PressureDiaryModel>> = mapOf(),
+    val showProgressBar: Boolean = true,
 )
 
 class HistoryViewModel (
@@ -35,7 +36,8 @@ class HistoryViewModel (
         PressureDiaryStore.getAllEntry().collectLatest { listTable->
             val groupList = listTable.map { it.mapToModel() }.groupBy { it.date }
             state = state.copy(
-                groupList = groupList
+                groupList = groupList,
+                showProgressBar = false
             )
         }
     }

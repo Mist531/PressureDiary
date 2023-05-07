@@ -12,7 +12,7 @@ android {
         val versionMinor = 1
 
         applicationId = "com.mist.mobile_app"
-        minSdk = 26
+        minSdk = 27
         targetSdk = 33
         versionCode = 1
         versionName = "${versionMajor}.${versionMinor}.(${versionCode})"
@@ -21,11 +21,15 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+
+        resourceConfigurations += listOf("ru","en")
     }
 
     buildTypes {
         release {
-            isMinifyEnabled = false
+            isCrunchPngs = true
+            isShrinkResources = true
+            isMinifyEnabled = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -55,7 +59,5 @@ android {
 dependencies {
     implementation(project(":common"))
 
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.1")
-    implementation("androidx.activity:activity-compose:1.7.1")
     implementation("androidx.compose.material3:material3")
 }
