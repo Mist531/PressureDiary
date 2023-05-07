@@ -38,4 +38,12 @@
 
     <!--Error-->
     <string name="error_please_enter_a_valid_number">Please enter a valid entry</string>
+
+    <!--Settings Block-->
+    <string name="settings_theme">Theme:</string>
+
+    <!--Theme-->
+    <string name="theme_green">Green</string>
+    <string name="theme_red">Red</string>
+    <string name="theme_purple">Purple</string>
 </resources>

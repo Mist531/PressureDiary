@@ -38,4 +38,12 @@
 
     <!--Error-->
     <string name="error_please_enter_a_valid_number">Пожалуйста, введите число</string>
+
+    <!--Settings Block-->
+    <string name="settings_theme">Тема:</string>
+
+    <!--Theme-->
+    <string name="theme_green">Зеленый</string>
+    <string name="theme_red">Красный</string>
+    <string name="theme_purple">Фиолетовый</string>
 </resources>

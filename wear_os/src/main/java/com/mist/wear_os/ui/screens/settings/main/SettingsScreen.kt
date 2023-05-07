@@ -10,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.wear.compose.foundation.lazy.ScalingLazyColumn
@@ -17,6 +18,7 @@ import androidx.wear.compose.foundation.lazy.rememberScalingLazyListState
 import androidx.wear.compose.material.MaterialTheme
 import androidx.wear.compose.material.PositionIndicator
 import androidx.wear.compose.material.Scaffold
+import com.mist.wear_os.R
 import com.mist.wear_os.ui.common.PDBackgroundBlock
 import com.mist.wear_os.ui.common.PDBlockWithTitle
 import com.mist.wear_os.utils.ScalingLazyColumnPadding
@@ -49,24 +51,42 @@ fun SettingsScreen(
             contentPadding = ScalingLazyColumnPadding
         ) {
             item {
-                PDBackgroundBlock(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .background(
-                            color = MaterialTheme.colors.primary,
-                            shape = CircleShape
-                        ),
+                SettingBlock(
+                    value =
+                    state.theme.let { theme ->
+                        if (theme != null) {
+                            stringResource(id = theme.title)
+                        } else ""
+                    },
+                    title = stringResource(R.string.settings_theme),
                     onClick = navigateToSelectTheme
-                ) {
-                    PDBlockWithTitle(
-                        modifier = Modifier
-                            .padding(horizontal = 15.dp, vertical = 5.dp)
-                            .fillMaxWidth(),
-                        title = "Theme:",
-                        value = state.theme?.title ?: "",
-                    )
-                }
+                )
             }
         }
+    }
+}
+
+@Composable
+fun SettingBlock(
+    title: String,
+    value: String,
+    onClick: () -> Unit,
+) {
+    PDBackgroundBlock(
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(
+                color = MaterialTheme.colors.primary,
+                shape = CircleShape
+            ),
+        onClick = onClick
+    ) {
+        PDBlockWithTitle(
+            modifier = Modifier
+                .padding(horizontal = 15.dp, vertical = 5.dp)
+                .fillMaxWidth(),
+            title = title,
+            value = value,
+        )
     }
 }

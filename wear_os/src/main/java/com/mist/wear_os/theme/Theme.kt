@@ -1,5 +1,6 @@
 package com.mist.wear_os.theme
 
+import androidx.annotation.StringRes
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -8,23 +9,24 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.wear.compose.material.Colors
 import androidx.wear.compose.material.MaterialTheme
+import com.mist.wear_os.R
 import com.mist.wear_os.data.settings.SettingsDataStore
 import kotlinx.coroutines.flow.collectLatest
 
 enum class Theme(
-    val title: String,
+    @StringRes val title: Int,
     val colors: Colors
 ) {
     GREEN(
-        title = "Green",
+        title = R.string.theme_green,
         colors = greenColorPalette
     ),
     RED(
-        title = "Red",
+        title = R.string.theme_red,
         colors = redColorPalette
     ),
     PURPLE(
-        title = "Purple",
+        title = R.string.theme_purple,
         colors = purpleColorPalette
     );
 
