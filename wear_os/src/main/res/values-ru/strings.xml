@@ -40,7 +40,7 @@
     <string name="error_please_enter_a_valid_number">Пожалуйста, введите число</string>
 
     <!--Settings Block-->
-    <string name="settings_theme">Тема:</string>
+    <string name="settings_theme">Выбранная Тема:</string>
 
     <!--Theme-->
     <string name="theme_green">Зеленый</string>

@@ -12,14 +12,15 @@ val MIN_DATE: LocalDate = LocalDate.of(1900, 1, 1)
 
 @Composable
 fun PDDatePicker(
-    onDateChange: (LocalDate) -> Unit
+    onDateChange: (LocalDate) -> Unit,
+    startDate: LocalDate? = null
 ) {
     DatePicker(
         modifier = Modifier.fillMaxSize(),
         onDateConfirm = { date ->
             onDateChange(date)
         },
-        date = LocalDate.now(),
+        date = startDate ?: LocalDate.now(),
         toDate = LocalDate.now().plusDays(1),
         fromDate = MIN_DATE
     )
@@ -27,14 +28,15 @@ fun PDDatePicker(
 
 @Composable
 fun PDTimePicker(
-    onTimeChange: (LocalTime) -> Unit
+    onTimeChange: (LocalTime) -> Unit,
+    startTime: LocalTime? = null
 ) {
     TimePicker(
         modifier = Modifier.fillMaxSize(),
         onTimeConfirm = { time ->
             onTimeChange(time)
         },
-        time = LocalTime.now(),
+        time = startTime ?: LocalTime.now(),
         showSeconds = false
     )
 }

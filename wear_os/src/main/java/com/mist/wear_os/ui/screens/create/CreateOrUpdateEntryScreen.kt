@@ -94,9 +94,11 @@ fun CreateOrUpdateEntryScreen(
         ContentEntryScreen(
             modifier = Modifier.fillMaxWidth(),
             datePickerEvent = state.datePickerEvent,
+            startDate = state.entry.date,
             onDatePickerEvent = viewModel::onDatePickerEvent,
             onConsumedDatePickerWithSave = viewModel::onConsumedDatePickerEventWithSave,
             timePickerEvent = state.timePickerEvent,
+            startTime = state.entry.time,
             onTimePickerEvent = viewModel::onTimePickerEvent,
             onConsumedTimePickerWithSave = viewModel::onConsumedTimePickerEventWithSave,
             diastolicValue = state.entry.diastolic.getStringValueOptionInt(),

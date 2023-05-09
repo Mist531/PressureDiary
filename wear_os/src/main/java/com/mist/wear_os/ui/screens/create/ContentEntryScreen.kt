@@ -26,9 +26,11 @@ import java.time.LocalTime
 fun ContentEntryScreen(
     modifier: Modifier = Modifier,
     datePickerEvent: StateEvent,
+    startDate: LocalDate,
     onDatePickerEvent: () -> Unit,
     onConsumedDatePickerWithSave: (LocalDate) -> Unit,
     timePickerEvent: StateEvent,
+    startTime: LocalTime,
     onTimePickerEvent: () -> Unit,
     onConsumedTimePickerWithSave: (LocalTime) -> Unit,
     diastolicValue: String,
@@ -46,13 +48,15 @@ fun ContentEntryScreen(
 ) {
     AnimatedVisibility(visible = timePickerEvent.isTriggered()) {
         PDTimePicker(
-            onTimeChange = onConsumedTimePickerWithSave
+            onTimeChange = onConsumedTimePickerWithSave,
+            startTime = startTime
         )
     }
 
     AnimatedVisibility(visible = datePickerEvent.isTriggered()) {
         PDDatePicker(
-            onDateChange = onConsumedDatePickerWithSave
+            onDateChange = onConsumedDatePickerWithSave,
+            startDate = startDate
         )
     }
 
