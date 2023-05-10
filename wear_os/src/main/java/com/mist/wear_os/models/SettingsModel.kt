@@ -5,5 +5,5 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class SettingsModel(
-    val Theme: Theme = com.mist.wear_os.theme.Theme.GREEN
+    val themeName: String = Theme.GREEN.name
 )

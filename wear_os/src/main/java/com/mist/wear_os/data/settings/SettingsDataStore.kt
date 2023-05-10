@@ -16,7 +16,7 @@ class SettingsDataStore(
     ) {
         dataStore.updateData { settings ->
             settings.copy(
-                Theme = theme
+                themeName = theme.name
             )
         }
     }

@@ -50,7 +50,7 @@ fun PressureDiaryTheme(
 
     LaunchedEffect(Unit) {
         settingsDataStore.settingsFlow.collectLatest { settings ->
-            theme = settings.Theme
+            theme = Theme.valueOf(settings.themeName)
         }
     }
 

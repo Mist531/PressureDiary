@@ -30,7 +30,7 @@ class SettingsViewModel(
     private suspend fun stateSettings(){
         settingsDataStore.settingsFlow.collectLatest { settings ->
             state = state.copy(
-                theme = settings.Theme
+                theme = Theme.valueOf(settings.themeName)
             )
         }
     }

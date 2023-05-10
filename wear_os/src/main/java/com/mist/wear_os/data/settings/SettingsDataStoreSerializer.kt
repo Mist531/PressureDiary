@@ -20,11 +20,11 @@ object SettingsDataStoreSerializer : Serializer<SettingsModel>, KoinComponent {
 
     @OptIn(ExperimentalSerializationApi::class)
     override suspend fun readFrom(input: InputStream): SettingsModel {
-        return get<Json>().decodeFromStream(input)
+        return get<Json>().decodeFromStream(deserializer = SettingsModel.serializer(), input)
     }
 
     @OptIn(ExperimentalSerializationApi::class)
     override suspend fun writeTo(t: SettingsModel, output: OutputStream) {
-        get<Json>().encodeToStream(t, output)
+        get<Json>().encodeToStream(serializer = SettingsModel.serializer(), t, output)
     }
 }
