@@ -130,8 +130,8 @@ fun HistoryInfoBlock(
             Text(
                 text = """
                     ${stringResource(R.string.history_time, entry.time.timeInFormat())}
-                    ${stringResource(R.string.history_diastolic, entry.diastolic.getStringValueOptionInt())}
                     ${stringResource(R.string.history_systolic, entry.systolic.getStringValueOptionInt())}
+                    ${stringResource(R.string.history_diastolic, entry.diastolic.getStringValueOptionInt())}
                     ${stringResource(R.string.history_heart_rate, entry.pulse.getStringValueOptionInt())}
                     ${stringResource(R.string.history_comment, entry.comment)}
                 """.trimIndent(),

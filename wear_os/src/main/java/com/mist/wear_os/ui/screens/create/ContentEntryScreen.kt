@@ -74,24 +74,24 @@ fun ContentEntryScreen(
             item {
                 PDBlockEntry(
                     modifier = Modifier,
-                    iconId = R.drawable.ic_diastolic,
-                    value = diastolicValue,
-                    title = stringResource(R.string.content_entry_diastolic),
-                    onValueChange = onDiastolicValueChange,
-                    horizontalPadding = 18.dp,
-                    placeholder = stringResource(R.string.content_entry_entry_diastolic),
-                    onClick = null
-                )
-            }
-            item {
-                PDBlockEntry(
-                    modifier = Modifier,
                     iconId = R.drawable.ic_systolic,
                     value = systolicValue,
                     title = stringResource(R.string.content_entry_systolic),
                     onValueChange = onSystolicValueChange,
                     horizontalPadding = 18.dp,
                     placeholder = stringResource(R.string.content_entry_entry_systolic),
+                    onClick = null
+                )
+            }
+            item {
+                PDBlockEntry(
+                    modifier = Modifier,
+                    iconId = R.drawable.ic_diastolic,
+                    value = diastolicValue,
+                    title = stringResource(R.string.content_entry_diastolic),
+                    onValueChange = onDiastolicValueChange,
+                    horizontalPadding = 18.dp,
+                    placeholder = stringResource(R.string.content_entry_entry_diastolic),
                     onClick = null
                 )
             }
