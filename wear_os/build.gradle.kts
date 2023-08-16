@@ -6,7 +6,7 @@ plugins {
 
 android {
     namespace = "com.mist.wear_os"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         val versionMajor = 1
@@ -52,7 +52,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.4.3"
+        kotlinCompilerExtensionVersion = "1.5.1"
     }
     packaging {
         resources {
@@ -73,11 +73,11 @@ dependencies {
     //endregion
 
     //region ComposeForWearOs
-    val wearComposeVersion = "1.2.0-alpha09"
+    val wearComposeVersion = "1.2.0"
 
     implementation("androidx.wear.compose:compose-material:$wearComposeVersion")
     implementation("androidx.wear.compose:compose-foundation:$wearComposeVersion")
-    implementation("androidx.recyclerview:recyclerview:1.3.0")
+    implementation("androidx.recyclerview:recyclerview:1.3.1")
     implementation("androidx.recyclerview:recyclerview-selection:1.1.0")
     implementation("androidx.wear.compose:compose-navigation:$wearComposeVersion")
     //endregion

@@ -17,7 +17,7 @@ data class PressureDiaryModel(
     val date: LocalDate = LocalDate.now(),
     val time: LocalTime = LocalTime.now(),
     val comment: String = ""
-){
+) {
     fun mapToTable() = PressureDiaryStore.PressureDiaryTable(
         id = id,
         diastolic = diastolic.orNull() ?: 0,

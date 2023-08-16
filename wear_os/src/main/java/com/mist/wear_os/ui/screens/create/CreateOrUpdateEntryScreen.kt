@@ -103,36 +103,30 @@ fun CreateOrUpdateEntryScreen(
             onConsumedTimePickerWithSave = viewModel::onConsumedTimePickerEventWithSave,
             diastolicValue = state.entry.diastolic.getStringValueOptionInt(),
             onDiastolicValueChange = { str ->
-                if (str.toIntOrNull() != null) {
-                    viewModel.onDiastolicChanged(str.toInt())
-                } else {
-                    toast(
-                        context = context,
-                        text = errorMessage
-                    )
-                }
+                str.toIntOrNull()?.let { int ->
+                    viewModel.onDiastolicChanged(int)
+                } ?: toast(
+                    context = context,
+                    text = errorMessage
+                )
             },
             systolicValue = state.entry.systolic.getStringValueOptionInt(),
             onSystolicValueChange = { str ->
-                if (str.toIntOrNull() != null) {
-                    viewModel.onSystolicChanged(str.toInt())
-                } else {
-                    toast(
-                        context = context,
-                        text = errorMessage
-                    )
-                }
+                str.toIntOrNull()?.let { int ->
+                    viewModel.onSystolicChanged(int)
+                } ?: toast(
+                    context = context,
+                    text = errorMessage
+                )
             },
             pulseValue = state.entry.pulse.getStringValueOptionInt(),
             onPulseValueChange = { str ->
-                if (str.toIntOrNull() != null) {
-                    viewModel.onPulseChanged(str.toInt())
-                } else {
-                    toast(
-                        context = context,
-                        text = errorMessage
-                    )
-                }
+                str.toIntOrNull()?.let { int ->
+                    viewModel.onPulseChanged(int)
+                } ?: toast(
+                    context = context,
+                    text = errorMessage
+                )
             },
             dateValue = state.entry.date.dateInFormat(),
             timeValue = state.entry.time.timeInFormat(),
@@ -156,7 +150,7 @@ fun ScalingLazyListScope.createOrUpdateEntryBottomContent(
     onSaveClick: () -> Unit,
     onUpdateClick: () -> Unit,
     onDeleteClick: () -> Unit,
-){
+) {
     if (id != null) {
         item {
             Row(

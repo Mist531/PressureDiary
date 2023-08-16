@@ -38,7 +38,7 @@ class MainActivityWear : ComponentActivity() {
 @Composable
 fun MasterApp(
     modifier: Modifier = Modifier,
-){
+) {
     val navController = rememberSwipeDismissableNavController()
 
     MasterNavHost(

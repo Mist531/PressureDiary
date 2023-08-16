@@ -20,7 +20,6 @@ fun MasterNavHost(
     navController: NavHostController,
     modifier: Modifier = Modifier
 ) {
-
     WearNavScaffold(
         modifier = modifier,
         startDestination = Screen.Main.route,

@@ -51,7 +51,7 @@ fun SelectThemeScreen(
             verticalArrangement = Arrangement.spacedBy(10.dp),
             contentPadding = ScalingLazyColumnPadding
         ) {
-            items(Theme.listTheme) { theme ->
+            items(Theme.values()) { theme ->
                 ToggleChip(
                     modifier = Modifier.fillMaxWidth(),
                     checked = state.theme == theme,

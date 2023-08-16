@@ -16,9 +16,7 @@ data class HistoryState(
     val showProgressBar: Boolean = true,
 )
 
-class HistoryViewModel (
-
-): BaseViewModel<HistoryState>() {
+class HistoryViewModel : BaseViewModel<HistoryState>() {
 
     override val initialState = HistoryState()
 
@@ -33,7 +31,7 @@ class HistoryViewModel (
     }
 
     private suspend fun getPressureDiaryList() = withContext(Dispatchers.IO) {
-        PressureDiaryStore.getAllEntry().collectLatest { listTable->
+        PressureDiaryStore.getAllEntry().collectLatest { listTable ->
             val groupList = listTable.map { it.mapToModel() }.groupBy { it.date }
             state = state.copy(
                 groupList = groupList,

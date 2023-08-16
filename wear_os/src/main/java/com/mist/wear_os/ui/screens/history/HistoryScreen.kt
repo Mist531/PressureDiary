@@ -78,10 +78,10 @@ fun HistoryScreen(
                     state.groupList.forEach { map ->
                         item {
                             Text(
-                                text = stringResource(R.string.history_date, map.key.dateInFormat()),
                                 modifier = Modifier
                                     .fillMaxWidth()
-                                    .padding(10.dp)
+                                    .padding(10.dp),
+                                text = stringResource(R.string.history_date, map.key.dateInFormat()),
                             )
                         }
                         items(map.value) { entry ->
@@ -128,6 +128,9 @@ fun HistoryInfoBlock(
             verticalArrangement = Arrangement.spacedBy(10.dp)
         ) {
             Text(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(10.dp),
                 text = """
                     ${stringResource(R.string.history_time, entry.time.timeInFormat())}
                     ${stringResource(R.string.history_systolic, entry.systolic.getStringValueOptionInt())}
@@ -135,9 +138,6 @@ fun HistoryInfoBlock(
                     ${stringResource(R.string.history_heart_rate, entry.pulse.getStringValueOptionInt())}
                     ${stringResource(R.string.history_comment, entry.comment)}
                 """.trimIndent(),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(10.dp),
                 color = MaterialTheme.colors.background,
                 fontWeight = FontWeight.Bold
             )

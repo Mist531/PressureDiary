@@ -158,24 +158,19 @@ fun PDBlockEntry(
     onClick: (() -> Unit)? = null,
     onValueChange: (String) -> Unit = {},
 ) {
-    val voiceLauncher =
-        rememberLauncherForActivityResult(
-            ActivityResultContracts.StartActivityForResult()
-        ) {
-            VoiceIntentUtils.voiceLauncher(
-                activityResult = it,
-                onValueChange = onValueChange
-            )
-        }
+    val voiceLauncher = rememberLauncherForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) {
+        VoiceIntentUtils.voiceLauncher(
+            activityResult = it,
+            onValueChange = onValueChange
+        )
+    }
 
     PDBackgroundBlock(
         modifier = modifier,
         onClick = {
-            if (onClick != null) {
-                onClick()
-            } else {
-                voiceLauncher.launch(VoiceIntentUtils.voiceIntent)
-            }
+            onClick?.invoke() ?: voiceLauncher.launch(VoiceIntentUtils.voiceIntent)
         }
     ) {
         Row(

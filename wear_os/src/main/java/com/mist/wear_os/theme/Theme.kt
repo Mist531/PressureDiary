@@ -15,28 +15,20 @@ import kotlinx.coroutines.flow.collectLatest
 
 enum class Theme(
     @StringRes val title: Int,
-    val colors: Colors
+    val palette: Colors
 ) {
     GREEN(
         title = R.string.theme_green,
-        colors = greenColorPalette
+        palette = greenColorPalette
     ),
     RED(
         title = R.string.theme_red,
-        colors = redColorPalette
+        palette = redColorPalette
     ),
     PURPLE(
         title = R.string.theme_purple,
-        colors = purpleColorPalette
-    );
-
-    companion object {
-        val listTheme: List<Theme> = listOf(
-            GREEN,
-            RED,
-            PURPLE
-        )
-    }
+        palette = purpleColorPalette
+    )
 }
 
 @Composable
@@ -56,7 +48,7 @@ fun PressureDiaryTheme(
 
     if (theme != null) {
         MaterialTheme(
-            colors = theme!!.colors,
+            colors = theme!!.palette,
             typography = Typography,
             content = content
         )

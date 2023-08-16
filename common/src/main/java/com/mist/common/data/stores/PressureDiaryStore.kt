@@ -29,7 +29,7 @@ object PressureDiaryStore {
         val time: LocalTime,
         @ColumnInfo
         val comment: String
-    ){
+    ) {
         fun mapToModel() = PressureDiaryModel(
             id = id,
             diastolic = diastolic.some(),

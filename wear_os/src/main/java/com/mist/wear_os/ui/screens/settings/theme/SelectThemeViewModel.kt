@@ -27,7 +27,7 @@ class SelectThemeViewModel(
         }
     }
 
-    private suspend fun stateSettings(){
+    private suspend fun stateSettings() {
         settingsDataStore.settingsFlow.collectLatest { settings ->
             state = state.copy(
                 theme = Theme.valueOf(settings.themeName)

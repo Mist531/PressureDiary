@@ -7,31 +7,31 @@ sealed class Screen(
     open val route: String,
     @StringRes open val id: Int
 ) {
-    
-    object Main : Screen(
+
+    data object Main : Screen(
         route = "main",
         id = R.string.screen_main
     )
 
-    object CreatePressure : Screen(
+    data object CreatePressure : Screen(
         route = "create_entry",
         id = R.string.screen_create_entry
     )
 
-    object UpdatePressure : Screen(
+    data object UpdatePressure : Screen(
         route = "update_entry",
         id = R.string.screen_update_entry
     )
 
-    object History : Screen(
+    data object History : Screen(
         route = "history",
         id = R.string.screen_history
     )
 
-    object Settings : Screen(
+    data object Settings : Screen(
         route = "settings",
         id = R.string.screen_settings
-    ){
+    ) {
         object Theme : Screen(
             route = "theme",
             id = R.string.screen_theme

@@ -52,8 +52,7 @@ fun SettingsScreen(
         ) {
             item {
                 SettingBlock(
-                    value =
-                    state.theme.let { theme ->
+                    value = state.theme.let { theme ->
                         if (theme != null) {
                             stringResource(id = theme.title)
                         } else ""
