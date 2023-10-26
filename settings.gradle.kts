@@ -18,3 +18,4 @@ rootProject.name = "PressureDiary"
 include(":wear_os")
 include(":common")
 include(":mobile")
+include(":backend")
