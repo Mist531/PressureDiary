@@ -1,7 +1,7 @@
 plugins {
-    id("org.jetbrains.kotlin.plugin.serialization") version "1.9.0"
+    id("org.jetbrains.kotlin.plugin.serialization") version "1.9.10"
     id("io.ktor.plugin") version "2.3.5"
-    kotlin("jvm") version "1.9.0"
+    kotlin("jvm") version "1.9.10"
 }
 
 group = "com.backend"
@@ -15,6 +15,12 @@ application {
 }
 
 dependencies {
+    val exposedVersion = "0.43.0"
+
+    implementation(project(":common"))
+
+    implementation("io.ktor:ktor-server-status-pages")
+
     implementation("io.ktor:ktor-server-core-jvm")
     implementation("io.ktor:ktor-server-auth-jvm")
     implementation("io.ktor:ktor-server-auth-jwt-jvm")
@@ -24,13 +30,22 @@ dependencies {
     implementation("io.ktor:ktor-server-swagger-jvm")
     implementation("io.ktor:ktor-server-call-logging-jvm")
     implementation("io.ktor:ktor-server-content-negotiation-jvm")
+    implementation("io.ktor:ktor-server-data-conversion")
     implementation("io.ktor:ktor-serialization-kotlinx-json-jvm")
     implementation("io.ktor:ktor-serialization-gson-jvm")
-    implementation("org.jetbrains.exposed:exposed-core:0.43.0")
-    implementation("org.jetbrains.exposed:exposed-jdbc:0.43.0")
-    implementation("com.h2database:h2:2.1.214")
+    implementation("org.jetbrains.exposed:exposed-core:$exposedVersion")
+    implementation("org.jetbrains.exposed:exposed-dao:$exposedVersion")
+    implementation("org.jetbrains.exposed:exposed-jdbc:$exposedVersion")
+    implementation("org.jetbrains.exposed:exposed-java-time:$exposedVersion")
     implementation("io.ktor:ktor-server-netty-jvm")
-    implementation("ch.qos.logback:logback-classic:1.4.11")
+    implementation("ch.qos.logback:logback-classic:1.4.12")
     testImplementation("io.ktor:ktor-server-tests-jvm")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit:1.9.10")
+
+    //koin
+    implementation("io.insert-koin:koin-ktor:3.4.3")
+    implementation("io.insert-koin:koin-logger-slf4j:3.4.3")
+
+    //bd
+    implementation("org.postgresql:postgresql:42.5.1")
 }

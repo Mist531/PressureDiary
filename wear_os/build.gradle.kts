@@ -73,16 +73,16 @@ dependencies {
     //endregion
 
     //region ComposeForWearOs
-    val wearComposeVersion = "1.2.0"
+    val wearComposeVersion = "1.2.1"
 
     implementation("androidx.wear.compose:compose-material:$wearComposeVersion")
     implementation("androidx.wear.compose:compose-foundation:$wearComposeVersion")
-    implementation("androidx.recyclerview:recyclerview:1.3.1")
+    implementation("androidx.recyclerview:recyclerview:1.3.2")
     implementation("androidx.recyclerview:recyclerview-selection:1.1.0")
     implementation("androidx.wear.compose:compose-navigation:$wearComposeVersion")
     //endregion
 
     //region Other
-    implementation("com.google.android.gms:play-services-wearable:18.0.0")
+    implementation("com.google.android.gms:play-services-wearable:18.1.0")
     //endregion
 }

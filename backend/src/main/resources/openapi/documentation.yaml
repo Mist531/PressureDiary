@@ -1,23 +1,470 @@
 openapi: "3.0.3"
 info:
-  title: "Application API"
-  description: "Application API"
+  title: "PressureDiary API"
+  description: "PressureDiary API"
   version: "1.0.0"
 servers:
-  - url: "http://0.0.0.0:8080"
+  - url: "http://0.0.0.0:8082"
 paths:
-  /:
+  /api/device:
     get:
-      description: "Hello World!"
+      description: ""
+      responses:
+        "401":
+          description: "Unauthorized"
+          content:
+            '*/*':
+              schema:
+                type: "object"
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/DeviceModel"
+    post:
+      description: ""
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              $ref: "#/components/schemas/PostDeviceForUserModel"
+        required: true
+      responses:
+        "401":
+          description: "Unauthorized"
+          content:
+            '*/*':
+              schema:
+                type: "object"
+        "200":
+          description: ""
+          content:
+            '*/*':
+              schema:
+                type: "object"
+    delete:
+      description: ""
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              $ref: "#/components/schemas/DeleteUserDeviceModel"
+        required: true
+      responses:
+        "401":
+          description: "Unauthorized"
+          content:
+            '*/*':
+              schema:
+                type: "object"
+        "200":
+          description: ""
+          content:
+            '*/*':
+              schema:
+                type: "object"
+  /api/healthcheck:
+    get:
+      description: ""
       responses:
         "200":
           description: "OK"
           content:
-            text/plain:
+            '*/*':
               schema:
-                type: "string"
-              examples:
-                Example#1:
-                  value: "Hello World!"
+                type: "object"
+  /api/pressureRecord:
+    get:
+      description: ""
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              $ref: "#/components/schemas/GetPaginatedPressureRecordsModel"
+        required: true
+      responses:
+        "401":
+          description: "Unauthorized"
+          content:
+            '*/*':
+              schema:
+                type: "object"
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/PressureRecordModel"
+    put:
+      description: ""
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              $ref: "#/components/schemas/PutPressureRecordModel"
+        required: true
+      responses:
+        "401":
+          description: "Unauthorized"
+          content:
+            '*/*':
+              schema:
+                type: "object"
+        "200":
+          description: ""
+          content:
+            '*/*':
+              schema:
+                type: "object"
+    post:
+      description: ""
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              $ref: "#/components/schemas/PostPressureRecordModel"
+        required: true
+      responses:
+        "401":
+          description: "Unauthorized"
+          content:
+            '*/*':
+              schema:
+                type: "object"
+        "200":
+          description: ""
+          content:
+            '*/*':
+              schema:
+                type: "object"
+    delete:
+      description: ""
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              $ref: "#/components/schemas/DeletePressureRecordModel"
+        required: true
+      responses:
+        "401":
+          description: "Unauthorized"
+          content:
+            '*/*':
+              schema:
+                type: "object"
+        "200":
+          description: ""
+          content:
+            '*/*':
+              schema:
+                type: "object"
+  /api/register/create:
+    post:
+      description: ""
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              $ref: "#/components/schemas/PostUserRequestModel"
+        required: true
+      responses:
+        "200":
+          description: ""
+          content:
+            '*/*':
+              schema:
+                type: "object"
+  /api/register/login:
+    post:
+      description: ""
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              $ref: "#/components/schemas/LoginModel"
+        required: true
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/TokensModel"
+  /api/user/delete:
+    delete:
+      description: ""
+      requestBody:
+        content:
+          text/plain:
+            schema:
+              type: "string"
+              format: "uuid"
+        required: true
+      responses:
+        "401":
+          description: "Unauthorized"
+          content:
+            '*/*':
+              schema:
+                type: "object"
+        "200":
+          description: ""
+          content:
+            '*/*':
+              schema:
+                type: "object"
+  /api/user/edit:
+    put:
+      description: ""
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              $ref: "#/components/schemas/PutUserRequestModel"
+        required: true
+      responses:
+        "401":
+          description: "Unauthorized"
+          content:
+            '*/*':
+              schema:
+                type: "object"
+        "200":
+          description: ""
+          content:
+            '*/*':
+              schema:
+                type: "object"
 components:
   schemas:
+    DeviceModel:
+      type: "object"
+      properties:
+        deviceUUID:
+          type: "string"
+          format: "uuid"
+        deviceType:
+          type: "string"
+          enum:
+            - "ANDROID_WEAR"
+            - "ANDROID"
+            - "IOS"
+        lastSyncDate:
+          type: "string"
+          format: "date"
+      required:
+        - "deviceUUID"
+        - "deviceType"
+        - "lastSyncDate"
+    PostDeviceForUserModel:
+      type: "object"
+      properties:
+        userUUID:
+          type: "string"
+          format: "uuid"
+        deviceType:
+          type: "string"
+          enum:
+            - "ANDROID_WEAR"
+            - "ANDROID"
+            - "IOS"
+        lastSyncDate:
+          type: "string"
+          format: "date"
+      required:
+        - "userUUID"
+        - "deviceType"
+        - "lastSyncDate"
+    DeleteUserDeviceModel:
+      type: "object"
+      properties:
+        deviceUUID:
+          type: "string"
+          format: "uuid"
+      required:
+        - "deviceUUID"
+    PressureRecordModel:
+      type: "object"
+      properties:
+        pressureRecordUUID:
+          type: "string"
+          format: "uuid"
+        userUUID:
+          type: "string"
+          format: "uuid"
+        dateTimeRecord:
+          type: "string"
+          format: "date-time"
+        systolic:
+          type: "integer"
+          format: "int32"
+        diastolic:
+          type: "integer"
+          format: "int32"
+        pulse:
+          type: "integer"
+          format: "int32"
+        note:
+          type: "string"
+        deviceType:
+          type: "string"
+          enum:
+            - "ANDROID_WEAR"
+            - "ANDROID"
+            - "IOS"
+      required:
+        - "pressureRecordUUID"
+        - "userUUID"
+        - "dateTimeRecord"
+        - "note"
+        - "deviceType"
+    GetPaginatedPressureRecordsModel:
+      type: "object"
+      properties:
+        userUUID:
+          type: "string"
+          format: "uuid"
+        fromDateTime:
+          type: "string"
+          format: "date-time"
+        toDateTime:
+          type: "string"
+          format: "date-time"
+        page:
+          type: "integer"
+          format: "int32"
+        pageSize:
+          type: "integer"
+          format: "int32"
+      required:
+        - "userUUID"
+        - "fromDateTime"
+        - "toDateTime"
+    PutPressureRecordModel:
+      type: "object"
+      properties:
+        pressureRecordUUID:
+          type: "string"
+          format: "uuid"
+        dateTimeRecord:
+          type: "string"
+          format: "date-time"
+        systolic:
+          type: "integer"
+          format: "int32"
+        diastolic:
+          type: "integer"
+          format: "int32"
+        pulse:
+          type: "integer"
+          format: "int32"
+        note:
+          type: "string"
+      required:
+        - "pressureRecordUUID"
+    PostPressureRecordModel:
+      type: "object"
+      properties:
+        dateTimeRecord:
+          type: "string"
+          format: "date-time"
+        systolic:
+          type: "integer"
+          format: "int32"
+        diastolic:
+          type: "integer"
+          format: "int32"
+        pulse:
+          type: "integer"
+          format: "int32"
+        note:
+          type: "string"
+        deviceType:
+          type: "string"
+          enum:
+            - "ANDROID_WEAR"
+            - "ANDROID"
+            - "IOS"
+      required:
+        - "dateTimeRecord"
+        - "note"
+        - "deviceType"
+    DeletePressureRecordModel:
+      type: "object"
+      properties:
+        pressureRecordUUID:
+          type: "string"
+          format: "uuid"
+      required:
+        - "pressureRecordUUID"
+    PostUserRequestModel:
+      type: "object"
+      properties:
+        email:
+          type: "string"
+        password:
+          type: "string"
+        firstName:
+          type: "string"
+        lastName:
+          type: "string"
+        dateOfBirth:
+          type: "string"
+          format: "date"
+        gender:
+          type: "string"
+          enum:
+            - "M"
+            - "F"
+            - "O"
+        timeZone:
+          type: "string"
+      required:
+        - "email"
+        - "password"
+        - "firstName"
+        - "dateOfBirth"
+        - "gender"
+    TokensModel:
+      type: "object"
+      properties:
+        access:
+          type: "string"
+        refresh:
+          type: "string"
+      required:
+        - "access"
+        - "refresh"
+    LoginModel:
+      type: "object"
+      properties:
+        login:
+          type: "string"
+        password:
+          type: "string"
+      required:
+        - "login"
+        - "password"
+    PutUserRequestModel:
+      type: "object"
+      properties:
+        firstName:
+          type: "string"
+        lastName:
+          type: "string"
+        dateOfBirth:
+          type: "string"
+          format: "date"
+        gender:
+          type: "string"
+          enum:
+            - "M"
+            - "F"
+            - "O"
+        timeZone:
+          type: "string"
