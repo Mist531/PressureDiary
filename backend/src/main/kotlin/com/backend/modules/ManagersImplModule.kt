@@ -8,4 +8,6 @@ val managersImplModule = module {
     singleOf<UserManager>(::UserManagerImpl)
     singleOf<PressureRecordManager>(::PressureRecordManagerImpl)
     singleOf<DeviceManager>(::DeviceManagerImpl)
+    singleOf<TagsManager>(::TagsManagerImpl)
+    singleOf<PressureRecordTagLinksManager>(::PressureRecordTagLinksManagerImpl)
 }

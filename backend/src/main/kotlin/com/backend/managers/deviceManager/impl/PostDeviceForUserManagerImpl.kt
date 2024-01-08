@@ -7,12 +7,13 @@ import io.ktor.http.*
 import kotlinx.coroutines.Dispatchers
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
+import java.util.UUID
 
 class PostDeviceForUserManagerImpl : PostDeviceForUserManager {
-    override suspend operator fun invoke(param: Unit, request: PostDeviceForUserModel): HttpStatusCode =
+    override suspend operator fun invoke(param: UUID, request: PostDeviceForUserModel): HttpStatusCode =
         newSuspendedTransaction(Dispatchers.IO) {
             DevicesTable.insert {
-                it[userUUID] = request.userUUID
+                it[userUUID] = param
                 it[deviceType] = request.deviceType
                 it[lastSyncDate] = request.lastSyncDate
             }

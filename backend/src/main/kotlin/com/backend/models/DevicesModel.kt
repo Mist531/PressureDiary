@@ -9,8 +9,6 @@ import java.util.*
 
 @Serializable
 data class PostDeviceForUserModel(
-    @Serializable(with = UUIDSerializer::class)
-    val userUUID: UUID,
     val deviceType: DeviceType,
     @Serializable(with = LocalDateSerializer::class)
     val lastSyncDate: LocalDate

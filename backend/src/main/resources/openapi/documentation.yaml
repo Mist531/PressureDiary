@@ -163,6 +163,60 @@ paths:
             '*/*':
               schema:
                 type: "object"
+  /api/pressureRecordTagLinks:
+    post:
+      description: ""
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              $ref: "#/components/schemas/AddPressureRecordTagLinkModel"
+        required: true
+      responses:
+        "401":
+          description: "Unauthorized"
+          content:
+            '*/*':
+              schema:
+                type: "object"
+        "200":
+          description: ""
+          content:
+            '*/*':
+              schema:
+                type: "object"
+  /api/pressureRecordTagLinks/deleteByRecord:
+    delete:
+      description: ""
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              $ref: "#/components/schemas/DeletePressureRecordTagLinkByRecordModel"
+        required: true
+      responses:
+        "401":
+          description: "Unauthorized"
+          content:
+            '*/*':
+              schema:
+                type: "object"
+  /api/pressureRecordTagLinks/deleteByTag:
+    delete:
+      description: ""
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              $ref: "#/components/schemas/DeletePressureRecordTagLinkByTagModel"
+        required: true
+      responses:
+        "401":
+          description: "Unauthorized"
+          content:
+            '*/*':
+              schema:
+                type: "object"
   /api/register/create:
     post:
       description: ""
@@ -195,6 +249,82 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/TokensModel"
+  /api/tags:
+    get:
+      description: ""
+      responses:
+        "401":
+          description: "Unauthorized"
+          content:
+            '*/*':
+              schema:
+                type: "object"
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/TagModel"
+    post:
+      description: ""
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              $ref: "#/components/schemas/AddTagModel"
+        required: true
+      responses:
+        "401":
+          description: "Unauthorized"
+          content:
+            '*/*':
+              schema:
+                type: "object"
+        "200":
+          description: ""
+          content:
+            '*/*':
+              schema:
+                type: "object"
+    delete:
+      description: ""
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              $ref: "#/components/schemas/DeleteUserTagModel"
+        required: true
+      responses:
+        "401":
+          description: "Unauthorized"
+          content:
+            '*/*':
+              schema:
+                type: "object"
+        "200":
+          description: ""
+          content:
+            '*/*':
+              schema:
+                type: "object"
+  /api/tags/deleteAll:
+    delete:
+      description: ""
+      responses:
+        "401":
+          description: "Unauthorized"
+          content:
+            '*/*':
+              schema:
+                type: "object"
+        "200":
+          description: ""
+          content:
+            '*/*':
+              schema:
+                type: "object"
   /api/user/delete:
     delete:
       description: ""
@@ -264,9 +394,6 @@ components:
     PostDeviceForUserModel:
       type: "object"
       properties:
-        userUUID:
-          type: "string"
-          format: "uuid"
         deviceType:
           type: "string"
           enum:
@@ -277,7 +404,6 @@ components:
           type: "string"
           format: "date"
       required:
-        - "userUUID"
         - "deviceType"
         - "lastSyncDate"
     DeleteUserDeviceModel:
@@ -402,6 +528,34 @@ components:
           format: "uuid"
       required:
         - "pressureRecordUUID"
+    AddPressureRecordTagLinkModel:
+      type: "object"
+      properties:
+        pressureRecordUUID:
+          type: "string"
+          format: "uuid"
+        tagUUID:
+          type: "string"
+          format: "uuid"
+      required:
+        - "pressureRecordUUID"
+        - "tagUUID"
+    DeletePressureRecordTagLinkByRecordModel:
+      type: "object"
+      properties:
+        pressureRecordUUID:
+          type: "string"
+          format: "uuid"
+      required:
+        - "pressureRecordUUID"
+    DeletePressureRecordTagLinkByTagModel:
+      type: "object"
+      properties:
+        tagUUID:
+          type: "string"
+          format: "uuid"
+      required:
+        - "tagUUID"
     PostUserRequestModel:
       type: "object"
       properties:
@@ -450,6 +604,31 @@ components:
       required:
         - "login"
         - "password"
+    TagModel:
+      type: "object"
+      properties:
+        tagId:
+          type: "string"
+          format: "uuid"
+        name:
+          type: "string"
+      required:
+        - "name"
+    AddTagModel:
+      type: "object"
+      properties:
+        name:
+          type: "string"
+      required:
+        - "name"
+    DeleteUserTagModel:
+      type: "object"
+      properties:
+        tagId:
+          type: "string"
+          format: "uuid"
+      required:
+        - "tagId"
     PutUserRequestModel:
       type: "object"
       properties:

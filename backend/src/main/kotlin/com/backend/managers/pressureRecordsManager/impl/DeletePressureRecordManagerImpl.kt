@@ -1,5 +1,7 @@
 package com.backend.managers.pressureRecordsManager.impl
 
+import com.backend.database.tables.HistoryTable
+import com.backend.database.tables.PressureRecordTagLinksTable
 import com.backend.database.tables.PressureRecordsTable
 import com.backend.managers.pressureRecordsManager.DeletePressureRecordManager
 import com.backend.models.DeletePressureRecordModel
@@ -13,7 +15,13 @@ class DeletePressureRecordManagerImpl : DeletePressureRecordManager {
     override suspend operator fun invoke(param: Unit, request: DeletePressureRecordModel): HttpStatusCode =
         newSuspendedTransaction(Dispatchers.IO) {
             PressureRecordsTable.deleteWhere {
-                PressureRecordsTable.id eq request.pressureRecordUUID
+                id eq request.pressureRecordUUID
+            }
+            PressureRecordTagLinksTable.deleteWhere {
+                pressureRecordUUID eq request.pressureRecordUUID
+            }
+            HistoryTable.deleteWhere {
+                pressureRecordUUID eq request.pressureRecordUUID
             }
             HttpStatusCode.OK
         }

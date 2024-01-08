@@ -3,9 +3,7 @@ package com.backend
 import com.backend.authorization.AuthRouteUtils
 import com.backend.configure.configure
 import com.backend.database.tables.*
-import com.backend.managersImpl.DeviceManager
-import com.backend.managersImpl.PressureRecordManager
-import com.backend.managersImpl.UserManager
+import com.backend.managersImpl.*
 import com.backend.modules.commonModule
 import com.backend.modules.managerModule
 import com.backend.modules.managersImplModule
@@ -74,6 +72,8 @@ fun Application.myApplicationModule() {
     val deviceManager: DeviceManager by inject()
     val authRouteUtils: AuthRouteUtils by inject()
     val userManager: UserManager by inject()
+    val tagsManager: TagsManager by inject()
+    val pressureRecordTagLinksManager: PressureRecordTagLinksManager by inject()
 
     routing {
         route("api") {
@@ -96,6 +96,7 @@ fun Application.myApplicationModule() {
                 }
             }
             authenticate("jwt") {
+                //region PressureRecord
                 route("pressureRecord") {
                     post {
                         authRouteUtils.authUser(
@@ -150,8 +151,13 @@ fun Application.myApplicationModule() {
                     post {
                         authRouteUtils.authUser(
                             call = call,
-                            ifRight = {
-                                call.respond(deviceManager.addDeviceForUser(call.receive()))
+                            ifRight = { id ->
+                                call.respond(
+                                    deviceManager.addDeviceForUser(
+                                        id = id,
+                                        model = call.receive()
+                                    )
+                                )
                             }
                         )
                     }
@@ -201,6 +207,90 @@ fun Application.myApplicationModule() {
                                         id = id,
                                         model = call.receive()
                                     )
+                                )
+                            }
+                        )
+                    }
+                }
+                //endregion
+
+                //region Tags
+                route("tags") {
+                    get {
+                        authRouteUtils.authUser(
+                            call = call,
+                            ifRight = { id ->
+                                call.respond(
+                                    tagsManager.getUserTagsList(id)
+                                )
+                            }
+                        )
+                    }
+                    post {
+                        authRouteUtils.authUser(
+                            call = call,
+                            ifRight = { id ->
+                                call.respond(
+                                    tagsManager.addTagForUser(
+                                        userUUID = id,
+                                        addTagModel = call.receive()
+                                    )
+                                )
+                            }
+                        )
+                    }
+                    delete {
+                        authRouteUtils.authUser(
+                            call = call,
+                            ifRight = {
+                                call.respond(
+                                    tagsManager.deleteUserTag(call.receive())
+                                )
+                            }
+                        )
+                    }
+                    delete("deleteAll") {
+                        authRouteUtils.authUser(
+                            call = call,
+                            ifRight = { id ->
+                                call.respond(tagsManager.deleteAllTagsForUser(id))
+                            }
+                        )
+                    }
+                }
+                //endregion
+
+                //region PressureRecordTagLinks
+                route("pressureRecordTagLinks") {
+                    post {
+                        authRouteUtils.authUser(
+                            call = call,
+                            ifRight = {
+                                call.respond(
+                                    pressureRecordTagLinksManager.addPressureRecordTagLink(
+                                        call.receive()
+                                    )
+                                )
+                            }
+                        )
+                    }
+                    delete("deleteByRecord") {
+                        authRouteUtils.authUser(
+                            call = call,
+                            ifRight = {
+                                pressureRecordTagLinksManager.deletePressureRecordTagLinkByRecord(
+                                    call.receive()
+                                )
+                            }
+                        )
+                    }
+
+                    delete("deleteByTag") {
+                        authRouteUtils.authUser(
+                            call = call,
+                            ifRight = {
+                                pressureRecordTagLinksManager.deletePressureRecordTagLinkByTag(
+                                    call.receive()
                                 )
                             }
                         )

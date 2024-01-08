@@ -6,6 +6,12 @@ import com.backend.managers.deviceManager.PostDeviceForUserManager
 import com.backend.managers.deviceManager.impl.DeleteUserDeviceManagerImpl
 import com.backend.managers.deviceManager.impl.GetUserDevicesListManagerImpl
 import com.backend.managers.deviceManager.impl.PostDeviceForUserManagerImpl
+import com.backend.managers.pressureRecordTagLinksManager.AddPressureRecordTagLinkManager
+import com.backend.managers.pressureRecordTagLinksManager.DeletePressureRecordTagLinkByRecordManager
+import com.backend.managers.pressureRecordTagLinksManager.DeletePressureRecordTagLinkByTagManager
+import com.backend.managers.pressureRecordTagLinksManager.impl.AddPressureRecordTagLinkManagerImpl
+import com.backend.managers.pressureRecordTagLinksManager.impl.DeletePressureRecordTagLinkByRecordManagerImpl
+import com.backend.managers.pressureRecordTagLinksManager.impl.DeletePressureRecordTagLinkByTagManagerImpl
 import com.backend.managers.pressureRecordsManager.DeletePressureRecordManager
 import com.backend.managers.pressureRecordsManager.GetPaginatedPressureRecordsManager
 import com.backend.managers.pressureRecordsManager.PostPressureRecordManager
@@ -14,6 +20,14 @@ import com.backend.managers.pressureRecordsManager.impl.DeletePressureRecordMana
 import com.backend.managers.pressureRecordsManager.impl.GetPaginatedPressureRecordsManagerImpl
 import com.backend.managers.pressureRecordsManager.impl.PostPressureRecordManagerImpl
 import com.backend.managers.pressureRecordsManager.impl.PutPressureRecordManagerImpl
+import com.backend.managers.tagsManager.DeleteAllTagsForUserManager
+import com.backend.managers.tagsManager.DeleteUserTagManager
+import com.backend.managers.tagsManager.GetUserTagsListManager
+import com.backend.managers.tagsManager.PostTagForUserManager
+import com.backend.managers.tagsManager.impl.DeleteAllTagsForUserManagerImpl
+import com.backend.managers.tagsManager.impl.DeleteUserTagManagerImpl
+import com.backend.managers.tagsManager.impl.GetUserTagsListManagerImpl
+import com.backend.managers.tagsManager.impl.PostTagForUserManagerImpl
 import com.backend.managers.usersManager.DeleteUserManager
 import com.backend.managers.usersManager.LoginUserManager
 import com.backend.managers.usersManager.PostUserManager
@@ -67,6 +81,33 @@ val managerModule = module {
     }
     singleOf(::PostDeviceForUserManagerImpl) {
         bind<PostDeviceForUserManager>()
+    }
+    //endregion
+
+    //region Tags
+    singleOf(::GetUserTagsListManagerImpl) {
+        bind<GetUserTagsListManager>()
+    }
+    singleOf(::PostTagForUserManagerImpl) {
+        bind<PostTagForUserManager>()
+    }
+    singleOf(::DeleteUserTagManagerImpl) {
+        bind<DeleteUserTagManager>()
+    }
+    singleOf(::DeleteAllTagsForUserManagerImpl) {
+        bind<DeleteAllTagsForUserManager>()
+    }
+    //endregion
+
+    //region PressureRecordsTagLink
+    singleOf(::AddPressureRecordTagLinkManagerImpl) {
+        bind<AddPressureRecordTagLinkManager>()
+    }
+    singleOf(::DeletePressureRecordTagLinkByRecordManagerImpl) {
+        bind<DeletePressureRecordTagLinkByRecordManager>()
+    }
+    singleOf(::DeletePressureRecordTagLinkByTagManagerImpl) {
+        bind<DeletePressureRecordTagLinkByTagManager>()
     }
     //endregion
 }

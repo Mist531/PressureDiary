@@ -13,7 +13,7 @@ import java.util.*
 
 interface DeviceManager {
     suspend fun getUserDevicesList(id: UUID): List<DeviceModel>
-    suspend fun addDeviceForUser(model: PostDeviceForUserModel): HttpStatusCode
+    suspend fun addDeviceForUser(id: UUID, model: PostDeviceForUserModel): HttpStatusCode
     suspend fun deleteUserDevice(model: DeleteUserDeviceModel): HttpStatusCode
 }
 
@@ -30,10 +30,10 @@ class DeviceManagerImpl : DeviceManager, KoinComponent {
         }
     }
 
-    override suspend fun addDeviceForUser(model: PostDeviceForUserModel): HttpStatusCode {
+    override suspend fun addDeviceForUser(id: UUID, model: PostDeviceForUserModel): HttpStatusCode {
         val manager: PostDeviceForUserManager by inject()
         return runCatching {
-            manager.invoke(Unit, model)
+            manager.invoke(id, model)
         }.getOrElse {
             it.printStackTrace()
             throw it
