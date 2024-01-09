@@ -14,7 +14,10 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-
+                //region Serialization
+                api("app.softwork:kotlinx-uuid-core:0.0.17")
+                api("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
+                //endregion
             }
         }
 
@@ -37,5 +40,10 @@ android {
 
     defaultConfig {
         minSdk = 27
+    }
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 }
