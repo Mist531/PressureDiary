@@ -88,29 +88,6 @@ kotlin {
                 //endregion
             }
         }
-        /*val androidTest by getting {
-            dependencies {
-               *//* //region ComposeTest
-                testApi("junit:junit:4.13.2")
-                androidTestApi("androidx.test.ext:junit:1.1.5")
-                androidTestApi("androidx.test.espresso:espresso-core:3.5.1")
-                androidTestApi(composeBom)
-                androidTestApi("androidx.compose.ui:ui-test-junit4")
-                //endregion
-
-                //region ComposeDebug
-                debugApi("androidx.compose.ui:ui-tooling")
-                debugApi("androidx.compose.ui:ui-test-manifest")
-
-                testApi("androidx.room:room-testing:$roomVersion")*//*
-
-            }
-        }*/
-        val jvmMain by getting {
-            dependencies {
-
-            }
-        }
     }
 }
 
@@ -119,22 +96,9 @@ android {
     compileSdk = 34
 
     defaultConfig {
-
         minSdk = 27
-
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles("consumer-rules.pro")
     }
 
-    buildTypes {
-        release {
-            isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
-        }
-    }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
@@ -143,6 +107,7 @@ android {
 }
 
 dependencies {
-    add("kspCommonMainMetadata", "androidx.room:room-compiler:$roomVersion")
+    ksp("androidx.room:room-compiler:$roomVersion")
+    //add("kspCommonMainMetadata", "androidx.room:room-compiler:$roomVersion")
 }
 

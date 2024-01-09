@@ -52,7 +52,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.1"
+        kotlinCompilerExtensionVersion = "1.5.3"
     }
     packaging {
         resources {
@@ -63,6 +63,7 @@ android {
 
 dependencies {
     implementation(project(":common"))
+    implementation(project(":api"))
 
     //region Horologist
     val horologistVersion = "0.4.4"

@@ -9,7 +9,7 @@ sealed class Screen(
 ) {
 
     data object Main : Screen(
-        route = "main",
+        route = "commonMain",
         id = R.string.screen_main
     )
 

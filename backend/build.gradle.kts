@@ -15,9 +15,9 @@ application {
 }
 
 dependencies {
-    val exposedVersion = "0.43.0"
+    implementation(project(":api"))
 
-    implementation(project(":common"))
+    val exposedVersion = "0.43.0"
 
     implementation("io.ktor:ktor-server-status-pages")
 
