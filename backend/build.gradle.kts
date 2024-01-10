@@ -48,4 +48,15 @@ dependencies {
 
     //bd
     implementation("org.postgresql:postgresql:42.5.1")
+
+    //region Arrow
+    val arrowVersion = "1.2.1"
+    val arrowPlatform = platform("io.arrow-kt:arrow-stack:$arrowVersion")
+
+    api(arrowPlatform)
+    api("io.arrow-kt:arrow-core")
+    api("io.arrow-kt:arrow-optics")
+    api("io.arrow-kt:arrow-fx-coroutines")
+    api("io.arrow-kt:arrow-fx-stm")
+    //endregion
 }
