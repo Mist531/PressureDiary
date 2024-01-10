@@ -2,7 +2,7 @@ package com.backend.managers.deviceManager.impl
 
 import com.backend.database.tables.DevicesTable
 import com.backend.managers.deviceManager.PostDeviceForUserManager
-import com.backend.models.PostDeviceForUserModel
+import com.example.api.models.PostDeviceForUserModel
 import io.ktor.http.*
 import kotlinx.coroutines.Dispatchers
 import org.jetbrains.exposed.sql.insert

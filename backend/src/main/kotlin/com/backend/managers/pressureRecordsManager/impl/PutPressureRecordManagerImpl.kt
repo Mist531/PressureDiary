@@ -2,7 +2,7 @@ package com.backend.managers.pressureRecordsManager.impl
 
 import com.backend.database.tables.PressureRecordsTable
 import com.backend.managers.pressureRecordsManager.PutPressureRecordManager
-import com.backend.models.PutPressureRecordModel
+import com.example.api.models.PutPressureRecordModel
 import io.ktor.http.*
 import kotlinx.coroutines.Dispatchers
 import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
@@ -14,11 +14,11 @@ class PutPressureRecordManagerImpl : PutPressureRecordManager {
             PressureRecordsTable.update(
                 { PressureRecordsTable.id eq request.pressureRecordUUID }
             ) { update ->
-                request.dateTimeRecord?.let { update[dateTimeRecord] = request.dateTimeRecord }
-                request.systolic?.let { update[systolic] = request.systolic }
-                request.diastolic?.let { update[diastolic] = request.diastolic }
-                request.pulse?.let { update[pulse] = request.pulse }
-                request.note?.let { update[note] = request.note }
+                request.dateTimeRecord?.let { update[dateTimeRecord] = request.dateTimeRecord!! }
+                request.systolic?.let { update[systolic] = request.systolic!! }
+                request.diastolic?.let { update[diastolic] = request.diastolic!! }
+                request.pulse?.let { update[pulse] = request.pulse!! }
+                request.note?.let { update[note] = request.note!! }
             }
             HttpStatusCode.OK
         }

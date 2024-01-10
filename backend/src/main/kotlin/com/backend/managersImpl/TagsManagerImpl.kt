@@ -4,9 +4,9 @@ import com.backend.managers.tagsManager.DeleteAllTagsForUserManager
 import com.backend.managers.tagsManager.DeleteUserTagManager
 import com.backend.managers.tagsManager.GetUserTagsListManager
 import com.backend.managers.tagsManager.PostTagForUserManager
-import com.backend.models.AddTagModel
-import com.backend.models.DeleteUserTagModel
-import com.backend.models.TagModel
+import com.example.api.models.AddTagModel
+import com.example.api.models.DeleteUserTagModel
+import com.example.api.models.TagModel
 import io.ktor.http.*
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject

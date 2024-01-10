@@ -3,9 +3,9 @@ package com.backend.managersImpl
 import com.backend.managers.deviceManager.DeleteUserDeviceManager
 import com.backend.managers.deviceManager.GetUserDevicesListManager
 import com.backend.managers.deviceManager.PostDeviceForUserManager
-import com.backend.models.DeleteUserDeviceModel
-import com.backend.models.DeviceModel
-import com.backend.models.PostDeviceForUserModel
+import com.example.api.models.DeleteUserDeviceModel
+import com.example.api.models.DeviceModel
+import com.example.api.models.PostDeviceForUserModel
 import io.ktor.http.*
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject

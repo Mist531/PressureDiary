@@ -1,6 +1,6 @@
 package com.backend.managers.pressureRecordsManager
 
-import com.backend.models.*
+import com.example.api.models.*
 import com.example.managers.SimpleManager
 import io.ktor.http.*
 import java.util.*

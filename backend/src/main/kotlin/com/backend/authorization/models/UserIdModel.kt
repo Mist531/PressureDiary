@@ -1,6 +1,6 @@
 package com.backend.authorization.models
 
-import com.backend.utils.UUIDSerializer
+import com.example.api.utils.UUIDSerializer
 import kotlinx.serialization.Serializable
 import java.util.*
 

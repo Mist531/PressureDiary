@@ -2,7 +2,7 @@ package com.backend.managers.deviceManager.impl
 
 import com.backend.database.tables.DevicesTable
 import com.backend.managers.deviceManager.GetUserDevicesListManager
-import com.backend.models.DeviceModel
+import com.example.api.models.DeviceModel
 import kotlinx.coroutines.Dispatchers
 import org.jetbrains.exposed.sql.ResultRow
 import org.jetbrains.exposed.sql.select

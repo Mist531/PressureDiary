@@ -2,7 +2,7 @@ package com.backend.managers.pressureRecordsManager.impl
 
 import com.backend.database.tables.PressureRecordsTable
 import com.backend.managers.pressureRecordsManager.PostPressureRecordManager
-import com.backend.models.PostPressureRecordModel
+import com.example.api.models.PostPressureRecordModel
 import io.ktor.http.*
 import kotlinx.coroutines.Dispatchers
 import org.jetbrains.exposed.sql.insert

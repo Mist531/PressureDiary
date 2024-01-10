@@ -4,7 +4,7 @@ import com.backend.database.tables.HistoryTable
 import com.backend.database.tables.PressureRecordTagLinksTable
 import com.backend.database.tables.PressureRecordsTable
 import com.backend.managers.pressureRecordsManager.DeletePressureRecordManager
-import com.backend.models.DeletePressureRecordModel
+import com.example.api.models.DeletePressureRecordModel
 import io.ktor.http.*
 import kotlinx.coroutines.Dispatchers
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq

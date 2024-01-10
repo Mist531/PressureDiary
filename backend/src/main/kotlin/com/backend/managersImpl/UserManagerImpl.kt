@@ -7,8 +7,8 @@ import com.backend.managers.usersManager.DeleteUserManager
 import com.backend.managers.usersManager.LoginUserManager
 import com.backend.managers.usersManager.PostUserManager
 import com.backend.managers.usersManager.PutUserManager
-import com.backend.models.PostUserRequestModel
-import com.backend.models.PutUserRequestModel
+import com.example.api.models.PostUserRequestModel
+import com.example.api.models.PutUserRequestModel
 import io.ktor.http.*
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject

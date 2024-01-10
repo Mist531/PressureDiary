@@ -4,7 +4,7 @@ import com.backend.managers.pressureRecordsManager.DeletePressureRecordManager
 import com.backend.managers.pressureRecordsManager.GetPaginatedPressureRecordsManager
 import com.backend.managers.pressureRecordsManager.PostPressureRecordManager
 import com.backend.managers.pressureRecordsManager.PutPressureRecordManager
-import com.backend.models.*
+import com.example.api.models.*
 import io.ktor.http.*
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject

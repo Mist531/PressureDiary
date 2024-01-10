@@ -1,8 +1,7 @@
-package com.backend.models
+package com.example.api.models
 
-import com.backend.database.tables.DeviceType
-import com.backend.utils.LocalDateTimeSerializer
-import com.backend.utils.UUIDSerializer
+import com.example.api.utils.LocalDateTimeSerializer
+import com.example.api.utils.UUIDSerializer
 import kotlinx.serialization.Serializable
 import java.time.LocalDateTime
 import java.util.*
@@ -62,3 +61,10 @@ data class PressureRecordModel(
     val note: String,
     val deviceType: DeviceType
 )
+
+@Serializable
+enum class DeviceType {
+    ANDROID_WEAR,
+    ANDROID,
+    IOS
+}

@@ -2,8 +2,8 @@ package com.backend.managers.pressureRecordsManager.impl
 
 import com.backend.database.tables.PressureRecordsTable
 import com.backend.managers.pressureRecordsManager.GetPaginatedPressureRecordsManager
-import com.backend.models.GetPaginatedPressureRecordsModel
-import com.backend.models.PressureRecordModel
+import com.example.api.models.GetPaginatedPressureRecordsModel
+import com.example.api.models.PressureRecordModel
 import kotlinx.coroutines.Dispatchers
 import org.jetbrains.exposed.sql.ResultRow
 import org.jetbrains.exposed.sql.and

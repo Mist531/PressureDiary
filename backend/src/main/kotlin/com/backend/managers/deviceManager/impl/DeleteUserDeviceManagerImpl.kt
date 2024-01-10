@@ -2,7 +2,7 @@ package com.backend.managers.deviceManager.impl
 
 import com.backend.database.tables.DevicesTable
 import com.backend.managers.deviceManager.DeleteUserDeviceManager
-import com.backend.models.DeleteUserDeviceModel
+import com.example.api.models.DeleteUserDeviceModel
 import io.ktor.http.*
 import kotlinx.coroutines.Dispatchers
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq

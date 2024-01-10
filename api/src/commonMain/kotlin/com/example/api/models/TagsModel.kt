@@ -1,8 +1,8 @@
-package com.backend.models
+package com.example.api.models
 
-import com.backend.utils.UUIDSerializer
-import java.util.*
+import com.example.api.utils.UUIDSerializer
 import kotlinx.serialization.Serializable
+import java.util.*
 
 @Serializable
 data class AddTagModel(

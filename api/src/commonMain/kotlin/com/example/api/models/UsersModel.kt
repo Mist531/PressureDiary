@@ -1,11 +1,8 @@
-package com.backend.models
+package com.example.api.models
 
-import com.backend.database.tables.Gender
-import com.backend.utils.LocalDateSerializer
-import com.backend.utils.UUIDSerializer
+import com.example.api.utils.LocalDateSerializer
 import kotlinx.serialization.Serializable
 import java.time.LocalDate
-import java.util.*
 
 @Serializable
 data class PostUserRequestModel(
@@ -28,3 +25,10 @@ data class PutUserRequestModel(
     val gender: Gender? = null,
     val timeZone: String? = null
 )
+
+@Serializable
+enum class Gender {
+    M,
+    F,
+    O
+}

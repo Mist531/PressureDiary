@@ -2,7 +2,7 @@ package com.backend.managers.tagsManager.impl
 
 import com.backend.database.tables.TagsTable
 import com.backend.managers.tagsManager.GetUserTagsListManager
-import com.backend.models.TagModel
+import com.example.api.models.TagModel
 import kotlinx.coroutines.Dispatchers
 import org.jetbrains.exposed.sql.ResultRow
 import org.jetbrains.exposed.sql.select

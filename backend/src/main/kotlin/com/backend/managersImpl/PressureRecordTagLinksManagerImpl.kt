@@ -3,9 +3,9 @@ package com.backend.managersImpl
 import com.backend.managers.pressureRecordTagLinksManager.AddPressureRecordTagLinkManager
 import com.backend.managers.pressureRecordTagLinksManager.DeletePressureRecordTagLinkByRecordManager
 import com.backend.managers.pressureRecordTagLinksManager.DeletePressureRecordTagLinkByTagManager
-import com.backend.models.AddPressureRecordTagLinkModel
-import com.backend.models.DeletePressureRecordTagLinkByRecordModel
-import com.backend.models.DeletePressureRecordTagLinkByTagModel
+import com.example.api.models.AddPressureRecordTagLinkModel
+import com.example.api.models.DeletePressureRecordTagLinkByRecordModel
+import com.example.api.models.DeletePressureRecordTagLinkByTagModel
 import io.ktor.http.*
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject

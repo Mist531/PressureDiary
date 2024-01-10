@@ -1,6 +1,6 @@
-package com.backend.models
+package com.example.api.models
 
-import com.backend.utils.UUIDSerializer
+import com.example.api.utils.UUIDSerializer
 import kotlinx.serialization.Serializable
 import java.util.*
 

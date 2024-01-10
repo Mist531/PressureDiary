@@ -1,8 +1,8 @@
 package com.backend.managers.tagsManager
 
-import com.backend.models.AddTagModel
-import com.backend.models.DeleteUserTagModel
-import com.backend.models.TagModel
+import com.example.api.models.AddTagModel
+import com.example.api.models.DeleteUserTagModel
+import com.example.api.models.TagModel
 import com.example.managers.SimpleManager
 import io.ktor.http.*
 import java.util.*

@@ -2,8 +2,8 @@ package com.backend.managers.usersManager
 
 import com.backend.authorization.models.LoginModel
 import com.backend.authorization.models.UserIdModel
-import com.backend.models.PostUserRequestModel
-import com.backend.models.PutUserRequestModel
+import com.example.api.models.PostUserRequestModel
+import com.example.api.models.PutUserRequestModel
 import com.example.managers.SimpleManager
 import io.ktor.http.*
 import java.util.*

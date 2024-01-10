@@ -2,7 +2,7 @@ package com.backend.managers.tagsManager.impl
 
 import com.backend.database.tables.TagsTable
 import com.backend.managers.tagsManager.PostTagForUserManager
-import com.backend.models.AddTagModel
+import com.example.api.models.AddTagModel
 import io.ktor.http.*
 import kotlinx.coroutines.Dispatchers
 import org.jetbrains.exposed.sql.insert

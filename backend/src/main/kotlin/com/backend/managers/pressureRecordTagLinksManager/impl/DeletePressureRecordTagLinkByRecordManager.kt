@@ -2,7 +2,7 @@ package com.backend.managers.pressureRecordTagLinksManager.impl
 
 import com.backend.database.tables.PressureRecordTagLinksTable
 import com.backend.managers.pressureRecordTagLinksManager.DeletePressureRecordTagLinkByRecordManager
-import com.backend.models.DeletePressureRecordTagLinkByRecordModel
+import com.example.api.models.DeletePressureRecordTagLinkByRecordModel
 import io.ktor.http.*
 import kotlinx.coroutines.Dispatchers
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq

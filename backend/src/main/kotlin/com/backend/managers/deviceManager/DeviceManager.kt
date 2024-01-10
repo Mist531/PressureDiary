@@ -1,8 +1,8 @@
 package com.backend.managers.deviceManager
 
-import com.backend.models.DeleteUserDeviceModel
-import com.backend.models.DeviceModel
-import com.backend.models.PostDeviceForUserModel
+import com.example.api.models.DeleteUserDeviceModel
+import com.example.api.models.DeviceModel
+import com.example.api.models.PostDeviceForUserModel
 import com.example.managers.SimpleManager
 import io.ktor.http.*
 import java.util.*

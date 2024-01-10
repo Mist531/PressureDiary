@@ -1,6 +1,6 @@
 package com.backend.database.tables
 
-import kotlinx.serialization.Serializable
+import com.example.api.models.DeviceType
 import org.jetbrains.exposed.dao.UUIDEntity
 import org.jetbrains.exposed.dao.UUIDEntityClass
 import org.jetbrains.exposed.dao.id.EntityID
@@ -28,11 +28,4 @@ class PressureRecord(id: EntityID<UUID>) : UUIDEntity(id) {
     var pulse by PressureRecordsTable.pulse
     var note by PressureRecordsTable.note
     var deviceType by PressureRecordsTable.deviceType
-}
-
-@Serializable
-enum class DeviceType {
-    ANDROID_WEAR,
-    ANDROID,
-    IOS
 }

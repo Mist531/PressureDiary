@@ -1,6 +1,6 @@
 package com.backend.database.tables
 
-import kotlinx.serialization.Serializable
+import com.example.api.models.Gender
 import org.jetbrains.exposed.dao.UUIDEntity
 import org.jetbrains.exposed.dao.UUIDEntityClass
 import org.jetbrains.exposed.dao.id.EntityID
@@ -33,9 +33,4 @@ class User(id: EntityID<UUID>) : UUIDEntity(id) {
     var timeZone by UsersTable.timeZone
 }
 
-@Serializable
-enum class Gender {
-    M,
-    F,
-    O
-}
+

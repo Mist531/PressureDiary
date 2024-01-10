@@ -3,7 +3,7 @@ package com.backend.managers.tagsManager.impl
 import com.backend.database.tables.PressureRecordTagLinksTable
 import com.backend.database.tables.TagsTable
 import com.backend.managers.tagsManager.DeleteUserTagManager
-import com.backend.models.DeleteUserTagModel
+import com.example.api.models.DeleteUserTagModel
 import io.ktor.http.*
 import kotlinx.coroutines.Dispatchers
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq

@@ -2,7 +2,7 @@ package com.backend.managers.usersManager.impl
 
 import com.backend.database.tables.UsersTable
 import com.backend.managers.usersManager.PostUserManager
-import com.backend.models.PostUserRequestModel
+import com.example.api.models.PostUserRequestModel
 import io.ktor.http.*
 import kotlinx.coroutines.Dispatchers
 import org.jetbrains.exposed.sql.insert

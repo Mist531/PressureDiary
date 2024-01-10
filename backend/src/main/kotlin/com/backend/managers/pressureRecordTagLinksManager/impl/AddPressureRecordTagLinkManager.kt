@@ -2,7 +2,7 @@ package com.backend.managers.pressureRecordTagLinksManager.impl
 
 import com.backend.database.tables.PressureRecordTagLinksTable
 import com.backend.managers.pressureRecordTagLinksManager.AddPressureRecordTagLinkManager
-import com.backend.models.AddPressureRecordTagLinkModel
+import com.example.api.models.AddPressureRecordTagLinkModel
 import io.ktor.http.*
 import kotlinx.coroutines.Dispatchers
 import org.jetbrains.exposed.sql.and

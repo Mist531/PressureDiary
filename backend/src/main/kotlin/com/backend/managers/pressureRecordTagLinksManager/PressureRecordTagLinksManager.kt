@@ -1,8 +1,8 @@
 package com.backend.managers.pressureRecordTagLinksManager
 
-import com.backend.models.AddPressureRecordTagLinkModel
-import com.backend.models.DeletePressureRecordTagLinkByRecordModel
-import com.backend.models.DeletePressureRecordTagLinkByTagModel
+import com.example.api.models.AddPressureRecordTagLinkModel
+import com.example.api.models.DeletePressureRecordTagLinkByRecordModel
+import com.example.api.models.DeletePressureRecordTagLinkByTagModel
 import com.example.managers.SimpleManager
 import io.ktor.http.*
 
