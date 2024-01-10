@@ -10,7 +10,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.api.models.GetPaginatedPressureRecordsModel
 import com.mist.mobile_app.ui.theme.PressureDiaryTheme
+import java.time.LocalDateTime
+import java.util.UUID
 
 class MainActivityMobile : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,8 +34,15 @@ class MainActivityMobile : ComponentActivity() {
 
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
+    val dsf = GetPaginatedPressureRecordsModel(
+        userUUID = UUID.randomUUID(),
+        fromDateTime = LocalDateTime.now(),
+        toDateTime = LocalDateTime.now(),
+        page = 1,
+        pageSize = 1
+    )
     Text(
-        text = "Hello !",
+        text = "Hello ${dsf.userUUID}!",
         modifier = modifier
     )
 }

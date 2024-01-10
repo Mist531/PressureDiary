@@ -1,12 +1,27 @@
 package com.backend
 
 import com.backend.authorization.AuthRouteUtils
+import com.backend.authorization.models.LoginModel
 import com.backend.configure.configure
 import com.backend.database.tables.*
 import com.backend.managersImpl.*
 import com.backend.modules.commonModule
 import com.backend.modules.managerModule
 import com.backend.modules.managersImplModule
+import com.example.api.ApiRoutes
+import com.example.api.models.AddPressureRecordTagLinkModel
+import com.example.api.models.AddTagModel
+import com.example.api.models.DeletePressureRecordModel
+import com.example.api.models.DeletePressureRecordTagLinkByRecordModel
+import com.example.api.models.DeletePressureRecordTagLinkByTagModel
+import com.example.api.models.DeleteUserDeviceModel
+import com.example.api.models.DeleteUserTagModel
+import com.example.api.models.GetPaginatedPressureRecordsModel
+import com.example.api.models.PostDeviceForUserModel
+import com.example.api.models.PostPressureRecordModel
+import com.example.api.models.PostUserRequestModel
+import com.example.api.models.PutPressureRecordModel
+import com.example.api.models.PutUserRequestModel
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.auth.*
@@ -79,6 +94,219 @@ fun Application.myApplicationModule() {
     val pressureRecordTagLinksManager: PressureRecordTagLinksManager by inject()
 
     routing {
+        route(ApiRoutes.BASE) {
+            swaggerUI(path = "docs", swaggerFile = "openapi/documentation.yaml")
+        }
+        get(ApiRoutes.HEALTHCHECK) {
+            call.respond(HttpStatusCode.OK)
+        }
+        post(ApiRoutes.REGISTER_CREATE) {
+            call.respond(
+                userManager.postUser(call.receive<PostUserRequestModel>())
+            )
+        }
+        post(ApiRoutes.LOGIN) {
+            call.respond(
+                userManager.login(call.receive<LoginModel>())
+            )
+        }
+        authenticate("jwt") {
+            post(ApiRoutes.PressureRecord.ADD) {
+                authRouteUtils.authUser(
+                    call = call,
+                    ifRight = { id ->
+                        call.respond(
+                            pressureRecordManager.addPressureRecord(
+                                id = id,
+                                model = call.receive<PostPressureRecordModel>()
+                            )
+                        )
+                    }
+                )
+            }
+            delete(ApiRoutes.PressureRecord.DELETE) {
+                authRouteUtils.authUser(
+                    call = call,
+                    ifRight = {
+                        call.respond(
+                            pressureRecordManager.deletePressureRecord(
+                                call.receive<DeletePressureRecordModel>()
+                            )
+                        )
+                    }
+                )
+            }
+            put(ApiRoutes.PressureRecord.EDIT) {
+                authRouteUtils.authUser(
+                    call = call,
+                    ifRight = {
+                        call.respond(
+                            pressureRecordManager.editPressureRecord(
+                                call.receive<PutPressureRecordModel>()
+                            )
+                        )
+                    }
+                )
+            }
+            get(ApiRoutes.PressureRecord.GET_PAGINATED) {
+                authRouteUtils.authUser(
+                    call = call,
+                    ifRight = {
+                        call.respond(
+                            pressureRecordManager.getPaginatedPressureRecords(
+                                call.receive<GetPaginatedPressureRecordsModel>()
+                            )
+                        )
+                    }
+                )
+            }
+            post(ApiRoutes.Device.ADD) {
+                authRouteUtils.authUser(
+                    call = call,
+                    ifRight = { id ->
+                        call.respond(
+                            deviceManager.addDeviceForUser(
+                                id = id,
+                                model = call.receive<PostDeviceForUserModel>()
+                            )
+                        )
+                    }
+                )
+            }
+            get(ApiRoutes.Device.GET_ALL) {
+                authRouteUtils.authUser(
+                    call = call,
+                    ifRight = { id ->
+                        call.respond(
+                            deviceManager.getUserDevicesList(
+                                id
+                            )
+                        )
+                    }
+                )
+            }
+            delete(ApiRoutes.Device.DELETE) {
+                authRouteUtils.authUser(
+                    call = call,
+                    ifRight = {
+                        call.respond(
+                            deviceManager.deleteUserDevice(
+                                call.receive<DeleteUserDeviceModel>()
+                            )
+                        )
+                    }
+                )
+            }
+            delete(ApiRoutes.User.DELETE) {
+                authRouteUtils.authUser(
+                    call = call,
+                    ifRight = { id ->
+                        call.respond(
+                            userManager.deleteUser(
+                                id = id
+                            )
+                        )
+                    }
+                )
+            }
+            put(ApiRoutes.User.EDIT) {
+                authRouteUtils.authUser(
+                    call = call,
+                    ifRight = { id ->
+                        call.respond(
+                            userManager.putUser(
+                                id = id,
+                                model = call.receive<PutUserRequestModel>()
+                            )
+                        )
+                    }
+                )
+            }
+            get(ApiRoutes.Tags.GET) {
+                authRouteUtils.authUser(
+                    call = call,
+                    ifRight = { id ->
+                        call.respond(
+                            tagsManager.getUserTagsList(
+                                userUUID = id
+                            )
+                        )
+                    }
+                )
+            }
+            post(ApiRoutes.Tags.ADD) {
+                authRouteUtils.authUser(
+                    call = call,
+                    ifRight = { id ->
+                        call.respond(
+                            tagsManager.addTagForUser(
+                                userUUID = id,
+                                addTagModel = call.receive<AddTagModel>()
+                            )
+                        )
+                    }
+                )
+            }
+            delete(ApiRoutes.Tags.DELETE) {
+                authRouteUtils.authUser(
+                    call = call,
+                    ifRight = {
+                        call.respond(
+                            tagsManager.deleteUserTag(
+                                call.receive<DeleteUserTagModel>()
+                            )
+                        )
+                    }
+                )
+            }
+            delete(ApiRoutes.Tags.DELETE_ALL) {
+                authRouteUtils.authUser(
+                    call = call,
+                    ifRight = { id ->
+                        call.respond(
+                            tagsManager.deleteAllTagsForUser(
+                                userUUID = id
+                            )
+                        )
+                    }
+                )
+            }
+            post(ApiRoutes.PressureRecordTagLinks.ADD) {
+                authRouteUtils.authUser(
+                    call = call,
+                    ifRight = {
+                        call.respond(
+                            pressureRecordTagLinksManager.addPressureRecordTagLink(
+                                call.receive<AddPressureRecordTagLinkModel>()
+                            )
+                        )
+                    }
+                )
+            }
+            delete(ApiRoutes.PressureRecordTagLinks.DELETE_BY_RECORD) {
+                authRouteUtils.authUser(
+                    call = call,
+                    ifRight = {
+                        pressureRecordTagLinksManager.deletePressureRecordTagLinkByRecord(
+                            call.receive<DeletePressureRecordTagLinkByRecordModel>()
+                        )
+                    }
+                )
+            }
+            delete(ApiRoutes.PressureRecordTagLinks.DELETE_BY_TAG) {
+                authRouteUtils.authUser(
+                    call = call,
+                    ifRight = {
+                        pressureRecordTagLinksManager.deletePressureRecordTagLinkByTag(
+                            call.receive<DeletePressureRecordTagLinkByTagModel>()
+                        )
+                    }
+                )
+            }
+        }
+    }
+
+   /* routing {
         route("api") {
             swaggerUI(path = "docs", swaggerFile = "openapi/documentation.yaml")
             route("healthcheck") {
@@ -89,12 +317,12 @@ fun Application.myApplicationModule() {
             route("register") {
                 post("create") {
                     call.respond(
-                        userManager.postUser(call.receive())
+                        userManager.postUser(call.receive<PostUserRequestModel>())
                     )
                 }
                 post("login") {
                     call.respond(
-                        userManager.login(call.receive())
+                        userManager.login(call.receive<LoginModel>())
                     )
                 }
             }
@@ -108,7 +336,7 @@ fun Application.myApplicationModule() {
                                 call.respond(
                                     pressureRecordManager.addPressureRecord(
                                         id = id,
-                                        model = call.receive()
+                                        model = call.receive<PostPressureRecordModel>()
                                     )
                                 )
                             }
@@ -120,7 +348,7 @@ fun Application.myApplicationModule() {
                             ifRight = {
                                 call.respond(
                                     pressureRecordManager.deletePressureRecord(
-                                        call.receive()
+                                        call.receive<DeletePressureRecordModel>()
                                     )
                                 )
                             }
@@ -130,7 +358,11 @@ fun Application.myApplicationModule() {
                         authRouteUtils.authUser(
                             call = call,
                             ifRight = {
-                                call.respond(pressureRecordManager.editPressureRecord(call.receive()))
+                                call.respond(
+                                    pressureRecordManager.editPressureRecord(
+                                        call.receive<PutPressureRecordModel>()
+                                    )
+                                )
                             }
                         )
                     }
@@ -140,7 +372,7 @@ fun Application.myApplicationModule() {
                             ifRight = {
                                 call.respond(
                                     pressureRecordManager.getPaginatedPressureRecords(
-                                        call.receive()
+                                        call.receive<GetPaginatedPressureRecordsModel>()
                                     )
                                 )
                             }
@@ -158,7 +390,7 @@ fun Application.myApplicationModule() {
                                 call.respond(
                                     deviceManager.addDeviceForUser(
                                         id = id,
-                                        model = call.receive()
+                                        model = call.receive<PostDeviceForUserModel>()
                                     )
                                 )
                             }
@@ -181,7 +413,9 @@ fun Application.myApplicationModule() {
                             call = call,
                             ifRight = {
                                 call.respond(
-                                    deviceManager.deleteUserDevice(call.receive())
+                                    deviceManager.deleteUserDevice(
+                                        call.receive<DeleteUserDeviceModel>()
+                                    )
                                 )
                             }
                         )
@@ -194,9 +428,11 @@ fun Application.myApplicationModule() {
                     delete("delete") {
                         authRouteUtils.authUser(
                             call = call,
-                            ifRight = {
+                            ifRight = { id ->
                                 call.respond(
-                                    userManager.deleteUser(call.receive())
+                                    userManager.deleteUser(
+                                        id = id
+                                    )
                                 )
                             }
                         )
@@ -208,7 +444,7 @@ fun Application.myApplicationModule() {
                                 call.respond(
                                     userManager.putUser(
                                         id = id,
-                                        model = call.receive()
+                                        model = call.receive<PutUserRequestModel>()
                                     )
                                 )
                             }
@@ -224,7 +460,9 @@ fun Application.myApplicationModule() {
                             call = call,
                             ifRight = { id ->
                                 call.respond(
-                                    tagsManager.getUserTagsList(id)
+                                    tagsManager.getUserTagsList(
+                                        userUUID = id
+                                    )
                                 )
                             }
                         )
@@ -236,7 +474,7 @@ fun Application.myApplicationModule() {
                                 call.respond(
                                     tagsManager.addTagForUser(
                                         userUUID = id,
-                                        addTagModel = call.receive()
+                                        addTagModel = call.receive<AddTagModel>()
                                     )
                                 )
                             }
@@ -247,7 +485,9 @@ fun Application.myApplicationModule() {
                             call = call,
                             ifRight = {
                                 call.respond(
-                                    tagsManager.deleteUserTag(call.receive())
+                                    tagsManager.deleteUserTag(
+                                        call.receive<DeleteUserTagModel>()
+                                    )
                                 )
                             }
                         )
@@ -256,7 +496,11 @@ fun Application.myApplicationModule() {
                         authRouteUtils.authUser(
                             call = call,
                             ifRight = { id ->
-                                call.respond(tagsManager.deleteAllTagsForUser(id))
+                                call.respond(
+                                    tagsManager.deleteAllTagsForUser(
+                                        userUUID = id
+                                    )
+                                )
                             }
                         )
                     }
@@ -271,7 +515,7 @@ fun Application.myApplicationModule() {
                             ifRight = {
                                 call.respond(
                                     pressureRecordTagLinksManager.addPressureRecordTagLink(
-                                        call.receive()
+                                        call.receive<AddPressureRecordTagLinkModel>()
                                     )
                                 )
                             }
@@ -282,18 +526,17 @@ fun Application.myApplicationModule() {
                             call = call,
                             ifRight = {
                                 pressureRecordTagLinksManager.deletePressureRecordTagLinkByRecord(
-                                    call.receive()
+                                    call.receive<DeletePressureRecordTagLinkByRecordModel>()
                                 )
                             }
                         )
                     }
-
                     delete("deleteByTag") {
                         authRouteUtils.authUser(
                             call = call,
                             ifRight = {
                                 pressureRecordTagLinksManager.deletePressureRecordTagLinkByTag(
-                                    call.receive()
+                                    call.receive<DeletePressureRecordTagLinkByTagModel>()
                                 )
                             }
                         )
@@ -302,5 +545,5 @@ fun Application.myApplicationModule() {
                 //endregion
             }
         }
-    }
+    }*/
 }
