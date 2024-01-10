@@ -43,8 +43,8 @@ dependencies {
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit:1.9.10")
 
     //koin
-    implementation("io.insert-koin:koin-ktor:3.4.3")
-    implementation("io.insert-koin:koin-logger-slf4j:3.4.3")
+    implementation("io.insert-koin:koin-ktor:3.5.0")
+    implementation("io.insert-koin:koin-logger-slf4j:3.5.3")
 
     //bd
     implementation("org.postgresql:postgresql:42.5.1")
@@ -53,10 +53,13 @@ dependencies {
     val arrowVersion = "1.2.1"
     val arrowPlatform = platform("io.arrow-kt:arrow-stack:$arrowVersion")
 
-    api(arrowPlatform)
-    api("io.arrow-kt:arrow-core")
-    api("io.arrow-kt:arrow-optics")
-    api("io.arrow-kt:arrow-fx-coroutines")
-    api("io.arrow-kt:arrow-fx-stm")
+    implementation(arrowPlatform)
+    implementation("io.arrow-kt:arrow-core")
+    implementation("io.arrow-kt:arrow-optics")
+    implementation("io.arrow-kt:arrow-fx-coroutines")
+    implementation("io.arrow-kt:arrow-fx-stm")
     //endregion
+
+    implementation("org.codehaus.janino:janino:3.1.6")
+
 }

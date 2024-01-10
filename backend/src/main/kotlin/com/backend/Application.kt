@@ -1,6 +1,5 @@
 package com.backend
 
-import arrow.fx.coroutines.parMap
 import com.backend.authorization.AuthRouteUtils
 import com.backend.authorization.models.LoginModel
 import com.backend.configure.configure
@@ -23,10 +22,8 @@ import io.ktor.server.routing.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import org.jetbrains.exposed.sql.Database
-import org.jetbrains.exposed.sql.SchemaUtils
+import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
-import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
 import org.koin.ktor.ext.inject
 import java.time.LocalDate
