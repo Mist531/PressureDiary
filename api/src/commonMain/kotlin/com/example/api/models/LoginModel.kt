@@ -1,4 +1,4 @@
-package com.backend.authorization.models
+package com.example.api.models
 
 import kotlinx.serialization.Serializable
 

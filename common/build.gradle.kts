@@ -5,7 +5,7 @@ plugins {
     id("com.google.devtools.ksp")
 }
 
-val roomVersion = "2.6.0"
+val roomVersion = "2.6.1"
 
 kotlin {
     androidTarget()
@@ -20,6 +20,7 @@ kotlin {
 
         val androidMain by getting {
             dependencies {
+                implementation(project(":api"))
 
                 api("androidx.core:core-ktx:1.12.0")
                 api("androidx.appcompat:appcompat:1.6.1")
@@ -35,9 +36,6 @@ kotlin {
                 api("androidx.core:core-ktx:1.12.0")
                 api("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
                 api("androidx.activity:activity-compose:1.8.0")
-                //endregion
-
-
                 //endregion
 
                 //region Arrow
@@ -62,10 +60,7 @@ kotlin {
                 //endregion
 
                 //region Room
-
-
                 api("androidx.legacy:legacy-support-v4:1.0.0")
-
                 api("androidx.room:room-runtime:$roomVersion")
                 api("androidx.room:room-ktx:$roomVersion")
                 //endregion
@@ -85,6 +80,19 @@ kotlin {
 
                 //region DataStore
                 api("androidx.datastore:datastore-preferences:1.0.0")
+                //endregion
+
+                //region Ktor
+                val ktorVersion = "2.3.5"
+                api("io.ktor:ktor-client-serialization:$ktorVersion")
+                api("io.ktor:ktor-client-android:$ktorVersion")
+                api("io.ktor:ktor-client-core:$ktorVersion")
+                api("io.ktor:ktor-client-cio:$ktorVersion")
+                api("io.ktor:ktor-client-content-negotiation:$ktorVersion")
+                api("io.ktor:ktor-serialization-kotlinx-json:$ktorVersion")
+                api("io.ktor:ktor-client-auth:$ktorVersion")
+                api("io.ktor:ktor-client-logging:$ktorVersion")
+                api("io.ktor:ktor-client-okhttp:$ktorVersion")
                 //endregion
             }
         }

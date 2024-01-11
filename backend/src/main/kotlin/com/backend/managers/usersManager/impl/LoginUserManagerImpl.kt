@@ -1,7 +1,7 @@
 package com.backend.managers.usersManager.impl
 
-import com.backend.authorization.models.LoginModel
-import com.backend.authorization.models.UserIdModel
+import com.example.api.models.LoginModel
+import com.example.api.models.UserIdModel
 import com.backend.database.tables.User
 import com.backend.database.tables.UsersTable
 import com.backend.managers.usersManager.LoginUserManager

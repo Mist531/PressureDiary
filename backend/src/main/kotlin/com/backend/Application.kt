@@ -1,7 +1,7 @@
 package com.backend
 
 import com.backend.authorization.AuthRouteUtils
-import com.backend.authorization.models.LoginModel
+import com.example.api.models.LoginModel
 import com.backend.configure.configure
 import com.backend.database.tables.*
 import com.backend.managersImpl.*

@@ -1,6 +1,7 @@
 package com.mist.mobile_app
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
@@ -8,12 +9,18 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.api.models.Gender
 import com.example.api.models.GetPaginatedPressureRecordsModel
+import com.example.api.models.PostUserRequestModel
+import com.mist.common.data.repository.UserRepository
 import com.mist.mobile_app.ui.theme.PressureDiaryTheme
+import org.koin.compose.getKoin
+import java.time.LocalDate
 import java.time.LocalDateTime
-import java.util.UUID
+import java.util.*
 
 class MainActivityMobile : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,7 +40,32 @@ class MainActivityMobile : ComponentActivity() {
 }
 
 @Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
+fun Greeting(
+    name: String,
+    modifier: Modifier = Modifier,
+    userRepository: UserRepository = getKoin().get()
+) {
+    LaunchedEffect(key1 = Unit) {
+        Log.e("TESTNET", "ssss")
+        userRepository.postUser(
+            model = PostUserRequestModel(
+                email = "work",
+                password = "work",
+                firstName = "work",
+                lastName = "work",
+                dateOfBirth = LocalDate.now().minusYears(20),
+                gender = Gender.M
+            )
+        ).fold(
+            ifLeft = {
+                Log.e("TESTNET", it.toString())
+            },
+            ifRight = {
+                Log.e("TESTNET", "WORK!!")
+            }
+        )
+    }
+
     val dsf = GetPaginatedPressureRecordsModel(
         userUUID = UUID.randomUUID(),
         fromDateTime = LocalDateTime.now(),

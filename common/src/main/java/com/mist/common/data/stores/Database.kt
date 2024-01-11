@@ -1,11 +1,10 @@
-package com.mist.common.data
+package com.mist.common.data.stores
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import com.mist.common.data.stores.PressureDiaryStore
 import org.koin.core.component.KoinComponent
 
 @Database(

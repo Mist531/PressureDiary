@@ -13,7 +13,7 @@ data class PostUserRequestModel(
     @Serializable(with = LocalDateSerializer::class)
     val dateOfBirth: LocalDate,
     val gender: Gender = Gender.O,
-    val timeZone: String?
+    val timeZone: String? = null
 )
 
 @Serializable

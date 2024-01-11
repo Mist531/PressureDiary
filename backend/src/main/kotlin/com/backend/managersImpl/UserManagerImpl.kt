@@ -1,8 +1,8 @@
 package com.backend.managersImpl
 
 import com.backend.authorization.AuthUtil
-import com.backend.authorization.models.LoginModel
-import com.backend.authorization.models.TokensModel
+import com.example.api.models.LoginModel
+import com.example.api.models.TokensModel
 import com.backend.managers.usersManager.DeleteUserManager
 import com.backend.managers.usersManager.LoginUserManager
 import com.backend.managers.usersManager.PostUserManager
