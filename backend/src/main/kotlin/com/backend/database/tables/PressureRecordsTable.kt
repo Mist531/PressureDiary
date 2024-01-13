@@ -15,7 +15,7 @@ object PressureRecordsTable : UUIDTable("PressureRecords", "pressureRecordUUID")
     val diastolic = integer("diastolic")
     val pulse = integer("pulse")
     val note = varchar("note", 255)
-    val deviceType = enumerationByName("deviceType", 10, DeviceType::class)
+    val deviceType = enumeration("deviceType", DeviceType::class)
 }
 
 class PressureRecord(id: EntityID<UUID>) : UUIDEntity(id) {

@@ -1,7 +1,7 @@
 package com.mist.wear_os
 
 import android.app.Application
-import com.mist.common.data.stores.Database
+import com.mist.common.data.bd.Database
 import com.mist.wear_os.modules.masterModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger

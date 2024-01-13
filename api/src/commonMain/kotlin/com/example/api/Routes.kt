@@ -3,7 +3,7 @@ package com.example.api
 object ApiRoutes {
     const val BASE = "/api"
     const val HEALTHCHECK = "$BASE/healthcheck"
-    const val REGISTER = "$BASE/register"
+    private const val REGISTER = "$BASE/register"
     const val REGISTER_CREATE = "$REGISTER/create"
     const val LOGIN = "$REGISTER/login"
 
@@ -41,5 +41,18 @@ object ApiRoutes {
         const val ADD = ROOT
         const val DELETE_BY_RECORD = "$ROOT/deleteByRecord"
         const val DELETE_BY_TAG = "$ROOT/deleteByTag"
+    }
+
+    object History {
+        private const val ROOT = "$BASE/history"
+        const val GET_HISTORY = ROOT
+        const val RESTORE_FROM_HISTORY = "$ROOT/restore"
+    }
+
+    object Notifications {
+        private const val ROOT = "$BASE/notifications"
+        const val GET_ALL = "$ROOT/getAll"
+        const val UPDATE = "$ROOT/update"
+        const val GET_NEXT = "$ROOT/getNext"
     }
 }

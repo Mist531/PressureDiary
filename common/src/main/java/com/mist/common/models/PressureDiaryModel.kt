@@ -3,7 +3,7 @@ package com.mist.common.models
 import arrow.core.Option
 import arrow.core.none
 import arrow.optics.optics
-import com.mist.common.data.stores.PressureDiaryStore
+import com.mist.common.data.bd.PressureDiaryStore
 import kotlinx.uuid.UUID
 import java.time.LocalDate
 import java.time.LocalTime

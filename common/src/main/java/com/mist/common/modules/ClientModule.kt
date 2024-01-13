@@ -6,7 +6,11 @@ import io.ktor.client.plugins.DefaultRequest
 import io.ktor.client.plugins.HttpRequestRetry
 import io.ktor.client.plugins.HttpTimeout
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
-import io.ktor.http.ContentType
+import io.ktor.client.plugins.logging.DEFAULT
+import io.ktor.client.plugins.logging.LogLevel
+import io.ktor.client.plugins.logging.Logger
+import io.ktor.client.plugins.logging.Logging
+import io.ktor.http.ContentType.Application.Json
 import io.ktor.http.URLProtocol
 import io.ktor.http.contentType
 import io.ktor.serialization.kotlinx.json.json
@@ -16,12 +20,16 @@ import org.koin.dsl.module
 internal val clientModule = module {
     factory {
         HttpClient(CIO) {
+            install(Logging) {
+                logger = Logger.DEFAULT
+                level = LogLevel.ALL
+            }
             install(DefaultRequest) {
-                contentType(ContentType.Application.Json)
                 url {
-                    protocol = URLProtocol.HTTP
-                    host = "0.0.0.0:8082"
+                    protocol = URLProtocol.HTTPS
+                    host = "ray-model-sensibly.ngrok-free.app"
                 }
+                contentType(Json)
             }
             install(HttpRequestRetry) {
                 retryOnServerErrors(maxRetries = 5)
@@ -31,16 +39,17 @@ internal val clientModule = module {
                 requestTimeoutMillis = 10000
             }
             install(ContentNegotiation) {
-                json(getKoin().get())
+                json(
+                    json = getKoin().get<Json>()
+                )
             }
         }
     }
     single {
         Json {
-            prettyPrint = true
             isLenient = true
+            prettyPrint = true
             ignoreUnknownKeys = true
-            encodeDefaults = true
         }
     }
 }

@@ -13,27 +13,27 @@ import org.koin.core.component.inject
 import java.util.*
 
 interface TagsManager {
-    suspend fun getUserTagsList(userUUID: UUID): List<TagModel>
-    suspend fun addTagForUser(userUUID: UUID, addTagModel: AddTagModel): HttpStatusCode
+    suspend fun getUserTagsList(userId: UUID): List<TagModel>
+    suspend fun addTagForUser(userId: UUID, addTagModel: AddTagModel): HttpStatusCode
     suspend fun deleteUserTag(deleteUserTagModel: DeleteUserTagModel): HttpStatusCode
-    suspend fun deleteAllTagsForUser(userUUID: UUID): HttpStatusCode
+    suspend fun deleteAllTagsForUser(userId: UUID): HttpStatusCode
 }
 
 class TagsManagerImpl : TagsManager, KoinComponent {
-    override suspend fun getUserTagsList(userUUID: UUID): List<TagModel> {
+    override suspend fun getUserTagsList(userId: UUID): List<TagModel> {
         val manager: GetUserTagsListManager by inject()
         return runCatching {
-            manager.invoke(userUUID, Unit)
+            manager.invoke(userId, Unit)
         }.getOrElse {
             it.printStackTrace()
             throw it
         }
     }
 
-    override suspend fun addTagForUser(userUUID: UUID, addTagModel: AddTagModel): HttpStatusCode {
+    override suspend fun addTagForUser(userId: UUID, addTagModel: AddTagModel): HttpStatusCode {
         val manager: PostTagForUserManager by inject()
         return runCatching {
-            manager.invoke(userUUID, addTagModel)
+            manager.invoke(userId, addTagModel)
         }.getOrElse {
             it.printStackTrace()
             throw it
@@ -54,10 +54,10 @@ class TagsManagerImpl : TagsManager, KoinComponent {
         }
     }
 
-    override suspend fun deleteAllTagsForUser(userUUID: UUID): HttpStatusCode {
+    override suspend fun deleteAllTagsForUser(userId: UUID): HttpStatusCode {
         val manager: DeleteAllTagsForUserManager by inject()
         return runCatching {
-            manager.invoke(userUUID, Unit)
+            manager.invoke(userId, Unit)
         }.getOrElse {
             it.printStackTrace()
             throw it

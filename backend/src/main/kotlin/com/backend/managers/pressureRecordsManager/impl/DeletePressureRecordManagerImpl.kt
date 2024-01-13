@@ -1,7 +1,5 @@
 package com.backend.managers.pressureRecordsManager.impl
 
-import com.backend.database.tables.HistoryTable
-import com.backend.database.tables.PressureRecordTagLinksTable
 import com.backend.database.tables.PressureRecordsTable
 import com.backend.managers.pressureRecordsManager.DeletePressureRecordManager
 import com.example.api.models.DeletePressureRecordModel
@@ -16,12 +14,6 @@ class DeletePressureRecordManagerImpl : DeletePressureRecordManager {
         newSuspendedTransaction(Dispatchers.IO) {
             PressureRecordsTable.deleteWhere {
                 id eq request.pressureRecordUUID
-            }
-            PressureRecordTagLinksTable.deleteWhere {
-                pressureRecordUUID eq request.pressureRecordUUID
-            }
-            HistoryTable.deleteWhere {
-                pressureRecordUUID eq request.pressureRecordUUID
             }
             HttpStatusCode.OK
         }

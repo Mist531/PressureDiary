@@ -31,13 +31,10 @@ class DeviceRepositoryImpl(
                 .handleResponse<List<DeviceModel>>()
         }
 
-
     override suspend fun addDeviceForUser(
         model: PostDeviceForUserModel
     ): Either<NetworkError, Unit> = withContext(repositoryScope.coroutineContext) {
-        client.post(
-            urlString = ApiRoutes.Device.ADD,
-        ) {
+        client.post(ApiRoutes.Device.ADD) {
             setBody(model)
         }.handleResponse<Unit>()
     }

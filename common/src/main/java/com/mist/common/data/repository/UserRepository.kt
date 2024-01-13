@@ -8,11 +8,8 @@ import com.example.api.models.PutUserRequestModel
 import com.example.api.models.TokensModel
 import com.mist.common.utils.BaseRepository
 import com.mist.common.utils.errorflow.NetworkError
-import io.ktor.client.HttpClient
-import io.ktor.client.request.delete
-import io.ktor.client.request.post
-import io.ktor.client.request.put
-import io.ktor.client.request.setBody
+import io.ktor.client.*
+import io.ktor.client.request.*
 import kotlinx.coroutines.withContext
 
 interface UserRepository {
@@ -35,7 +32,7 @@ class UserRepositoryImpl(
 
     override suspend fun postUser(model: PostUserRequestModel): Either<NetworkError, Unit> =
         withContext(repositoryScope.coroutineContext) {
-            client.post(ApiRoutes.REGISTER) {
+            client.post(ApiRoutes.REGISTER_CREATE) {
                 setBody(model)
             }.handleResponse<Unit>()
         }

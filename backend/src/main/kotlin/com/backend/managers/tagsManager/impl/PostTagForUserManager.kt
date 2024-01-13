@@ -14,7 +14,7 @@ class PostTagForUserManagerImpl : PostTagForUserManager {
         newSuspendedTransaction(Dispatchers.IO) {
             TagsTable.insert {
                 it[userUUID] = param
-                it[name] = request.name
+                it[tagName] = request.name
             }
             HttpStatusCode.Created
         }

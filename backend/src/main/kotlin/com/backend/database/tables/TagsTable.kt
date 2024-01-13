@@ -8,12 +8,12 @@ import java.util.*
 
 object TagsTable : UUIDTable("Tags", "tagUUID") {
     val userUUID = reference("userUUID", UsersTable)
-    val name = varchar("name", 255)
+    val tagName = varchar("name", 255)
 }
 
 class Tag(id: EntityID<UUID>) : UUIDEntity(id) {
     companion object : UUIDEntityClass<Tag>(TagsTable)
 
     var userUUID by User referencedOn TagsTable.userUUID
-    var name by TagsTable.name
+    var name by TagsTable.tagName
 }

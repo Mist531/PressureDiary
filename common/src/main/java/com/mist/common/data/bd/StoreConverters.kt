@@ -1,4 +1,4 @@
-package com.mist.common.data.stores
+package com.mist.common.data.bd
 
 import androidx.room.TypeConverter
 import kotlinx.uuid.UUID

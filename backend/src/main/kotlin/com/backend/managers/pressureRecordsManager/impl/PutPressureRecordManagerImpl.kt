@@ -11,7 +11,7 @@ import org.jetbrains.exposed.sql.update
 class PutPressureRecordManagerImpl : PutPressureRecordManager {
     override suspend operator fun invoke(param: Unit, request: PutPressureRecordModel): HttpStatusCode =
         newSuspendedTransaction(Dispatchers.IO) {
-            PressureRecordsTable.update(
+            val updatedRows = PressureRecordsTable.update(
                 { PressureRecordsTable.id eq request.pressureRecordUUID }
             ) { update ->
                 request.dateTimeRecord?.let { update[dateTimeRecord] = request.dateTimeRecord!! }
@@ -20,6 +20,7 @@ class PutPressureRecordManagerImpl : PutPressureRecordManager {
                 request.pulse?.let { update[pulse] = request.pulse!! }
                 request.note?.let { update[note] = request.note!! }
             }
-            HttpStatusCode.OK
+
+            if (updatedRows > 0) HttpStatusCode.OK else HttpStatusCode.NotFound
         }
 }

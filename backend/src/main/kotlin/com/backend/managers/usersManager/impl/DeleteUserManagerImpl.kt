@@ -1,14 +1,9 @@
 package com.backend.managers.usersManager.impl
 
-import com.backend.database.tables.DevicesTable
-import com.backend.database.tables.NotificationsTable
-import com.backend.database.tables.PressureRecordsTable
 import com.backend.database.tables.User
 import com.backend.managers.usersManager.DeleteUserManager
 import io.ktor.http.*
 import kotlinx.coroutines.Dispatchers
-import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
-import org.jetbrains.exposed.sql.deleteWhere
 import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
 import java.util.*
 
@@ -17,9 +12,6 @@ class DeleteUserManagerImpl : DeleteUserManager {
         newSuspendedTransaction(Dispatchers.IO) {
             User.findById(param).let { user ->
                 if (user != null) {
-                    PressureRecordsTable.deleteWhere { userUUID eq user.id.value }
-                    DevicesTable.deleteWhere { userUUID eq user.id.value }
-                    NotificationsTable.deleteWhere { userUUID eq user.id.value }
                     user.delete()
                     HttpStatusCode.OK
                 } else {

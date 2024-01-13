@@ -14,9 +14,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.api.models.Gender
 import com.example.api.models.GetPaginatedPressureRecordsModel
+import com.example.api.models.LoginModel
 import com.example.api.models.PostUserRequestModel
 import com.mist.common.data.repository.UserRepository
-import com.mist.mobile_app.ui.theme.PressureDiaryTheme
+import com.mist.common.data.stores.impl.TokensDataStore
+import com.mist.mobile_app.ui.theme.PDTheme
+import org.koin.android.ext.android.inject
 import org.koin.compose.getKoin
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -25,13 +28,16 @@ import java.util.*
 class MainActivityMobile : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val tokensDataStore by inject<TokensDataStore>()
+
         setContent {
-            PressureDiaryTheme {
+            PDTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
+                    //TODO подписаться на errorFlow выводить ошибки
                     Greeting("Android")
                 }
             }
@@ -46,7 +52,21 @@ fun Greeting(
     userRepository: UserRepository = getKoin().get()
 ) {
     LaunchedEffect(key1 = Unit) {
-        Log.e("TESTNET", "ssss")
+        userRepository.login(
+            model = LoginModel(
+                password = "test",
+                email = "test"
+            )
+        ).fold(
+            ifLeft = {
+                Log.e("TesLOG", it.toString())
+            },
+            ifRight = {
+                Log.e("TesLOG", it.toString())
+            }
+        )
+
+
         userRepository.postUser(
             model = PostUserRequestModel(
                 email = "work",
@@ -82,7 +102,7 @@ fun Greeting(
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
-    PressureDiaryTheme {
+    PDTheme {
         Greeting("Android")
     }
 }

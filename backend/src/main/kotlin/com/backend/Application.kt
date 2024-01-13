@@ -1,7 +1,6 @@
 package com.backend
 
 import com.backend.authorization.AuthRouteUtils
-import com.example.api.models.LoginModel
 import com.backend.configure.configure
 import com.backend.database.tables.*
 import com.backend.managersImpl.*
@@ -21,31 +20,36 @@ import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
-import org.jetbrains.exposed.sql.*
-import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
+import org.jetbrains.exposed.sql.Database
+import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
 import org.koin.ktor.ext.inject
-import java.time.LocalDate
-import java.time.LocalDateTime
+import java.io.File
 
 fun main() {
     val url = System.getenv("DB_URL")
-        ?: "jdbc:postgresql://db.kahfzyjuzapymwottfcj.supabase.co:5432/postgres"
-    //?: "jdbc:postgresql://172.20.7.9:5432/db1095_05"
+        //?: "jdbc:postgresql://db.kahfzyjuzapymwottfcj.supabase.co:5432/postgres"
+    ?: "jdbc:postgresql://172.20.7.9:5432/db1095_05?currentSchema=kursach"
     val pass = System.getenv("DB_PASS")
-        ?: "pwd1095..sad"
-    //?: "pwd1095"
+        //?: "pwd1095..sad"
+    ?: "pwd1095"
     val user = System.getenv("DB_USER")
-        ?: "postgres"
-    //?: "st1095"
+        //?: "postgres"
+    ?: "st1095"
     val port = System.getenv("PORT")?.toInt() ?: 8082
     val host = System.getenv("HOST") ?: "0.0.0.0"
 
     Database.connect(url, "org.postgresql.Driver", user, pass)
 
     CoroutineScope(Dispatchers.IO).launch {
-        createTables()
+        async {
+            createTables()
+        }.await()
+        async {
+            createTriggers()
+        }.await()
         createDefaultInfoUser()
     }
 
@@ -57,6 +61,29 @@ fun main() {
             myApplicationModule()
         }
     ).start(wait = true)
+}
+
+suspend fun createTriggers() {
+    val sqlFile = File("src/main/kotlin/com/backend/create.sql")
+    val sqlScript = sqlFile.readText()
+
+    newSuspendedTransaction(Dispatchers.IO) {
+        exec(sqlScript)
+    }
+}
+
+suspend fun createTables() {
+    newSuspendedTransaction(Dispatchers.IO) {
+        SchemaUtils.createMissingTablesAndColumns(
+            HistoryTable,
+            NotificationsTable,
+            PressureRecordsTable,
+            PressureRecordTagLinksTable,
+            TagsTable,
+            UsersTable,
+            DevicesTable
+        )
+    }
 }
 
 fun Application.myApplicationModule() {
@@ -73,6 +100,8 @@ fun Application.myApplicationModule() {
     val userManager: UserManager by inject()
     val tagsManager: TagsManager by inject()
     val pressureRecordTagLinksManager: PressureRecordTagLinksManager by inject()
+    val historyManager: HistoryManager by inject()
+    val notificationsManager: NotificationsManager by inject()
 
     routing {
         route(ApiRoutes.BASE) {
@@ -98,7 +127,7 @@ fun Application.myApplicationModule() {
                     ifRight = { id ->
                         call.respond(
                             pressureRecordManager.addPressureRecord(
-                                id = id,
+                                userId = id,
                                 model = call.receive<PostPressureRecordModel>()
                             )
                         )
@@ -147,7 +176,7 @@ fun Application.myApplicationModule() {
                     ifRight = { id ->
                         call.respond(
                             deviceManager.addDeviceForUser(
-                                id = id,
+                                userId = id,
                                 model = call.receive<PostDeviceForUserModel>()
                             )
                         )
@@ -184,7 +213,7 @@ fun Application.myApplicationModule() {
                     ifRight = { id ->
                         call.respond(
                             userManager.deleteUser(
-                                id = id
+                                userId = id
                             )
                         )
                     }
@@ -196,7 +225,7 @@ fun Application.myApplicationModule() {
                     ifRight = { id ->
                         call.respond(
                             userManager.putUser(
-                                id = id,
+                                userId = id,
                                 model = call.receive<PutUserRequestModel>()
                             )
                         )
@@ -209,7 +238,7 @@ fun Application.myApplicationModule() {
                     ifRight = { id ->
                         call.respond(
                             tagsManager.getUserTagsList(
-                                userUUID = id
+                                userId = id
                             )
                         )
                     }
@@ -221,7 +250,7 @@ fun Application.myApplicationModule() {
                     ifRight = { id ->
                         call.respond(
                             tagsManager.addTagForUser(
-                                userUUID = id,
+                                userId = id,
                                 addTagModel = call.receive<AddTagModel>()
                             )
                         )
@@ -246,7 +275,7 @@ fun Application.myApplicationModule() {
                     ifRight = { id ->
                         call.respond(
                             tagsManager.deleteAllTagsForUser(
-                                userUUID = id
+                                userId = id
                             )
                         )
                     }
@@ -284,362 +313,67 @@ fun Application.myApplicationModule() {
                     }
                 )
             }
-        }
-    }
-}
-
-suspend fun createDefaultInfoUser(
-    userEmail: String = "test",
-    userPass: String = "test",
-) {
-    val mockPressureRecords = listOf(
-        PostPressureRecordModel(
-            dateTimeRecord = LocalDateTime.parse("2024-01-02T17:28:43.524462"),
-            systolic = 134,
-            diastolic = 83,
-            pulse = 86,
-            note = "Random note 29",
-            deviceType = DeviceType.ANDROID
-        ),
-        PostPressureRecordModel(
-            dateTimeRecord = LocalDateTime.parse("2024-01-09T17:28:43.524502"),
-            systolic = 115,
-            diastolic = 70,
-            pulse = 69,
-            note = "Random note 9",
-            deviceType = DeviceType.ANDROID
-        ),
-        PostPressureRecordModel(
-            dateTimeRecord = LocalDateTime.parse("2023-12-31T17:28:43.524520"),
-            systolic = 126,
-            diastolic = 82,
-            pulse = 61,
-            note = "Random note 3",
-            deviceType = DeviceType.ANDROID
-        ),
-        PostPressureRecordModel(
-            dateTimeRecord = LocalDateTime.parse("2023-12-15T17:28:43.524536"),
-            systolic = 132,
-            diastolic = 87,
-            pulse = 62,
-            note = "Random note 58",
-            deviceType = DeviceType.ANDROID
-        ),
-        PostPressureRecordModel(
-            dateTimeRecord = LocalDateTime.parse("2023-12-25T17:28:43.524552"),
-            systolic = 140,
-            diastolic = 90,
-            pulse = 74,
-            note = "Random note 79",
-            deviceType = DeviceType.ANDROID
-        ),
-        PostPressureRecordModel(
-            dateTimeRecord = LocalDateTime.parse("2023-12-25T17:28:43.524568"),
-            systolic = 135,
-            diastolic = 87,
-            pulse = 100,
-            note = "Random note 8",
-            deviceType = DeviceType.ANDROID
-        )
-    )
-
-    newSuspendedTransaction(Dispatchers.IO) {
-        User.find(UsersTable.email eq userEmail).empty().let { boolean: Boolean ->
-            if (boolean) {
-                User.new {
-                    email = userEmail
-                    password = userPass
-                    firstName = "test"
-                    lastName = "test"
-                    dateOfBirth = LocalDate.now().minusYears(20)
-                    gender = Gender.M
-                    timeZone = null
-                }.let { userInfo ->
-                    Device.new {
-                        userUUID = userInfo
-                        deviceType = DeviceType.ANDROID
-                        lastSyncDate = LocalDate.now()
+            get(ApiRoutes.History.GET_HISTORY) {
+                authRouteUtils.authUser(
+                    call = call,
+                    ifRight = {
+                        call.respond(
+                            historyManager.getHistoryForRecordManagerImpl(
+                                call.receive<GetHistoryPressureRecordModel>()
+                            )
+                        )
                     }
-                    mockPressureRecords.map { mockRecord ->
-                        PressureRecord.new {
-                            userUUID = userInfo
-                            dateTimeRecord = mockRecord.dateTimeRecord
-                            systolic = mockRecord.systolic
-                            diastolic = mockRecord.diastolic
-                            pulse = mockRecord.pulse
-                            note = mockRecord.note
-                            deviceType = mockRecord.deviceType
-                        }
-                    }.let { pressureRecords ->
-                        Tag.new {
-                            userUUID = userInfo
-                            name = "test"
-                        }.let { tag ->
-                            PressureRecordTagLinksTable.insert {
-                                it[pressureRecordUUID] = pressureRecords.random().id
-                                it[tagUUID] = tag.id
-                            }
-                        }
+                )
+            }
+            post(ApiRoutes.History.RESTORE_FROM_HISTORY) {
+                authRouteUtils.authUser(
+                    call = call,
+                    ifRight = { id ->
+                        call.respond(
+                            historyManager.restoreRecordFromHistory(
+                                userId = id,
+                                model = call.receive<RestoreHistoryModel>()
+                            )
+                        )
                     }
-                }
+                )
+            }
+            get(ApiRoutes.Notifications.GET_ALL) {
+                authRouteUtils.authUser(
+                    call = call,
+                    ifRight = { id ->
+                        call.respond(
+                            notificationsManager.getAllNotifications(
+                                userId = id
+                            )
+                        )
+                    }
+                )
+            }
+            put(ApiRoutes.Notifications.UPDATE) {
+                authRouteUtils.authUser(
+                    call = call,
+                    ifRight = {
+                        call.respond(
+                            notificationsManager.updateNotification(
+                                call.receive<UpdateNotificationModel>()
+                            )
+                        )
+                    }
+                )
+            }
+            get(ApiRoutes.Notifications.GET_NEXT) {
+                authRouteUtils.authUser(
+                    call = call,
+                    ifRight = { id ->
+                        call.respond(
+                            notificationsManager.getNextNotification(
+                                userId = id
+                            )
+                        )
+                    }
+                )
             }
         }
     }
 }
-
-suspend fun createTables() {
-    newSuspendedTransaction(Dispatchers.IO) {
-        SchemaUtils.createMissingTablesAndColumns(
-            DevicesTable,
-            HistoryTable,
-            NotificationsTable,
-            PressureRecordsTable,
-            PressureRecordTagLinksTable,
-            TagsTable,
-            UsersTable
-        )
-    }
-}
-
-//region OldRouting
-/* routing {
-     route("api") {
-         swaggerUI(path = "docs", swaggerFile = "openapi/documentation.yaml")
-         route("healthcheck") {
-             get {
-                 call.respond(HttpStatusCode.OK)
-             }
-         }
-         route("register") {
-             post("create") {
-                 call.respond(
-                     userManager.postUser(call.receive<PostUserRequestModel>())
-                 )
-             }
-             post("login") {
-                 call.respond(
-                     userManager.login(call.receive<LoginModel>())
-                 )
-             }
-         }
-         authenticate("jwt") {
-             //region PressureRecord
-             route("pressureRecord") {
-                 post {
-                     authRouteUtils.authUser(
-                         call = call,
-                         ifRight = { id ->
-                             call.respond(
-                                 pressureRecordManager.addPressureRecord(
-                                     id = id,
-                                     model = call.receive<PostPressureRecordModel>()
-                                 )
-                             )
-                         }
-                     )
-                 }
-                 delete {
-                     authRouteUtils.authUser(
-                         call = call,
-                         ifRight = {
-                             call.respond(
-                                 pressureRecordManager.deletePressureRecord(
-                                     call.receive<DeletePressureRecordModel>()
-                                 )
-                             )
-                         }
-                     )
-                 }
-                 put {
-                     authRouteUtils.authUser(
-                         call = call,
-                         ifRight = {
-                             call.respond(
-                                 pressureRecordManager.editPressureRecord(
-                                     call.receive<PutPressureRecordModel>()
-                                 )
-                             )
-                         }
-                     )
-                 }
-                 get {
-                     authRouteUtils.authUser(
-                         call = call,
-                         ifRight = {
-                             call.respond(
-                                 pressureRecordManager.getPaginatedPressureRecords(
-                                     call.receive<GetPaginatedPressureRecordsModel>()
-                                 )
-                             )
-                         }
-                     )
-                 }
-             }
-             //endregion
-
-             //region Device
-             route("device") {
-                 post {
-                     authRouteUtils.authUser(
-                         call = call,
-                         ifRight = { id ->
-                             call.respond(
-                                 deviceManager.addDeviceForUser(
-                                     id = id,
-                                     model = call.receive<PostDeviceForUserModel>()
-                                 )
-                             )
-                         }
-                     )
-                 }
-                 get {
-                     authRouteUtils.authUser(
-                         call = call,
-                         ifRight = { id ->
-                             call.respond(
-                                 deviceManager.getUserDevicesList(
-                                     id
-                                 )
-                             )
-                         }
-                     )
-                 }
-                 delete {
-                     authRouteUtils.authUser(
-                         call = call,
-                         ifRight = {
-                             call.respond(
-                                 deviceManager.deleteUserDevice(
-                                     call.receive<DeleteUserDeviceModel>()
-                                 )
-                             )
-                         }
-                     )
-                 }
-             }
-             //endregion
-
-             //region User
-             route("user") {
-                 delete("delete") {
-                     authRouteUtils.authUser(
-                         call = call,
-                         ifRight = { id ->
-                             call.respond(
-                                 userManager.deleteUser(
-                                     id = id
-                                 )
-                             )
-                         }
-                     )
-                 }
-                 put("edit") {
-                     authRouteUtils.authUser(
-                         call = call,
-                         ifRight = { id ->
-                             call.respond(
-                                 userManager.putUser(
-                                     id = id,
-                                     model = call.receive<PutUserRequestModel>()
-                                 )
-                             )
-                         }
-                     )
-                 }
-             }
-             //endregion
-
-             //region Tags
-             route("tags") {
-                 get {
-                     authRouteUtils.authUser(
-                         call = call,
-                         ifRight = { id ->
-                             call.respond(
-                                 tagsManager.getUserTagsList(
-                                     userUUID = id
-                                 )
-                             )
-                         }
-                     )
-                 }
-                 post {
-                     authRouteUtils.authUser(
-                         call = call,
-                         ifRight = { id ->
-                             call.respond(
-                                 tagsManager.addTagForUser(
-                                     userUUID = id,
-                                     addTagModel = call.receive<AddTagModel>()
-                                 )
-                             )
-                         }
-                     )
-                 }
-                 delete {
-                     authRouteUtils.authUser(
-                         call = call,
-                         ifRight = {
-                             call.respond(
-                                 tagsManager.deleteUserTag(
-                                     call.receive<DeleteUserTagModel>()
-                                 )
-                             )
-                         }
-                     )
-                 }
-                 delete("deleteAll") {
-                     authRouteUtils.authUser(
-                         call = call,
-                         ifRight = { id ->
-                             call.respond(
-                                 tagsManager.deleteAllTagsForUser(
-                                     userUUID = id
-                                 )
-                             )
-                         }
-                     )
-                 }
-             }
-             //endregion
-
-             //region PressureRecordTagLinks
-             route("pressureRecordTagLinks") {
-                 post {
-                     authRouteUtils.authUser(
-                         call = call,
-                         ifRight = {
-                             call.respond(
-                                 pressureRecordTagLinksManager.addPressureRecordTagLink(
-                                     call.receive<AddPressureRecordTagLinkModel>()
-                                 )
-                             )
-                         }
-                     )
-                 }
-                 delete("deleteByRecord") {
-                     authRouteUtils.authUser(
-                         call = call,
-                         ifRight = {
-                             pressureRecordTagLinksManager.deletePressureRecordTagLinkByRecord(
-                                 call.receive<DeletePressureRecordTagLinkByRecordModel>()
-                             )
-                         }
-                     )
-                 }
-                 delete("deleteByTag") {
-                     authRouteUtils.authUser(
-                         call = call,
-                         ifRight = {
-                             pressureRecordTagLinksManager.deletePressureRecordTagLinkByTag(
-                                 call.receive<DeletePressureRecordTagLinkByTagModel>()
-                             )
-                         }
-                     )
-                 }
-             }
-             //endregion
-         }
-     }
- }*/
-//endregion

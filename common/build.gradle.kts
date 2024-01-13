@@ -1,7 +1,7 @@
 plugins {
     id("com.android.library")
     kotlin("multiplatform")
-    //id("org.jetbrains.kotlin.android")
+    id("org.jetbrains.kotlin.plugin.serialization") version "1.9.20"
     id("com.google.devtools.ksp")
 }
 
@@ -20,22 +20,25 @@ kotlin {
 
         val androidMain by getting {
             dependencies {
-                implementation(project(":api"))
+                api(project(":api"))
+
+                api("app.softwork:kotlinx-uuid-core:0.0.22")
 
                 api("androidx.core:core-ktx:1.12.0")
                 api("androidx.appcompat:appcompat:1.6.1")
-                api("com.google.android.material:material:1.10.0")
+                api("com.google.android.material:material:1.11.0")
 
                 //region Compose
-                val composeBom = platform("androidx.compose:compose-bom:2023.03.00")
+                val composeBom = platform("androidx.compose:compose-bom:2023.10.01")
 
                 api(composeBom)
                 api("androidx.compose.ui:ui")
+                api("androidx.compose.ui:ui-tooling")
                 api("androidx.compose.ui:ui-tooling-preview")
                 api("androidx.compose.ui:ui-graphics")
                 api("androidx.core:core-ktx:1.12.0")
-                api("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
-                api("androidx.activity:activity-compose:1.8.0")
+                api("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
+                api("androidx.activity:activity-compose:1.8.2")
                 //endregion
 
                 //region Arrow
@@ -65,13 +68,8 @@ kotlin {
                 api("androidx.room:room-ktx:$roomVersion")
                 //endregion
 
-                //region Serialization
-                api("app.softwork:kotlinx-uuid-core:0.0.17")
-                api("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
-                //endregion
-
                 //region StateEvent
-                api("com.github.leonard-palm:compose-state-events:2.0.3")
+                api("com.github.leonard-palm:compose-state-events:2.1.1")
                 //endregion
 
                 //region other
@@ -83,7 +81,8 @@ kotlin {
                 //endregion
 
                 //region Ktor
-                val ktorVersion = "2.3.5"
+                val ktorVersion = "2.3.7"
+                api("io.ktor:ktor-client-okhttp:$ktorVersion")
                 api("io.ktor:ktor-client-serialization:$ktorVersion")
                 api("io.ktor:ktor-client-android:$ktorVersion")
                 api("io.ktor:ktor-client-core:$ktorVersion")
@@ -92,8 +91,9 @@ kotlin {
                 api("io.ktor:ktor-serialization-kotlinx-json:$ktorVersion")
                 api("io.ktor:ktor-client-auth:$ktorVersion")
                 api("io.ktor:ktor-client-logging:$ktorVersion")
-                api("io.ktor:ktor-client-okhttp:$ktorVersion")
                 //endregion
+
+                api("androidx.lifecycle:lifecycle-runtime-compose:2.7.0")
             }
         }
     }

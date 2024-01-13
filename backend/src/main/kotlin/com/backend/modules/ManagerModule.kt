@@ -6,6 +6,16 @@ import com.backend.managers.deviceManager.PostDeviceForUserManager
 import com.backend.managers.deviceManager.impl.DeleteUserDeviceManagerImpl
 import com.backend.managers.deviceManager.impl.GetUserDevicesListManagerImpl
 import com.backend.managers.deviceManager.impl.PostDeviceForUserManagerImpl
+import com.backend.managers.historyManager.GetHistoryForRecordManager
+import com.backend.managers.historyManager.RestoreRecordFromHistoryManager
+import com.backend.managers.historyManager.impl.GetHistoryForRecordManagerImpl
+import com.backend.managers.historyManager.impl.RestoreRecordFromHistoryManagerImpl
+import com.backend.managers.notificationsManager.GetAllNotificationsManager
+import com.backend.managers.notificationsManager.GetNextNotificationManager
+import com.backend.managers.notificationsManager.UpdateNotificationManager
+import com.backend.managers.notificationsManager.impl.GetAllNotificationsManagerImpl
+import com.backend.managers.notificationsManager.impl.GetNextNotificationManagerImpl
+import com.backend.managers.notificationsManager.impl.UpdateNotificationManagerImpl
 import com.backend.managers.pressureRecordTagLinksManager.AddPressureRecordTagLinkManager
 import com.backend.managers.pressureRecordTagLinksManager.DeletePressureRecordTagLinkByRecordManager
 import com.backend.managers.pressureRecordTagLinksManager.DeletePressureRecordTagLinkByTagManager
@@ -108,6 +118,27 @@ val managerModule = module {
     }
     singleOf(::DeletePressureRecordTagLinkByTagManagerImpl) {
         bind<DeletePressureRecordTagLinkByTagManager>()
+    }
+    //endregion
+
+    //region Notifications
+    singleOf(::GetAllNotificationsManagerImpl) {
+        bind<GetAllNotificationsManager>()
+    }
+    singleOf(::GetNextNotificationManagerImpl) {
+        bind<GetNextNotificationManager>()
+    }
+    singleOf(::UpdateNotificationManagerImpl) {
+        bind<UpdateNotificationManager>()
+    }
+    //endregion
+
+    //region History
+    singleOf(::RestoreRecordFromHistoryManagerImpl) {
+        bind<RestoreRecordFromHistoryManager>()
+    }
+    singleOf(::GetHistoryForRecordManagerImpl) {
+        bind<GetHistoryForRecordManager>()
     }
     //endregion
 }

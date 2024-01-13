@@ -1,7 +1,7 @@
 plugins {
-    id("org.jetbrains.kotlin.plugin.serialization") version "1.9.10"
+    id("org.jetbrains.kotlin.plugin.serialization") version "1.9.20"
     id("io.ktor.plugin") version "2.3.5"
-    kotlin("jvm") version "1.9.10"
+    kotlin("jvm") version "1.9.20"
 }
 
 group = "com.backend"
@@ -20,7 +20,6 @@ dependencies {
     val exposedVersion = "0.43.0"
 
     implementation("io.ktor:ktor-server-status-pages")
-
     implementation("io.ktor:ktor-server-core-jvm")
     implementation("io.ktor:ktor-server-auth-jvm")
     implementation("io.ktor:ktor-server-auth-jwt-jvm")
@@ -33,6 +32,9 @@ dependencies {
     implementation("io.ktor:ktor-server-data-conversion")
     implementation("io.ktor:ktor-serialization-kotlinx-json-jvm")
     implementation("io.ktor:ktor-serialization-gson-jvm")
+
+    implementation("at.favre.lib:bcrypt:0.10.2")
+
     implementation("org.jetbrains.exposed:exposed-core:$exposedVersion")
     implementation("org.jetbrains.exposed:exposed-dao:$exposedVersion")
     implementation("org.jetbrains.exposed:exposed-jdbc:$exposedVersion")
@@ -40,7 +42,7 @@ dependencies {
     implementation("io.ktor:ktor-server-netty-jvm")
     implementation("ch.qos.logback:logback-classic:1.4.12")
     testImplementation("io.ktor:ktor-server-tests-jvm")
-    testImplementation("org.jetbrains.kotlin:kotlin-test-junit:1.9.10")
+    testImplementation("org.jetbrains.kotlin:kotlin-test-junit:1.9.20")
 
     //koin
     implementation("io.insert-koin:koin-ktor:3.5.3")

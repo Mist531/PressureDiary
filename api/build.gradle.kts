@@ -1,7 +1,7 @@
 plugins {
     id("com.android.library")
     kotlin("multiplatform")
-    id("org.jetbrains.kotlin.plugin.serialization") version "1.9.10"
+    id("org.jetbrains.kotlin.plugin.serialization") version "1.9.20"
 }
 
 @OptIn(org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi::class)
@@ -14,10 +14,7 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                //region Serialization
-                api("app.softwork:kotlinx-uuid-core:0.0.17")
-                api("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
-                //endregion
+                api("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.2")
             }
         }
 

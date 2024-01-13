@@ -12,28 +12,32 @@ import org.koin.core.component.inject
 import java.util.*
 
 interface DeviceManager {
-    suspend fun getUserDevicesList(id: UUID): List<DeviceModel>
-    suspend fun addDeviceForUser(id: UUID, model: PostDeviceForUserModel): HttpStatusCode
+    suspend fun getUserDevicesList(userId: UUID): List<DeviceModel>
+    suspend fun addDeviceForUser(
+        userId: UUID,
+        model: PostDeviceForUserModel
+    ): HttpStatusCode
+
     suspend fun deleteUserDevice(model: DeleteUserDeviceModel): HttpStatusCode
 }
 
 
 class DeviceManagerImpl : DeviceManager, KoinComponent {
 
-    override suspend fun getUserDevicesList(id: UUID): List<DeviceModel> {
+    override suspend fun getUserDevicesList(userId: UUID): List<DeviceModel> {
         val manager: GetUserDevicesListManager by inject()
         return runCatching {
-            manager.invoke(id, Unit)
+            manager.invoke(userId, Unit)
         }.getOrElse {
             it.printStackTrace()
             throw it
         }
     }
 
-    override suspend fun addDeviceForUser(id: UUID, model: PostDeviceForUserModel): HttpStatusCode {
+    override suspend fun addDeviceForUser(userId: UUID, model: PostDeviceForUserModel): HttpStatusCode {
         val manager: PostDeviceForUserManager by inject()
         return runCatching {
-            manager.invoke(id, model)
+            manager.invoke(userId, model)
         }.getOrElse {
             it.printStackTrace()
             throw it

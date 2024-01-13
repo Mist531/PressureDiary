@@ -20,6 +20,6 @@ class GetUserTagsListManagerImpl : GetUserTagsListManager {
     private fun toTagModel(row: ResultRow): TagModel =
         TagModel(
             tagId = row[TagsTable.id].value,
-            name = row[TagsTable.name]
+            name = row[TagsTable.tagName]
         )
 }

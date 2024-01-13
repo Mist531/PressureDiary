@@ -1,7 +1,7 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
-    id("org.jetbrains.kotlin.plugin.serialization") version "1.9.10"
+    id("org.jetbrains.kotlin.plugin.serialization") version "1.9.20"
 }
 
 android {
@@ -23,7 +23,7 @@ android {
             useSupportLibrary = true
         }
 
-        resourceConfigurations += listOf("ru","en")
+        resourceConfigurations += listOf("ru", "en")
     }
 
     buildTypes {
@@ -48,7 +48,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.3"
+        kotlinCompilerExtensionVersion = "1.5.5"
     }
     packagingOptions {
         resources {
@@ -59,7 +59,7 @@ android {
 
 dependencies {
     implementation(project(":common"))
-    implementation(project(":api"))
 
     implementation("androidx.compose.material3:material3")
+    //implementation("androidx.navigation:navigation-compose")
 }

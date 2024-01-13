@@ -11,7 +11,7 @@ import org.koin.core.component.inject
 import java.util.*
 
 interface PressureRecordManager {
-    suspend fun addPressureRecord(id: UUID, model: PostPressureRecordModel): HttpStatusCode
+    suspend fun addPressureRecord(userId: UUID, model: PostPressureRecordModel): HttpStatusCode
     suspend fun deletePressureRecord(model: DeletePressureRecordModel): HttpStatusCode
     suspend fun editPressureRecord(model: PutPressureRecordModel): HttpStatusCode
     suspend fun getPaginatedPressureRecords(model: GetPaginatedPressureRecordsModel): List<PressureRecordModel>
@@ -19,10 +19,10 @@ interface PressureRecordManager {
 
 class PressureRecordManagerImpl : PressureRecordManager, KoinComponent {
 
-    override suspend fun addPressureRecord(id: UUID, model: PostPressureRecordModel): HttpStatusCode {
+    override suspend fun addPressureRecord(userId: UUID, model: PostPressureRecordModel): HttpStatusCode {
         val manager: PostPressureRecordManager by inject()
         return runCatching {
-            manager.invoke(id, model)
+            manager.invoke(userId, model)
         }.getOrElse {
             it.printStackTrace()
             throw it

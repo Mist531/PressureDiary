@@ -12,6 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PressureDiary">
         <activity
+            android:windowSoftInputMode="adjustResize"
             android:name=".MainActivityMobile"
             android:exported="true"
             android:theme="@style/Theme.PressureDiary">

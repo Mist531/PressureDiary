@@ -1,5 +1,6 @@
 package com.backend.managers.usersManager.impl
 
+import at.favre.lib.crypto.bcrypt.BCrypt
 import com.backend.database.tables.UsersTable
 import com.backend.managers.usersManager.PostUserManager
 import com.example.api.models.PostUserRequestModel
@@ -18,7 +19,7 @@ class PostUserManagerImpl : PostUserManager {
                 if (existingUser == null) {
                     UsersTable.insert {
                         it[email] = request.email
-                        it[password] = request.password
+                        it[password] = BCrypt.withDefaults().hash(12, request.password.toCharArray())
                         it[firstName] = request.firstName
                         it[lastName] = request.lastName
                         it[dateOfBirth] = request.dateOfBirth

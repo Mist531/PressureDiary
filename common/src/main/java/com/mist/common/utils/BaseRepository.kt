@@ -20,7 +20,7 @@ abstract class BaseRepository : KoinComponent {
             in 200..299 -> {
                 try {
                     body<R>().right()
-                } catch (e: Exception) {
+                } catch (e: Throwable) {
                     NetworkError.JsonParseError("Ошибка десериализации: ${e.message}").left()
                 }
             }
@@ -33,10 +33,6 @@ abstract class BaseRepository : KoinComponent {
         response: HttpResponse
     ): NetworkError = when (response.status) {
         HttpStatusCode.Unauthorized -> NetworkError.AuthenticationError("Неавторизованный доступ")
-
-        HttpStatusCode.UpgradeRequired -> NetworkError.UpgradeRequiredError("Требуется обновление")
-
-        HttpStatusCode.ServiceUnavailable -> NetworkError.ServiceApiUnavailableError("Сервис недоступен")
 
         HttpStatusCode.BadRequest -> NetworkError.RequestError(
             response.status.value,

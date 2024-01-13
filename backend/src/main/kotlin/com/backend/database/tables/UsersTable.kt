@@ -10,14 +10,14 @@ import java.time.LocalDate
 import java.util.*
 
 object UsersTable : UUIDTable("Users", "userUUID") {
-    val email = varchar("email", 255)
-    val password = varchar("password", 255)
-    val firstName = varchar("firstName", 255)
-    val lastName = varchar("lastName", 255).nullable().default(null)
+    val email = varchar("email", 30)
+    val password = binary("password", 120)
+    val firstName = varchar("firstName", 30)
+    val lastName = varchar("lastName", 30).nullable().default(null)
     val dateOfBirth = date("dateOfBirth")
-    val gender = enumerationByName("gender", 10, Gender::class).default(Gender.O)
+    val gender = enumeration("gender", Gender::class).default(Gender.O)
     val dateRegistered = date("dateRegistered").default(LocalDate.now())
-    val timeZone = varchar("timeZone", 255).nullable()
+    val timeZone = varchar("timeZone", 255).nullable().default(null)
 }
 
 class User(id: EntityID<UUID>) : UUIDEntity(id) {
@@ -32,5 +32,3 @@ class User(id: EntityID<UUID>) : UUIDEntity(id) {
     var dateRegistered by UsersTable.dateRegistered
     var timeZone by UsersTable.timeZone
 }
-
-

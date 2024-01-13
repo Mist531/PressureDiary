@@ -1,6 +1,5 @@
 package com.backend.managers.tagsManager.impl
 
-import com.backend.database.tables.PressureRecordTagLinksTable
 import com.backend.database.tables.TagsTable
 import com.backend.managers.tagsManager.DeleteUserTagManager
 import com.example.api.models.DeleteUserTagModel
@@ -13,9 +12,6 @@ import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransacti
 class DeleteUserTagManagerImpl : DeleteUserTagManager {
     override suspend operator fun invoke(param: Unit, request: DeleteUserTagModel): HttpStatusCode =
         newSuspendedTransaction(Dispatchers.IO) {
-            PressureRecordTagLinksTable.deleteWhere {
-                tagUUID eq request.tagId
-            }
             TagsTable.deleteWhere {
                 id eq request.tagId
             }

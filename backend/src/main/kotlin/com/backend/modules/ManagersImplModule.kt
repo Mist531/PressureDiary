@@ -10,4 +10,6 @@ val managersImplModule = module {
     singleOf<DeviceManager>(::DeviceManagerImpl)
     singleOf<TagsManager>(::TagsManagerImpl)
     singleOf<PressureRecordTagLinksManager>(::PressureRecordTagLinksManagerImpl)
+    singleOf<NotificationsManager>(::NotificationsManagerImpl)
+    singleOf<HistoryManager>(::HistoryManagerImpl)
 }

@@ -17,8 +17,8 @@ import java.util.*
 interface UserManager {
     suspend fun login(model: LoginModel): TokensModel
     suspend fun postUser(model: PostUserRequestModel): HttpStatusCode
-    suspend fun putUser(id: UUID, model: PutUserRequestModel): HttpStatusCode
-    suspend fun deleteUser(id: UUID): HttpStatusCode
+    suspend fun putUser(userId: UUID, model: PutUserRequestModel): HttpStatusCode
+    suspend fun deleteUser(userId: UUID): HttpStatusCode
 }
 
 class UserManagerImpl : UserManager, KoinComponent {
@@ -49,10 +49,10 @@ class UserManagerImpl : UserManager, KoinComponent {
         }
     }
 
-    override suspend fun putUser(id: UUID, model: PutUserRequestModel): HttpStatusCode {
+    override suspend fun putUser(userId: UUID, model: PutUserRequestModel): HttpStatusCode {
         val manager: PutUserManager by inject()
         return runCatching {
-            manager.invoke(id, model)
+            manager.invoke(userId, model)
         }.getOrElse {
             it.printStackTrace()
             throw it
@@ -61,10 +61,10 @@ class UserManagerImpl : UserManager, KoinComponent {
         }
     }
 
-    override suspend fun deleteUser(id: UUID): HttpStatusCode {
+    override suspend fun deleteUser(userId: UUID): HttpStatusCode {
         val manager: DeleteUserManager by inject()
         return runCatching {
-            manager.invoke(id, Unit)
+            manager.invoke(userId, Unit)
         }.getOrElse {
             it.printStackTrace()
             throw it

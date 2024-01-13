@@ -1,7 +1,7 @@
 package com.mist.wear_os.ui.screens.history
 
 import androidx.lifecycle.viewModelScope
-import com.mist.common.data.stores.PressureDiaryStore
+import com.mist.common.data.bd.PressureDiaryStore
 import com.mist.common.models.PressureDiaryModel
 import com.mist.common.utils.BaseViewModel
 import kotlinx.coroutines.Dispatchers

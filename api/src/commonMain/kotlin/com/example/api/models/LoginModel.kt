@@ -4,6 +4,6 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class LoginModel(
-    val login: String,
+    val email: String,
     val password: String
 )

@@ -11,9 +11,15 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
 interface PressureRecordTagLinksManager {
-    suspend fun addPressureRecordTagLink(addPressureRecordTagLinkModel: AddPressureRecordTagLinkModel): HttpStatusCode
-    suspend fun deletePressureRecordTagLinkByRecord(deletePressureRecordTagLinkByRecordModel: DeletePressureRecordTagLinkByRecordModel): HttpStatusCode
-    suspend fun deletePressureRecordTagLinkByTag(deletePressureRecordTagLinkByTagModel: DeletePressureRecordTagLinkByTagModel): HttpStatusCode
+    suspend fun addPressureRecordTagLink(
+        addPressureRecordTagLinkModel: AddPressureRecordTagLinkModel
+    ): HttpStatusCode
+    suspend fun deletePressureRecordTagLinkByRecord(
+        deletePressureRecordTagLinkByRecordModel: DeletePressureRecordTagLinkByRecordModel
+    ): HttpStatusCode
+    suspend fun deletePressureRecordTagLinkByTag(
+        deletePressureRecordTagLinkByTagModel: DeletePressureRecordTagLinkByTagModel
+    ): HttpStatusCode
 }
 
 class PressureRecordTagLinksManagerImpl : PressureRecordTagLinksManager, KoinComponent {
