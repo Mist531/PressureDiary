@@ -164,7 +164,7 @@ fun ScalingLazyListScope.createOrUpdateEntryBottomContent(
                     onClick = onDeleteClick,
                     icon = {
                         Icon(
-                            painter = painterResource(id = R.drawable.ic_delete),
+                            painter = painterResource(id = com.mist.common.R.drawable.ic_delete),
                             contentDescription = null,
                             tint = Color.Unspecified
                         )
@@ -176,7 +176,7 @@ fun ScalingLazyListScope.createOrUpdateEntryBottomContent(
                     onClick = onUpdateClick,
                     icon = {
                         Icon(
-                            painter = painterResource(id = R.drawable.ic_ok),
+                            painter = painterResource(id = com.mist.common.R.drawable.ic_ok),
                             contentDescription = null,
                             tint = MaterialTheme.colors.background
                         )

@@ -11,17 +11,19 @@ import com.mist.common.utils.errorflow.NetworkErrorFlow
 import de.palm.composestateevents.StateEvent
 import de.palm.composestateevents.consumed
 import de.palm.composestateevents.triggered
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import java.time.LocalDateTime
 
 @Immutable
 data class LoginState(
-    val isLoadingLogin: Boolean = false,
+    val isLoadingLogin: Boolean = true,
     val loginModel: LoginModel = LoginModel(
         email = "",
         password = ""
     ),
-    val isLoginError: Boolean = false,
+    val isEmailError: Boolean = false,
     val isPasswordError: Boolean = false,
     val onSuccessfulLoginEvent: StateEvent = consumed
 ) {
@@ -38,28 +40,8 @@ data class LoginState(
 
     /**
      * Validate password
-     * Пароль должен содержать:
-     *
-     * латинские и/или кириллические буквы
-     * цифры
-     * специальные символы ~ ! ? @ # $ % ^ & * _ - + ( ) [ ] { } > < / \ | " ' . , : ;
-     * одну заглавную букву
-     * одну строчную буквы
-     * не менее 6 и не более 15 символов
      */
-    fun validatePassword(): Boolean = with(loginModel) {
-        val lengthRequirement = password.length in 6..15
-        val upperCaseLetterRequirement = password.any { it.isUpperCase() }
-        val lowerCaseLetterRequirement = password.any { it.isLowerCase() }
-        val digitRequirement = password.any { it.isDigit() }
-        val specialCharacterRequirement = password.any { it in "~!@#$%^&*()_+{}|:\"<>,.?;'[]\\/-" }
-
-        lengthRequirement &&
-        upperCaseLetterRequirement &&
-        lowerCaseLetterRequirement &&
-        digitRequirement &&
-        specialCharacterRequirement
-    }
+    fun validatePassword(): Boolean = loginModel.password.length >= 6
 }
 
 class LoginViewModel(
@@ -68,6 +50,20 @@ class LoginViewModel(
 ) : BaseViewModel<LoginState>() {
 
     override val initialState = LoginState()
+
+    init {
+        viewModelScope.launch {
+            tokensDataStore.getStateFlow().firstOrNull().let { tokens ->
+                if (tokens == null) {
+                    state = state.copy(
+                        isLoadingLogin = false
+                    )
+                } else {
+                    tokensDataStore
+                }
+            }
+        }
+    }
 
     fun onLogin() {
         viewModelScope.launch {
@@ -80,15 +76,10 @@ class LoginViewModel(
                     login(loginModel = state.loginModel)
 
                 else -> {
-                    state = if (!validateLogin) {
-                        state.copy(
-                            isLoginError = true
-                        )
-                    } else {
-                        state.copy(
-                            isPasswordError = true
-                        )
-                    }
+                    state = state.copy(
+                        isEmailError = !validateLogin,
+                        isPasswordError = !validatePassword,
+                    )
                 }
             }
         }

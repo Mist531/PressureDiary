@@ -14,8 +14,8 @@ import java.time.LocalDate
 import java.time.LocalDateTime
 
 suspend fun createDefaultInfoUser(
-    userEmail: String = "test",
-    userPass: String = "test",
+    userEmail: String = "test@mail.ru",
+    userPass: String = "test12",
     userManager: UserManager = getKoin().get(),
     pressureRecordManager: PressureRecordManager = getKoin().get(),
     tagManager: TagsManager = getKoin().get(),

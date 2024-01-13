@@ -74,7 +74,7 @@ fun ContentEntryScreen(
             item {
                 PDBlockEntry(
                     modifier = Modifier,
-                    iconId = R.drawable.ic_systolic,
+                    iconId = com.mist.common.R.drawable.ic_systolic,
                     value = systolicValue,
                     title = stringResource(R.string.content_entry_systolic),
                     onValueChange = onSystolicValueChange,
@@ -86,7 +86,7 @@ fun ContentEntryScreen(
             item {
                 PDBlockEntry(
                     modifier = Modifier,
-                    iconId = R.drawable.ic_diastolic,
+                    iconId = com.mist.common.R.drawable.ic_diastolic,
                     value = diastolicValue,
                     title = stringResource(R.string.content_entry_diastolic),
                     onValueChange = onDiastolicValueChange,
@@ -98,7 +98,7 @@ fun ContentEntryScreen(
             item {
                 PDBlockEntry(
                     modifier = Modifier,
-                    iconId = R.drawable.ic_heart,
+                    iconId = com.mist.common.R.drawable.ic_heart,
                     value = pulseValue,
                     horizontalPadding = 15.dp,
                     title = stringResource(R.string.content_entry_heart_rate),
@@ -110,7 +110,7 @@ fun ContentEntryScreen(
             item {
                 PDBlockEntry(
                     modifier = Modifier,
-                    iconId = R.drawable.ic_calendar,
+                    iconId = com.mist.common.R.drawable.ic_calendar,
                     value = dateValue,
                     title = stringResource(R.string.content_entry_date),
                     horizontalPadding = 17.dp,
@@ -121,7 +121,7 @@ fun ContentEntryScreen(
             item {
                 PDBlockEntry(
                     modifier = Modifier,
-                    iconId = R.drawable.ic_clock,
+                    iconId = com.mist.common.R.drawable.ic_clock,
                     value = timeValue,
                     title = stringResource(R.string.content_entry_time),
                     placeholder = stringResource(R.string.content_entry_pl_entry_time),
@@ -132,7 +132,7 @@ fun ContentEntryScreen(
             item {
                 PDBlockEntryBottomText(
                     modifier = Modifier,
-                    iconId = R.drawable.ic_comment,
+                    iconId = com.mist.common.R.drawable.ic_comment,
                     value = commentValue,
                     title = stringResource(R.string.content_entry_comment),
                     placeholder = stringResource(R.string.content_entry_pl_entry_comment),

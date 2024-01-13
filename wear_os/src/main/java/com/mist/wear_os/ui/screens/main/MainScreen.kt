@@ -25,9 +25,9 @@ fun MainScreen(
     onGoToSettings: () -> Unit
 ) {
     val listButton: List<Pair<Int, () -> Unit>> = listOf(
-        Pair(R.drawable.ic_add, onGoToCreate),
-        Pair(R.drawable.ic_history, onGoToHistory),
-        Pair(R.drawable.ic_settings, onGoToSettings)
+        Pair(com.mist.common.R.drawable.ic_add, onGoToCreate),
+        Pair(com.mist.common.R.drawable.ic_history, onGoToHistory),
+        Pair(com.mist.common.R.drawable.ic_settings, onGoToSettings)
     )
 
     Box(

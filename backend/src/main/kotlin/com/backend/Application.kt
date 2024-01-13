@@ -30,14 +30,14 @@ import java.io.File
 
 fun main() {
     val url = System.getenv("DB_URL")
-        //?: "jdbc:postgresql://db.kahfzyjuzapymwottfcj.supabase.co:5432/postgres"
-    ?: "jdbc:postgresql://172.20.7.9:5432/db1095_05?currentSchema=kursach"
+        ?: "jdbc:postgresql://db.kahfzyjuzapymwottfcj.supabase.co:5432/postgres"
+    //?: "jdbc:postgresql://172.20.7.9:5432/db1095_05?currentSchema=kursach"
     val pass = System.getenv("DB_PASS")
-        //?: "pwd1095..sad"
-    ?: "pwd1095"
+        ?: "pwd1095..sad"
+    //?: "pwd1095"
     val user = System.getenv("DB_USER")
-        //?: "postgres"
-    ?: "st1095"
+        ?: "postgres"
+    //?: "st1095"
     val port = System.getenv("PORT")?.toInt() ?: 8082
     val host = System.getenv("HOST") ?: "0.0.0.0"
 
