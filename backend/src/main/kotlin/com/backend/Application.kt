@@ -166,10 +166,11 @@ fun Application.myApplicationModule() {
             get(ApiRoutes.PressureRecord.GET_PAGINATED) {
                 authRouteUtils.authUser(
                     call = call,
-                    ifRight = {
+                    ifRight = { id ->
                         call.respond(
                             pressureRecordManager.getPaginatedPressureRecords(
-                                call.receive<GetPaginatedPressureRecordsModel>()
+                                userId = id,
+                                model = call.receive<GetPaginatedPressureRecordsModel>()
                             )
                         )
                     }

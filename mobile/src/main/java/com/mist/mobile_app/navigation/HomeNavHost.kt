@@ -1,6 +1,5 @@
 package com.mist.mobile_app.navigation
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
@@ -8,12 +7,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.mist.common.ui.PDColors
-import java.time.LocalDate
+import com.mist.mobile_app.ui.screens.main.history.HistoryScreen
+import com.mist.mobile_app.ui.screens.main.settings.SettingsScreen
 
 @Composable
 fun HomeNavHost(
@@ -30,27 +28,22 @@ fun HomeNavHost(
     ) {
 
         composable(Screens.HomeBottomNavItem.History.route) { backStackEntry ->
-            Box(
+            HistoryScreen(
                 modifier = modifier
-                    .padding(
-                        parentPaddingValues
-                    ),
-                contentAlignment = Alignment.Center
-            ) {
-                Text(text = "History")
-            }
+            )
         }
 
         composable(Screens.HomeBottomNavItem.Settings.route) { backStackEntry ->
-            Box(
-                modifier = modifier
-                    .padding(
-                        parentPaddingValues
-                    ),
-                contentAlignment = Alignment.Center
-            ) {
-                Text(text = "Settings")
-            }
+            SettingsScreen(
+                modifier = modifier,
+                onLogOut = {
+                    globalNavController.navigate(Screens.Auth.route) {
+                        popUpTo(Screens.MainScreen.route) {
+                            inclusive = true
+                        }
+                    }
+                }
+            )
         }
 
         composable(Screens.HomeBottomNavItem.Statistics.route) { backStackEntry ->

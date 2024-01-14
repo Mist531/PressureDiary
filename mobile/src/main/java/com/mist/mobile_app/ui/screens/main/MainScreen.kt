@@ -2,8 +2,6 @@ package com.mist.mobile_app.ui.screens.main
 
 import androidx.annotation.DrawableRes
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.core.animateFloatAsState
-import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -15,7 +13,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredHeight
-import androidx.compose.foundation.layout.requiredWidthIn
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.selection.selectable
@@ -24,12 +21,10 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
-import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -40,13 +35,13 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.mist.common.ui.PDColors
 import com.mist.mobile_app.navigation.HomeNavHost
 import com.mist.mobile_app.navigation.Screens
-import kotlinx.coroutines.launch
 
 @Composable
 fun MainScreen(
@@ -65,6 +60,10 @@ fun MainScreen(
     ) { paddingValues ->
         HomeNavHost(
             modifier = Modifier
+                .padding(
+                    top = paddingValues.calculateTopPadding(),
+                    bottom = 35.dp
+                )
                 .fillMaxSize(),
             globalNavController = navController,
             childNavController = childNavController,
@@ -116,7 +115,11 @@ fun BottomNavigationBar(
                         title = navItem.screenName,
                     ) {
                         navController.navigate(navItem.route) {
+                            popUpTo(navController.graph.findStartDestination().id) {
+                                saveState = true
+                            }
                             launchSingleTop = true
+                            restoreState = true
                         }
                     }
                 }

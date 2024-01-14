@@ -37,8 +37,6 @@ data class PutPressureRecordModel(
 
 @Serializable
 data class GetPaginatedPressureRecordsModel(
-    @Serializable(with = UUIDSerializer::class)
-    val userUUID: UUID,
     @Serializable(with = LocalDateTimeSerializer::class)
     val fromDateTime: LocalDateTime,
     @Serializable(with = LocalDateTimeSerializer::class)
@@ -51,15 +49,12 @@ data class GetPaginatedPressureRecordsModel(
 data class PressureRecordModel(
     @Serializable(with = UUIDSerializer::class)
     val pressureRecordUUID: UUID,
-    @Serializable(with = UUIDSerializer::class)
-    val userUUID: UUID,
     @Serializable(with = LocalDateTimeSerializer::class)
     val dateTimeRecord: LocalDateTime,
     val systolic: Int,
     val diastolic: Int,
     val pulse: Int,
     val note: String,
-    val deviceType: DeviceType
 )
 
 @Serializable

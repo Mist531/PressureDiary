@@ -3,6 +3,7 @@ package com.mist.common.data.stores
 import androidx.datastore.core.DataStore
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collectLatest
@@ -22,6 +23,8 @@ interface DataStoreModel<T> {
 }
 
 abstract class DataStore<DT : Any, M : DataStoreModel<DT>> {
+    val dataStoreScope = CoroutineScope(Dispatchers.IO + SupervisorJob())
+
     protected abstract val dataStore: DataStore<M>
 
     protected abstract val dataStoreFlow: Flow<M>
@@ -60,12 +63,6 @@ abstract class DataStore<DT : Any, M : DataStoreModel<DT>> {
         )
     }
 
-
-    /**
-     * Возвращает значение нужно ли перелогиниться
-     *
-     * @return
-     */
     open suspend fun checkAndUpdateData() {
         updateMutex.withLock {
             dataStoreFlow.firstOrNull()?.lastUpdateFromServer?.let { lastUpdate ->
@@ -78,7 +75,7 @@ abstract class DataStore<DT : Any, M : DataStoreModel<DT>> {
     }
 
     private fun <R> Flow<R>.mutableStateIn(
-        scope: CoroutineScope = CoroutineScope(Dispatchers.IO),
+        scope: CoroutineScope = dataStoreScope,
         initialValue: R? = null,
         onNewSubscriber: suspend () -> Unit = {}
     ): MutableStateFlow<R?> {

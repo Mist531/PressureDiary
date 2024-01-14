@@ -2,12 +2,15 @@ package com.mist.common.data.bd
 
 import androidx.room.*
 import arrow.core.some
+import com.example.api.models.PressureRecordModel
 import com.mist.common.models.PressureDiaryModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
 import kotlinx.uuid.UUID
+import kotlinx.uuid.toJavaUUID
 import java.time.LocalDate
+import java.time.LocalDateTime
 import java.time.LocalTime
 
 object PressureDiaryStore {
@@ -37,6 +40,15 @@ object PressureDiaryStore {
             date = date,
             time = time,
             comment = comment
+        )
+
+        fun mapToPressureRecordModel() = PressureRecordModel(
+            pressureRecordUUID = id.toJavaUUID(),
+            diastolic = diastolic,
+            systolic = systolic,
+            pulse = pulse,
+            dateTimeRecord = LocalDateTime.of(date, time),
+            note = comment
         )
     }
 

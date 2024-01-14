@@ -9,6 +9,6 @@ interface PostPressureRecordManager : PressureRecordManager<UUID, PostPressureRe
 interface DeletePressureRecordManager : PressureRecordManager<Unit, DeletePressureRecordModel, HttpStatusCode>
 interface PutPressureRecordManager : PressureRecordManager<Unit, PutPressureRecordModel, HttpStatusCode>
 interface GetPaginatedPressureRecordsManager :
-    PressureRecordManager<Unit, GetPaginatedPressureRecordsModel, List<PressureRecordModel>>
+    PressureRecordManager<UUID, GetPaginatedPressureRecordsModel, List<PressureRecordModel>>
 
 interface PressureRecordManager<Param, Request, Response> : SimpleManager<Param, Request, Response>

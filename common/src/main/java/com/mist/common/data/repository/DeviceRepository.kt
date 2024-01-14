@@ -5,11 +5,17 @@ import com.example.api.ApiRoutes
 import com.example.api.models.DeleteUserDeviceModel
 import com.example.api.models.DeviceModel
 import com.example.api.models.PostDeviceForUserModel
+import com.mist.common.modules.HTTP_CLIENT_AUTH
 import com.mist.common.utils.BaseRepository
 import com.mist.common.utils.errorflow.NetworkError
-import io.ktor.client.*
-import io.ktor.client.request.*
+import io.ktor.client.HttpClient
+import io.ktor.client.request.delete
+import io.ktor.client.request.get
+import io.ktor.client.request.post
+import io.ktor.client.request.setBody
 import kotlinx.coroutines.withContext
+import org.koin.core.component.inject
+import org.koin.core.qualifier.named
 
 interface DeviceRepository {
     suspend fun getUserDevicesList(): Either<NetworkError, List<DeviceModel>>
@@ -22,9 +28,9 @@ interface DeviceRepository {
     ): Either<NetworkError, Unit>
 }
 
-class DeviceRepositoryImpl(
-    private val client: HttpClient
-) : BaseRepository(), DeviceRepository {
+class DeviceRepositoryImpl: BaseRepository(), DeviceRepository {
+    private val client: HttpClient by inject(named(HTTP_CLIENT_AUTH))
+
     override suspend fun getUserDevicesList(): Either<NetworkError, List<DeviceModel>> =
         withContext(repositoryScope.coroutineContext) {
             client.get(ApiRoutes.Device.GET_ALL)

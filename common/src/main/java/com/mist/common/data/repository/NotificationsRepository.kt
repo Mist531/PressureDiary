@@ -4,12 +4,17 @@ import arrow.core.Either
 import com.example.api.ApiRoutes
 import com.example.api.models.NotificationModel
 import com.example.api.models.UpdateNotificationModel
+import com.mist.common.modules.HTTP_CLIENT_AUTH
 import com.mist.common.utils.BaseRepository
 import com.mist.common.utils.errorflow.NetworkError
-import io.ktor.client.*
-import io.ktor.client.request.*
-import io.ktor.http.*
+import io.ktor.client.HttpClient
+import io.ktor.client.request.get
+import io.ktor.client.request.put
+import io.ktor.client.request.setBody
+import io.ktor.http.HttpStatusCode
 import kotlinx.coroutines.withContext
+import org.koin.core.component.inject
+import org.koin.core.qualifier.named
 
 interface NotificationsRepository {
     suspend fun getAllNotifications(): Either<NetworkError, List<NotificationModel>>
@@ -20,9 +25,9 @@ interface NotificationsRepository {
     suspend fun getNextNotification(): Either<NetworkError, NotificationModel>
 }
 
-class NotificationsRepositoryImpl(
-    private val client: HttpClient
-) : BaseRepository(), NotificationsRepository {
+class NotificationsRepositoryImpl: BaseRepository(), NotificationsRepository {
+    private val client: HttpClient by inject(named(HTTP_CLIENT_AUTH))
+
     override suspend fun getAllNotifications(): Either<NetworkError, List<NotificationModel>> =
         withContext(repositoryScope.coroutineContext) {
             client.get(ApiRoutes.Notifications.GET_ALL)

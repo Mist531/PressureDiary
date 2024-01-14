@@ -1,6 +1,7 @@
 package com.mist.mobile_app
 
 import android.app.Application
+import com.mist.common.data.bd.Database
 import com.mist.common.modules.listModules
 import com.mist.mobile_app.modules.viewModelModule
 import org.koin.android.ext.koin.androidContext
@@ -11,6 +12,7 @@ import org.koin.core.logger.Level
 class MasterApplication : Application() {
     override fun onCreate() {
         super.onCreate()
+        Database.initLocalDatabase(this)
         startKoin {
             androidContext(this@MasterApplication)
             androidLogger(Level.DEBUG)

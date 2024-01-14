@@ -5,12 +5,15 @@ import com.example.api.ApiRoutes
 import com.example.api.models.AddPressureRecordTagLinkModel
 import com.example.api.models.DeletePressureRecordTagLinkByRecordModel
 import com.example.api.models.DeletePressureRecordTagLinkByTagModel
+import com.mist.common.modules.HTTP_CLIENT_AUTH
 import com.mist.common.utils.BaseRepository
 import com.mist.common.utils.errorflow.NetworkError
 import io.ktor.client.HttpClient
 import io.ktor.client.request.post
 import io.ktor.client.request.setBody
 import kotlinx.coroutines.withContext
+import org.koin.core.component.inject
+import org.koin.core.qualifier.named
 
 interface PressureRecordTagLinksRepository {
     suspend fun addPressureRecordTagLink(
@@ -26,9 +29,9 @@ interface PressureRecordTagLinksRepository {
     ): Either<NetworkError, Unit>
 }
 
-class PressureRecordTagLinksRepositoryImpl(
-    private val client: HttpClient
-) : BaseRepository(), PressureRecordTagLinksRepository {
+class PressureRecordTagLinksRepositoryImpl: BaseRepository(), PressureRecordTagLinksRepository {
+    private val client: HttpClient by inject(named(HTTP_CLIENT_AUTH))
+
     override suspend fun addPressureRecordTagLink(
         addPressureRecordTagLinkModel: AddPressureRecordTagLinkModel
     ): Either<NetworkError, Unit> = withContext(repositoryScope.coroutineContext) {

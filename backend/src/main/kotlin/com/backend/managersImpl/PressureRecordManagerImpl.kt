@@ -14,12 +14,18 @@ interface PressureRecordManager {
     suspend fun addPressureRecord(userId: UUID, model: PostPressureRecordModel): HttpStatusCode
     suspend fun deletePressureRecord(model: DeletePressureRecordModel): HttpStatusCode
     suspend fun editPressureRecord(model: PutPressureRecordModel): HttpStatusCode
-    suspend fun getPaginatedPressureRecords(model: GetPaginatedPressureRecordsModel): List<PressureRecordModel>
+    suspend fun getPaginatedPressureRecords(
+        userId: UUID,
+        model: GetPaginatedPressureRecordsModel
+    ): List<PressureRecordModel>
 }
 
 class PressureRecordManagerImpl : PressureRecordManager, KoinComponent {
 
-    override suspend fun addPressureRecord(userId: UUID, model: PostPressureRecordModel): HttpStatusCode {
+    override suspend fun addPressureRecord(
+        userId: UUID,
+        model: PostPressureRecordModel
+    ): HttpStatusCode {
         val manager: PostPressureRecordManager by inject()
         return runCatching {
             manager.invoke(userId, model)
@@ -55,10 +61,13 @@ class PressureRecordManagerImpl : PressureRecordManager, KoinComponent {
         }
     }
 
-    override suspend fun getPaginatedPressureRecords(model: GetPaginatedPressureRecordsModel): List<PressureRecordModel> {
+    override suspend fun getPaginatedPressureRecords(
+        userId: UUID,
+        model: GetPaginatedPressureRecordsModel
+    ): List<PressureRecordModel> {
         val manager: GetPaginatedPressureRecordsManager by inject()
         return runCatching {
-            manager.invoke(Unit, model)
+            manager.invoke(userId, model)
         }.getOrElse {
             it.printStackTrace()
             throw it
