@@ -42,10 +42,12 @@ import com.backend.managers.usersManager.DeleteUserManager
 import com.backend.managers.usersManager.LoginUserManager
 import com.backend.managers.usersManager.PostUserManager
 import com.backend.managers.usersManager.PutUserManager
+import com.backend.managers.usersManager.RefreshTokensManager
 import com.backend.managers.usersManager.impl.DeleteUserManagerImpl
 import com.backend.managers.usersManager.impl.LoginUserManagerImpl
 import com.backend.managers.usersManager.impl.PostUserManagerImpl
 import com.backend.managers.usersManager.impl.PutUserManagerImpl
+import com.backend.managers.usersManager.impl.RefreshTokensManagerImpl
 import org.koin.core.module.dsl.bind
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.module
@@ -64,6 +66,9 @@ val managerModule = module {
     }
     singleOf(::PutUserManagerImpl) {
         bind<PutUserManager>()
+    }
+    singleOf(::RefreshTokensManagerImpl) {
+        bind<RefreshTokensManager>()
     }
     //endregion
 

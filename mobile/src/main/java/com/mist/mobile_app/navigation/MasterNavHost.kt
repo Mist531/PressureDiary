@@ -1,27 +1,16 @@
 package com.mist.mobile_app.navigation
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
-import com.mist.common.data.stores.impl.TokensDataStore
-import com.mist.mobile_app.ui.components.PDLoader
 import com.mist.mobile_app.ui.screens.auth.login.LoginScreen
 import com.mist.mobile_app.ui.screens.auth.registration.RegistrationScreen
 import com.mist.mobile_app.ui.screens.main.MainScreen
 import com.mist.mobile_app.ui.screens.splash.SplashScreen
-import de.palm.composestateevents.EventEffect
-import org.koin.compose.getKoin
 
 @Composable
 fun MasterNavHost(
@@ -57,7 +46,9 @@ fun MasterNavHost(
         composable(
             route = Screens.MainScreen.route
         ) {
-            MainScreen()
+            MainScreen(
+                navController = navController
+            )
         }
 
         authGraph(

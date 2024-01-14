@@ -2,6 +2,10 @@ package com.backend.authorization
 
 import com.auth0.jwt.JWT
 import com.auth0.jwt.algorithms.Algorithm
+import com.auth0.jwt.exceptions.JWTVerificationException
+import io.ktor.http.*
+import io.ktor.server.auth.Principal
+import io.ktor.server.auth.jwt.JWTPrincipal
 import java.util.*
 import kotlin.time.Duration.Companion.days
 
@@ -24,4 +28,21 @@ object AuthUtil {
         .withClaim("userId", id)
         .withExpiresAt(Date(System.currentTimeMillis() + 7.days.inWholeMilliseconds))
         .sign(Algorithm.HMAC256(secret))
+
+    fun getUUIDFromRefreshToken(refreshToken: String): UUID? {
+        return try {
+            val algorithm = Algorithm.HMAC256(secret)
+            val verifier = JWT.require(algorithm)
+                .withAudience(jwtAudience)
+                .withIssuer(domain)
+                .build()
+
+            val decodedJWT = verifier.verify(refreshToken)
+            JWTPrincipal(decodedJWT).payload.getClaim("userId")
+                .asString()?.let(UUID::fromString)
+        } catch (e: JWTVerificationException) {
+            throw Exception("Неверный токен")
+        }
+    }
+
 }

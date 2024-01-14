@@ -120,6 +120,11 @@ fun Application.myApplicationModule() {
                 userManager.login(call.receive<LoginModel>())
             )
         }
+        post(ApiRoutes.REFRESH_TOKEN) {
+            call.respond(
+                userManager.refreshToken(call.receive<RefreshTokenModel>())
+            )
+        }
         authenticate("jwt") {
             post(ApiRoutes.PressureRecord.ADD) {
                 authRouteUtils.authUser(

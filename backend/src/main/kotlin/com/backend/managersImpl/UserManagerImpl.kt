@@ -1,15 +1,14 @@
 package com.backend.managersImpl
 
 import com.backend.authorization.AuthUtil
-import com.example.api.models.LoginModel
-import com.example.api.models.TokensModel
 import com.backend.managers.usersManager.DeleteUserManager
 import com.backend.managers.usersManager.LoginUserManager
 import com.backend.managers.usersManager.PostUserManager
 import com.backend.managers.usersManager.PutUserManager
-import com.example.api.models.PostUserRequestModel
-import com.example.api.models.PutUserRequestModel
+import com.backend.managers.usersManager.RefreshTokensManager
+import com.example.api.models.*
 import io.ktor.http.*
+import io.ktor.server.application.*
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import java.util.*
@@ -19,6 +18,7 @@ interface UserManager {
     suspend fun postUser(model: PostUserRequestModel): HttpStatusCode
     suspend fun putUser(userId: UUID, model: PutUserRequestModel): HttpStatusCode
     suspend fun deleteUser(userId: UUID): HttpStatusCode
+    suspend fun refreshToken(model: RefreshTokenModel): TokensModel
 }
 
 class UserManagerImpl : UserManager, KoinComponent {
@@ -70,6 +70,16 @@ class UserManagerImpl : UserManager, KoinComponent {
             throw it
         }.let {
             HttpStatusCode.OK
+        }
+    }
+
+    override suspend fun refreshToken(model: RefreshTokenModel): TokensModel {
+        val manager: RefreshTokensManager by inject()
+        return runCatching {
+            manager.invoke(Unit, model)
+        }.getOrElse {
+            it.printStackTrace()
+            throw it
         }
     }
 }

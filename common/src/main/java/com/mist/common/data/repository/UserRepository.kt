@@ -2,10 +2,7 @@ package com.mist.common.data.repository
 
 import arrow.core.Either
 import com.example.api.ApiRoutes
-import com.example.api.models.LoginModel
-import com.example.api.models.PostUserRequestModel
-import com.example.api.models.PutUserRequestModel
-import com.example.api.models.TokensModel
+import com.example.api.models.*
 import com.mist.common.utils.BaseRepository
 import com.mist.common.utils.errorflow.NetworkError
 import io.ktor.client.*
@@ -17,6 +14,7 @@ interface UserRepository {
     suspend fun postUser(model: PostUserRequestModel): Either<NetworkError, Unit>
     suspend fun putUser(model: PutUserRequestModel): Either<NetworkError, Unit>
     suspend fun deleteUser(): Either<NetworkError, Unit>
+    suspend fun refreshToken(model: RefreshTokenModel): Either<NetworkError, TokensModel>
 }
 
 class UserRepositoryImpl(
@@ -49,4 +47,12 @@ class UserRepositoryImpl(
             client.delete(ApiRoutes.User.DELETE)
                 .handleResponse<Unit>()
         }
+
+    override suspend fun refreshToken(
+        model: RefreshTokenModel
+    ): Either<NetworkError, TokensModel> = withContext(repositoryScope.coroutineContext) {
+        client.post(ApiRoutes.REFRESH_TOKEN) {
+            setBody(model)
+        }.handleResponse<TokensModel>()
+    }
 }

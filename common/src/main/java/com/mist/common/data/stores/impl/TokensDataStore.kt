@@ -1,12 +1,14 @@
 package com.mist.common.data.stores.impl
 
 import android.content.Context
+import com.example.api.models.RefreshTokenModel
 import com.example.api.models.TokensModel
 import com.example.api.utils.LocalDateTimeSerializer
 import com.mist.common.data.repository.UserRepository
 import com.mist.common.data.stores.DataStore
 import com.mist.common.data.stores.DataStoreModel
 import com.mist.common.data.stores.tokensDataStore
+import com.mist.common.utils.errorflow.NetworkErrorFlow
 import de.palm.composestateevents.StateEventWithContent
 import de.palm.composestateevents.consumed
 import de.palm.composestateevents.triggered
@@ -53,7 +55,20 @@ class TokensDataStore(
     }
 
     override suspend fun updateDataFromServer() {
-        //TODO обновление токенов
+        dataStoreFlow.firstOrNull()?.let {
+            userRepository.refreshToken(
+                RefreshTokenModel(
+                    refresh = it.data?.refresh ?: ""
+                )
+            ).fold(
+                ifLeft = { error ->
+                    NetworkErrorFlow.pushError(error)
+                },
+                ifRight = { tokensModel ->
+                    updateDataStore(tokensModel)
+                }
+            )
+        }
     }
 
     public override suspend fun updateDataStore(

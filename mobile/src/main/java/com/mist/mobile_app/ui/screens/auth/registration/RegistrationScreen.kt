@@ -1,6 +1,7 @@
 package com.mist.mobile_app.ui.screens.auth.registration
 
 import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -10,6 +11,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -19,10 +21,12 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.api.models.Gender
+import com.mist.common.ui.PDColors
 import com.mist.mobile_app.ui.components.PDButton
 import com.mist.mobile_app.ui.components.PDLoader
 import com.mist.mobile_app.ui.components.PDPasswordTextField
@@ -168,6 +172,24 @@ fun RegistrationScreenContent(
                 }
             )
         )
+
+        AnimatedVisibility(visible = isPasswordError) {
+            Text(
+                modifier = Modifier
+                    .padding(horizontal = 20.dp),
+                text = """
+                Пароль должен содержать:
+                     Латинские буквы
+                     Цифры
+                     Специальные символы
+                     Одну заглавную букву
+                     Одну строчную буквы
+                     Не менее 6 и не более 15 символов
+            """.trimIndent(),
+                textAlign = TextAlign.Start,
+                color = PDColors.Black,
+            )
+        }
 
         //TODO: select gender
 

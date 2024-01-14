@@ -7,3 +7,8 @@ data class TokensModel(
     val access: String,
     val refresh: String
 )
+
+@Serializable
+data class RefreshTokenModel(
+    val refresh: String
+)

@@ -6,6 +6,7 @@ object ApiRoutes {
     private const val REGISTER = "$BASE/register"
     const val REGISTER_CREATE = "$REGISTER/create"
     const val LOGIN = "$REGISTER/login"
+    const val REFRESH_TOKEN = "$REGISTER/refreshtoken"
 
     object PressureRecord {
         private const val ROOT = "$BASE/pressureRecord"

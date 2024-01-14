@@ -351,6 +351,22 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/TokensModel"
+  /api/register/refreshtoken:
+    post:
+      description: ""
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              $ref: "#/components/schemas/RefreshTokenModel"
+        required: true
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/TokensModel"
   /api/tags:
     get:
       description: ""
@@ -773,6 +789,13 @@ components:
       required:
         - "email"
         - "password"
+    RefreshTokenModel:
+      type: "object"
+      properties:
+        refresh:
+          type: "string"
+      required:
+        - "refresh"
     TagModel:
       type: "object"
       properties:
