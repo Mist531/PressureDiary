@@ -5,8 +5,8 @@ import org.jetbrains.exposed.dao.UUIDEntity
 import org.jetbrains.exposed.dao.UUIDEntityClass
 import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.dao.id.UUIDTable
+import org.jetbrains.exposed.sql.javatime.CurrentDate
 import org.jetbrains.exposed.sql.javatime.date
-import java.time.LocalDate
 import java.util.*
 
 object UsersTable : UUIDTable("Users", "userUUID") {
@@ -16,7 +16,7 @@ object UsersTable : UUIDTable("Users", "userUUID") {
     val lastName = varchar("lastName", 30).nullable().default(null)
     val dateOfBirth = date("dateOfBirth")
     val gender = enumeration("gender", Gender::class).default(Gender.O)
-    val dateRegistered = date("dateRegistered").default(LocalDate.now())
+    val dateRegistered = date("dateRegistered").defaultExpression(CurrentDate)
     val timeZone = varchar("timeZone", 255).nullable().default(null)
 }
 

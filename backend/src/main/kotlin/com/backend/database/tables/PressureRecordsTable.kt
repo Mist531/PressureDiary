@@ -5,12 +5,13 @@ import org.jetbrains.exposed.dao.UUIDEntity
 import org.jetbrains.exposed.dao.UUIDEntityClass
 import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.dao.id.UUIDTable
+import org.jetbrains.exposed.sql.javatime.CurrentDateTime
 import org.jetbrains.exposed.sql.javatime.datetime
 import java.util.*
 
 object PressureRecordsTable : UUIDTable("PressureRecords", "pressureRecordUUID") {
     val userUUID = reference("userUUID", UsersTable)
-    val dateTimeRecord = datetime("dateTimeRecord")
+    val dateTimeRecord = datetime("dateTimeRecord").defaultExpression(CurrentDateTime)
     val systolic = integer("systolic")
     val diastolic = integer("diastolic")
     val pulse = integer("pulse")

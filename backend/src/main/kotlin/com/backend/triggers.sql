@@ -126,4 +126,3 @@ CREATE TRIGGER triggerUpdateOrInsertDevice
     FOR EACH ROW
 EXECUTE FUNCTION updateOrInsertDevice();
 ------------------------------------------------------------
-

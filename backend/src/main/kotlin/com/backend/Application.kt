@@ -47,9 +47,9 @@ fun main() {
         async {
             createTables()
         }.await()
-        async {
-            createTriggers()
-        }.await()
+        createTriggers()
+        createViews()
+        createProcedure()
         createDefaultInfoUser()
     }
 
@@ -63,8 +63,26 @@ fun main() {
     ).start(wait = true)
 }
 
+suspend fun createProcedure() {
+    val sqlFile = File("src/main/kotlin/com/backend/procedure.sql")
+    val sqlScript = sqlFile.readText()
+
+    newSuspendedTransaction(Dispatchers.IO) {
+        exec(sqlScript)
+    }
+}
+
+suspend fun createViews() {
+    val sqlFile = File("src/main/kotlin/com/backend/views.sql")
+    val sqlScript = sqlFile.readText()
+
+    newSuspendedTransaction(Dispatchers.IO) {
+        exec(sqlScript)
+    }
+}
+
 suspend fun createTriggers() {
-    val sqlFile = File("src/main/kotlin/com/backend/create.sql")
+    val sqlFile = File("src/main/kotlin/com/backend/triggers.sql")
     val sqlScript = sqlFile.readText()
 
     newSuspendedTransaction(Dispatchers.IO) {
