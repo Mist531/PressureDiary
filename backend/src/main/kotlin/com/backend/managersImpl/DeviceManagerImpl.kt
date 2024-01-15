@@ -24,7 +24,9 @@ interface DeviceManager {
 
 class DeviceManagerImpl : DeviceManager, KoinComponent {
 
-    override suspend fun getUserDevicesList(userId: UUID): List<DeviceModel> {
+    override suspend fun getUserDevicesList(
+        userId: UUID
+    ): List<DeviceModel> {
         val manager: GetUserDevicesListManager by inject()
         return runCatching {
             manager.invoke(userId, Unit)

@@ -105,7 +105,7 @@ fun BottomNavigationBar(
                 val navBackStackEntry by navController.currentBackStackEntryAsState()
                 val currentRoute = navBackStackEntry?.destination?.route
                 Screens.HomeBottomNavItem.items.forEach { navItem ->
-                    GbNavigationBarItem(
+                    NavigationBarItem(
                         selected = remember(currentRoute) {
                             currentRoute == navItem.route
                         },
@@ -157,7 +157,7 @@ fun BottomNavigationBar(
 
 
 @Composable
-fun RowScope.GbNavigationBarItem(
+fun RowScope.NavigationBarItem(
     modifier: Modifier = Modifier,
     selected: Boolean,
     title: String,
