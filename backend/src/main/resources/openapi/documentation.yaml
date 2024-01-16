@@ -780,12 +780,15 @@ components:
         - "access"
         - "refresh"
     LoginModel:
+      example:
+        password: "test12"
+        email: "test@mail.ru"
       type: "object"
       properties:
         email:
-          type: "string"
+          type: string
         password:
-          type: "string"
+          type: string
       required:
         - "email"
         - "password"
