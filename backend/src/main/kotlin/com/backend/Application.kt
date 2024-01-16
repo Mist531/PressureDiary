@@ -20,37 +20,57 @@ import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
+import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.SchemaUtils
-import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
+import org.jetbrains.exposed.sql.transactions.transaction
 import org.koin.ktor.ext.inject
 import java.io.File
 
+data class BdConnectInfo(
+    val url: String,
+    val bdPass: String,
+    val bdUser: String,
+)
+
+enum class BdConnect(val bdConnectInfo: BdConnectInfo) {
+    NovGu(
+        BdConnectInfo(
+            url = "jdbc:postgresql://172.20.7.9:5432/db1095_05?currentSchema=kursach",
+            bdPass = "pwd1095",
+            bdUser = "st1095"
+        )
+    ),
+    Supabase(
+        BdConnectInfo(
+            url = "jdbc:postgresql://db.kahfzyjuzapymwottfcj.supabase.co:5432/postgres",
+            bdPass = "pwd1095..sad",
+            bdUser = "postgres"
+        )
+    )
+}
+
 fun main() {
-    val url = System.getenv("DB_URL")
-        ?: "jdbc:postgresql://db.kahfzyjuzapymwottfcj.supabase.co:5432/postgres"
-    //?: "jdbc:postgresql://172.20.7.9:5432/db1095_05?currentSchema=kursach"
-    val pass = System.getenv("DB_PASS")
-        ?: "pwd1095..sad"
-    //?: "pwd1095"
-    val user = System.getenv("DB_USER")
-        ?: "postgres"
-    //?: "st1095"
+    val connectInfo = BdConnect.NovGu
     val port = System.getenv("PORT")?.toInt() ?: 8082
     val host = System.getenv("HOST") ?: "0.0.0.0"
 
-    Database.connect(url, "org.postgresql.Driver", user, pass)
+    with(connectInfo.bdConnectInfo) {
+        Database.connect(
+            url = url,
+            driver = "org.postgresql.Driver",
+            user = bdUser,
+            password = bdPass
+        )
+    }
 
-    CoroutineScope(Dispatchers.IO).launch {
-        async {
-            createTables()
-        }.await()
-        createTriggers()
-        createViews()
-        createProcedure()
-        createDefaultInfoUser()
+    CoroutineScope(Dispatchers.IO + SupervisorJob()).launch {
+        //createTables()
+        //createTriggers()
+        //createViews()
+        //createProcedure()
+        //createDefaultInfoUser()
     }
 
     embeddedServer(
@@ -63,35 +83,35 @@ fun main() {
     ).start(wait = true)
 }
 
-suspend fun createProcedure() {
+fun createProcedure() {
     val sqlFile = File("src/main/kotlin/com/backend/procedure.sql")
     val sqlScript = sqlFile.readText()
 
-    newSuspendedTransaction(Dispatchers.IO) {
+    transaction {
         exec(sqlScript)
     }
 }
 
-suspend fun createViews() {
+fun createViews() {
     val sqlFile = File("src/main/kotlin/com/backend/views.sql")
     val sqlScript = sqlFile.readText()
 
-    newSuspendedTransaction(Dispatchers.IO) {
+    transaction {
         exec(sqlScript)
     }
 }
 
-suspend fun createTriggers() {
+fun createTriggers() {
     val sqlFile = File("src/main/kotlin/com/backend/triggers.sql")
     val sqlScript = sqlFile.readText()
 
-    newSuspendedTransaction(Dispatchers.IO) {
+    transaction {
         exec(sqlScript)
     }
 }
 
-suspend fun createTables() {
-    newSuspendedTransaction(Dispatchers.IO) {
+fun createTables() {
+    transaction {
         SchemaUtils.createMissingTablesAndColumns(
             HistoryTable,
             NotificationsTable,

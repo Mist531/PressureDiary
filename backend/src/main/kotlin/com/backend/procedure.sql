@@ -4,7 +4,7 @@ $$
 BEGIN
     IF NOT EXISTS (SELECT 1 FROM devices WHERE "userUUID" = user_id AND "deviceType" = device_type) THEN
         INSERT INTO devices ("deviceUUID", "userUUID", "deviceType", "lastSyncDate")
-        VALUES (uuid_generate_v4(), user_id, device_type, CURRENT_TIMESTAMP);
+        VALUES (public.uuid_generate_v4(), user_id, device_type, CURRENT_TIMESTAMP);
     END IF;
 END;
 $$;

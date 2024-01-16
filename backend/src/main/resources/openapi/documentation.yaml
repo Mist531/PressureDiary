@@ -4,7 +4,7 @@ info:
   description: "PressureDiary API"
   version: "1.0.0"
 servers:
-  - url: "https://ray-model-sensibly.ngrok-free.app"
+  - url: "http://0.0.0.0:8082"
 paths:
   /api/device:
     get:
@@ -839,3 +839,10 @@ components:
             - "O"
         timeZone:
           type: "string"
+  securitySchemes:
+    BearerAuth:  # Arbitrary name for the security scheme
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+security:
+  - BearerAuth: []

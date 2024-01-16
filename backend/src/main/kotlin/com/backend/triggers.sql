@@ -112,7 +112,7 @@ BEGIN
           AND "deviceType" = NEW."deviceType";
     ELSE
         INSERT INTO devices ("deviceUUID", "userUUID", "deviceType", "lastSyncDate")
-        VALUES (uuid_generate_v4(), NEW."userUUID", NEW."deviceType", CURRENT_TIMESTAMP);
+        VALUES (public.uuid_generate_v4(), NEW."userUUID", NEW."deviceType", CURRENT_TIMESTAMP);
     END IF;
     RETURN NEW;
 END

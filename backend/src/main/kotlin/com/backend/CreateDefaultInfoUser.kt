@@ -73,8 +73,8 @@ suspend fun createDefaultInfoUser(
     )
 
     newSuspendedTransaction(Dispatchers.IO) {
-        User.find(UsersTable.email eq userEmail).empty().let { boolean: Boolean ->
-            if (boolean) {
+        User.find(UsersTable.email eq userEmail).let { user ->
+            if (user.empty()) {
                 userManager.postUser(
                     PostUserRequestModel(
                         email = userEmail,
@@ -116,6 +116,8 @@ suspend fun createDefaultInfoUser(
                         }
                     }
                 }
+            } else {
+
             }
         }
     }
