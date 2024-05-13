@@ -8,7 +8,7 @@ import kotlinx.coroutines.Dispatchers
 import org.jetbrains.exposed.sql.ResultRow
 import org.jetbrains.exposed.sql.SortOrder
 import org.jetbrains.exposed.sql.and
-import org.jetbrains.exposed.sql.select
+import org.jetbrains.exposed.sql.selectAll
 import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
 import java.util.UUID
 
@@ -19,7 +19,7 @@ class GetPaginatedPressureRecordsManagerImpl : GetPaginatedPressureRecordsManage
         request: GetPaginatedPressureRecordsModel
     ): List<PressureRecordModel> =
         newSuspendedTransaction(Dispatchers.IO) {
-            PressureRecordsTable.select {
+            PressureRecordsTable.selectAll().where {
                 (PressureRecordsTable.userUUID eq param) and
                         (PressureRecordsTable.dateTimeRecord greaterEq request.fromDateTime) and
                         (PressureRecordsTable.dateTimeRecord lessEq request.toDateTime)

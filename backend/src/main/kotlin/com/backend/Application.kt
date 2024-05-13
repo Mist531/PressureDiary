@@ -44,15 +44,15 @@ enum class BdConnect(val bdConnectInfo: BdConnectInfo) {
     ),
     Supabase(
         BdConnectInfo(
-            url = "jdbc:postgresql://db.kahfzyjuzapymwottfcj.supabase.co:5432/postgres",
+            url = "jdbc:postgresql://aws-0-eu-central-1.pooler.supabase.com:5432/postgres",
             bdPass = "pwd1095..sad",
-            bdUser = "postgres"
+            bdUser = "postgres.kahfzyjuzapymwottfcj"
         )
     )
 }
 
 fun main() {
-    val connectInfo = BdConnect.NovGu
+    val connectInfo = BdConnect.Supabase
     val port = System.getenv("PORT")?.toInt() ?: 8082
     val host = System.getenv("HOST") ?: "0.0.0.0"
 

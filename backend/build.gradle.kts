@@ -17,7 +17,7 @@ application {
 dependencies {
     implementation(project(":api"))
 
-    val exposedVersion = "0.43.0"
+    val exposedVersion = "0.49.0"
 
     implementation("io.ktor:ktor-server-status-pages")
     implementation("io.ktor:ktor-server-core-jvm")
@@ -42,14 +42,14 @@ dependencies {
     implementation("io.ktor:ktor-server-netty-jvm")
     implementation("ch.qos.logback:logback-classic:1.4.12")
     testImplementation("io.ktor:ktor-server-tests-jvm")
-    testImplementation("org.jetbrains.kotlin:kotlin-test-junit:1.9.20")
+    testImplementation("org.jetbrains.kotlin:kotlin-test-junit:1.9.23")
 
     //koin
     implementation("io.insert-koin:koin-ktor:3.5.3")
     implementation("io.insert-koin:koin-logger-slf4j:3.5.3")
 
     //bd
-    implementation("org.postgresql:postgresql:42.5.1")
+    implementation("org.postgresql:postgresql:42.7.3")
 
     //region Arrow
     val arrowVersion = "1.2.1"

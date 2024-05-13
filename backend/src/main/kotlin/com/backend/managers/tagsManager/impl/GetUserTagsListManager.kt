@@ -5,16 +5,14 @@ import com.backend.managers.tagsManager.GetUserTagsListManager
 import com.example.api.models.TagModel
 import kotlinx.coroutines.Dispatchers
 import org.jetbrains.exposed.sql.ResultRow
-import org.jetbrains.exposed.sql.select
+import org.jetbrains.exposed.sql.selectAll
 import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
-import java.util.*
+import java.util.UUID
 
 class GetUserTagsListManagerImpl : GetUserTagsListManager {
     override suspend operator fun invoke(param: UUID, request: Unit): List<TagModel> =
         newSuspendedTransaction(Dispatchers.IO) {
-            TagsTable.select {
-                TagsTable.userUUID eq param
-            }.map(::toTagModel)
+            TagsTable.selectAll().where { TagsTable.userUUID eq param }.map(::toTagModel)
         }
 
     private fun toTagModel(row: ResultRow): TagModel =

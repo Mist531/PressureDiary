@@ -5,16 +5,14 @@ import com.backend.managers.deviceManager.GetUserDevicesListManager
 import com.example.api.models.DeviceModel
 import kotlinx.coroutines.Dispatchers
 import org.jetbrains.exposed.sql.ResultRow
-import org.jetbrains.exposed.sql.select
+import org.jetbrains.exposed.sql.selectAll
 import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
-import java.util.*
+import java.util.UUID
 
 class GetUserDevicesListManagerImpl : GetUserDevicesListManager {
     override suspend operator fun invoke(param: UUID, request: Unit): List<DeviceModel> =
         newSuspendedTransaction(Dispatchers.IO) {
-            DevicesTable.select {
-                DevicesTable.userUUID eq param
-            }.map(::toDevice)
+            DevicesTable.selectAll().where { DevicesTable.userUUID eq param }.map(::toDevice)
         }
 
     private fun toDevice(row: ResultRow): DeviceModel =

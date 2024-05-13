@@ -4,18 +4,16 @@ import at.favre.lib.crypto.bcrypt.BCrypt
 import com.backend.database.tables.UsersTable
 import com.backend.managers.usersManager.PostUserManager
 import com.example.api.models.PostUserRequestModel
-import io.ktor.http.*
+import io.ktor.http.HttpStatusCode
 import kotlinx.coroutines.Dispatchers
 import org.jetbrains.exposed.sql.insert
-import org.jetbrains.exposed.sql.select
+import org.jetbrains.exposed.sql.selectAll
 import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
 
 class PostUserManagerImpl : PostUserManager {
     override suspend operator fun invoke(param: Unit, request: PostUserRequestModel): HttpStatusCode =
         newSuspendedTransaction(Dispatchers.IO) {
-            UsersTable.select {
-                UsersTable.email eq request.email
-            }.firstOrNull().let { existingUser ->
+            UsersTable.selectAll().where { UsersTable.email eq request.email }.firstOrNull().let { existingUser ->
                 if (existingUser == null) {
                     UsersTable.insert {
                         it[email] = request.email

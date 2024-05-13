@@ -24,26 +24,28 @@ kotlin {
 
                 api("app.softwork:kotlinx-uuid-core:0.0.22")
 
-                api("androidx.core:core-ktx:1.12.0")
+                api("androidx.core:core-ktx:1.13.1")
                 api("androidx.appcompat:appcompat:1.6.1")
-                api("com.google.android.material:material:1.11.0")
+                api("com.google.android.material:material:1.12.0")
 
                 //region Compose
-                val composeBom = platform("androidx.compose:compose-bom:2023.10.01")
+                val composeBom =
+                    project.dependencies.platform("androidx.compose:compose-bom:2023.10.01")
 
                 api(composeBom)
                 api("androidx.compose.ui:ui")
                 api("androidx.compose.ui:ui-tooling")
                 api("androidx.compose.ui:ui-tooling-preview")
                 api("androidx.compose.ui:ui-graphics")
-                api("androidx.core:core-ktx:1.12.0")
+                api("androidx.core:core-ktx:1.13.1")
                 api("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
-                api("androidx.activity:activity-compose:1.8.2")
+                api("androidx.activity:activity-compose:1.9.0")
                 //endregion
 
                 //region Arrow
                 val arrowVersion = "1.1.2"
-                val arrowPlatform = platform("io.arrow-kt:arrow-stack:$arrowVersion")
+                val arrowPlatform =
+                    project.dependencies.platform("io.arrow-kt:arrow-stack:$arrowVersion")
 
                 api(arrowPlatform)
                 api("io.arrow-kt:arrow-core")
@@ -73,15 +75,15 @@ kotlin {
                 //endregion
 
                 //region other
-                api("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
+                api("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0")
                 //endregion
 
                 //region DataStore
-                api("androidx.datastore:datastore-preferences:1.0.0")
+                api("androidx.datastore:datastore-preferences:1.1.1")
                 //endregion
 
                 //region Ktor
-                val ktorVersion = "2.3.7"
+                val ktorVersion = "2.3.10"
                 api("io.ktor:ktor-client-okhttp:$ktorVersion")
                 api("io.ktor:ktor-client-serialization:$ktorVersion")
                 api("io.ktor:ktor-client-android:$ktorVersion")
