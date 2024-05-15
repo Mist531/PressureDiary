@@ -6,12 +6,15 @@ import com.backend.managers.usersManager.LoginUserManager
 import com.backend.managers.usersManager.PostUserManager
 import com.backend.managers.usersManager.PutUserManager
 import com.backend.managers.usersManager.RefreshTokensManager
-import com.example.api.models.*
-import io.ktor.http.*
-import io.ktor.server.application.*
+import com.example.api.models.LoginModel
+import com.example.api.models.PostUserRequestModel
+import com.example.api.models.PutUserRequestModel
+import com.example.api.models.RefreshTokenModel
+import com.example.api.models.TokensModel
+import io.ktor.http.HttpStatusCode
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
-import java.util.*
+import java.util.UUID
 
 interface UserManager {
     suspend fun login(model: LoginModel): TokensModel

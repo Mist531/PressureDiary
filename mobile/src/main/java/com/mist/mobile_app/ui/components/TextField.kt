@@ -17,7 +17,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -48,9 +47,9 @@ fun PDTextField(
 ) {
     val colorBorder = remember(isError) {
         if (isError) {
-            PDColors.Error
+            PDColors.error
         } else {
-            PDColors.Grey
+            PDColors.grey
         }
     }
 
@@ -70,7 +69,7 @@ fun PDTextField(
                 Text(
                     text = text,
                     textAlign = TextAlign.Start,
-                    color = PDColors.Black,
+                    color = PDColors.black,
                     overflow = TextOverflow.Ellipsis,
                     maxLines = 1
                 )
@@ -96,12 +95,12 @@ fun PDTextField(
             errorIndicatorColor = Color.Unspecified,
             focusedIndicatorColor = Color.Unspecified,
             unfocusedIndicatorColor = Color.Unspecified,
-            errorCursorColor = PDColors.Error,
-            focusedContainerColor = PDColors.White,
-            disabledContainerColor = PDColors.White,
-            unfocusedContainerColor = PDColors.White,
-            errorContainerColor = PDColors.White,
-            cursorColor = PDColors.Orange,
+            errorCursorColor = PDColors.error,
+            focusedContainerColor = PDColors.white,
+            disabledContainerColor = PDColors.white,
+            unfocusedContainerColor = PDColors.white,
+            errorContainerColor = PDColors.white,
+            cursorColor = PDColors.orange,
         ),
         visualTransformation = visualTransformation,
         trailingIcon = trailingIcon

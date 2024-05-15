@@ -4,7 +4,7 @@ import com.example.api.utils.LocalDateTimeSerializer
 import com.example.api.utils.UUIDSerializer
 import kotlinx.serialization.Serializable
 import java.time.LocalDateTime
-import java.util.*
+import java.util.UUID
 
 @Serializable
 data class HistoryModel(

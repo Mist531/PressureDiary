@@ -33,13 +33,13 @@ import com.mist.wear_os.utils.dateInFormat
 import com.mist.wear_os.utils.getStringValueOptionInt
 import com.mist.wear_os.utils.timeInFormat
 import kotlinx.uuid.UUID
-import org.koin.androidx.compose.getViewModel
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun HistoryScreen(
     modifier: Modifier = Modifier,
     onEntryClick: (UUID) -> Unit,
-    viewModel: HistoryViewModel = getViewModel()
+    viewModel: HistoryViewModel = koinViewModel()
 ) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
 

@@ -5,11 +5,11 @@ import com.backend.database.tables.PressureRecordsTable
 import com.backend.managers.historyManager.RestoreRecordFromHistoryManager
 import com.example.api.models.HistoryModel
 import com.example.api.models.RestoreHistoryModel
-import io.ktor.server.plugins.*
+import io.ktor.server.plugins.NotFoundException
 import kotlinx.coroutines.Dispatchers
 import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
 import org.jetbrains.exposed.sql.update
-import java.util.*
+import java.util.UUID
 
 class RestoreRecordFromHistoryManagerImpl : RestoreRecordFromHistoryManager {
     override suspend fun invoke(param: UUID, request: RestoreHistoryModel): HistoryModel =

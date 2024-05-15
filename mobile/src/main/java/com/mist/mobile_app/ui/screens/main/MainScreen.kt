@@ -20,13 +20,17 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.material3.Divider
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -35,6 +39,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -42,19 +47,43 @@ import androidx.navigation.compose.rememberNavController
 import com.mist.common.ui.PDColors
 import com.mist.mobile_app.navigation.HomeNavHost
 import com.mist.mobile_app.navigation.Screens
+import com.mist.mobile_app.ui.screens.main.records.new_rec.NewRecordBottomSheet
+import org.koin.androidx.compose.getViewModel
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainScreen(
     modifier: Modifier = Modifier,
-    navController: NavHostController
+    navController: NavHostController,
+    viewModel: MainViewModel = getViewModel()
 ) {
+    val state by viewModel.uiState.collectAsStateWithLifecycle()
+
     val childNavController = rememberNavController()
+
+    var isVisibleNewRecord by rememberSaveable {
+        mutableStateOf(false)
+    }
+
+    NewRecordBottomSheet(
+        isVisible = isVisibleNewRecord,
+        onDismissRequest = {
+            isVisibleNewRecord = false
+            viewModel.onTriggeredRefreshData()
+        },
+        onCloseBottomSheet = {
+            isVisibleNewRecord = false
+        }
+    )
 
     Scaffold(
         modifier = modifier.fillMaxSize(),
         bottomBar = {
             BottomNavigationBar(
-                navController = childNavController
+                navController = childNavController,
+                onClickAdd = {
+                    isVisibleNewRecord = true
+                }
             )
         }
     ) { paddingValues ->
@@ -68,6 +97,8 @@ fun MainScreen(
             globalNavController = navController,
             childNavController = childNavController,
             parentPaddingValues = paddingValues,
+            historyEventRefreshData = state.eventRefreshData,
+            historyOnConsumedEventRefreshData = viewModel::onConsumedRefreshData
         )
     }
 }
@@ -85,14 +116,14 @@ fun BottomNavigationBar(
             modifier = modifier
                 .fillMaxWidth()
                 .requiredHeight(76.dp)
-                .background(PDColors.White)
+                .background(PDColors.white)
                 .align(Alignment.BottomCenter)
         ) {
             Divider(
                 modifier = Modifier
                     .fillMaxWidth()
                     .requiredHeight(2.dp),
-                color = PDColors.Grey
+                color = PDColors.grey
             )
             NavigationBar(
                 modifier = modifier
@@ -140,7 +171,7 @@ fun BottomNavigationBar(
                         onClickAdd
                     },
                 )
-                .background(color = PDColors.Orange),
+                .background(color = PDColors.orange),
             contentAlignment = Alignment.BottomEnd
         ) {
             Icon(
@@ -149,7 +180,7 @@ fun BottomNavigationBar(
                     .size(29.dp),
                 painter = painterResource(id = com.mist.common.R.drawable.ic_add),
                 contentDescription = null,
-                tint = PDColors.Black
+                tint = PDColors.black
             )
         }
     }
@@ -194,14 +225,14 @@ fun RowScope.NavigationBarItem(
             Icon(
                 painter = painterResource(icon),
                 contentDescription = null,
-                tint = PDColors.Black
+                tint = PDColors.black
             )
             AnimatedVisibility(
                 visible = selected
             ) {
                 Text(
                     text = title,
-                    color = PDColors.Black
+                    color = PDColors.black
                 )
             }
         }

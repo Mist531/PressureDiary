@@ -7,7 +7,7 @@ import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.dao.id.UUIDTable
 import org.jetbrains.exposed.sql.javatime.CurrentDate
 import org.jetbrains.exposed.sql.javatime.date
-import java.util.*
+import java.util.UUID
 
 object UsersTable : UUIDTable("Users", "userUUID") {
     val email = varchar("email", 30)

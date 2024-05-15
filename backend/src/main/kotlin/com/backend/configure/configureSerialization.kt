@@ -1,12 +1,13 @@
 package com.backend.configure
 
-import io.ktor.serialization.kotlinx.json.*
-import io.ktor.server.application.*
-import io.ktor.server.plugins.contentnegotiation.*
-import io.ktor.server.plugins.dataconversion.*
+import io.ktor.serialization.kotlinx.json.json
+import io.ktor.server.application.Application
+import io.ktor.server.application.install
+import io.ktor.server.plugins.contentnegotiation.ContentNegotiation
+import io.ktor.server.plugins.dataconversion.DataConversion
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
-import java.util.*
+import java.util.UUID
 
 @OptIn(ExperimentalSerializationApi::class)
 fun Application.configureSerialization() {

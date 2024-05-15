@@ -3,11 +3,11 @@ package com.backend.managers.pressureRecordsManager.impl
 import com.backend.database.tables.PressureRecordsTable
 import com.backend.managers.pressureRecordsManager.PostPressureRecordManager
 import com.example.api.models.PostPressureRecordModel
-import io.ktor.http.*
+import io.ktor.http.HttpStatusCode
 import kotlinx.coroutines.Dispatchers
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
-import java.util.*
+import java.util.UUID
 
 class PostPressureRecordManagerImpl : PostPressureRecordManager {
     override suspend operator fun invoke(param: UUID, request: PostPressureRecordModel): HttpStatusCode =

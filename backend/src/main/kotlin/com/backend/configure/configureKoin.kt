@@ -1,6 +1,7 @@
 package com.backend.configure
 
-import io.ktor.server.application.*
+import io.ktor.server.application.Application
+import io.ktor.server.application.install
 import org.koin.core.logger.Level
 import org.koin.core.module.Module
 import org.koin.ktor.plugin.Koin

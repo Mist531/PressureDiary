@@ -74,7 +74,7 @@ dependencies {
     //endregion
 
     //region ComposeForWearOs
-    val wearComposeVersion = "1.3.2"
+    val wearComposeVersion = "1.3.1"
 
     implementation("androidx.wear.compose:compose-material:$wearComposeVersion")
     implementation("androidx.wear.compose:compose-foundation:$wearComposeVersion")

@@ -19,9 +19,11 @@ import java.time.LocalDateTime
 data class HistoryState(
     val pressureRecords: Map<LocalDate, List<PressureRecordModel>> = emptyMap(),
     val fromDateTime: LocalDateTime = LocalDateTime.now().minusYears(2),
-    val toDateTime: LocalDateTime = LocalDateTime.now(),
-    val page: Int = 1,
+    val toDateTime: LocalDateTime? = null,
+    val page: Int = 0,
     val showProgressBar: Boolean = true,
+    val isRefreshing: Boolean = false,
+    val isCanLoadNextPage: Boolean = false,
 )
 
 class HistoryViewModel(
@@ -32,34 +34,50 @@ class HistoryViewModel(
 
     init {
         viewModelScope.launch {
-            getPressureDiary()
+            onGetPressureDiary()
         }
     }
+
+    private suspend fun onGetPressureDiary() {
+        state = state.copy(
+            showProgressBar = true
+        )
+        getPressureDiary()
+        state = state.copy(
+            showProgressBar = false
+        )
+    }
+
+    private val pageSize = 10
 
     private suspend fun getPressureDiary() = withContext(Dispatchers.IO) {
         pressureRecordRepository.getPaginatedPressureRecords(
             model = GetPaginatedPressureRecordsModel(
                 fromDateTime = state.fromDateTime,
-                toDateTime = state.toDateTime,
+                toDateTime = state.toDateTime ?: LocalDateTime.now(),
                 page = state.page,
-                pageSize = 10
+                pageSize = pageSize
             )
         ).fold(
             ifLeft = { error ->
                 NetworkErrorFlow.pushError(error)
             },
             ifRight = { records ->
-                val groupRecords = records.groupBy {
+                val groupRecords = (if (state.page == 0) records
+                else (records + state.pressureRecords.flatMap { it.value }).distinctBy {
+                    it.dateTimeRecord
+                }).groupBy {
                     it.dateTimeRecord.toLocalDate()
                 }
 
+                val isCanLoadNextPage = records.size >= pageSize
+
                 state = state.copy(
-                    pressureRecords = groupRecords
+                    pressureRecords = groupRecords,
+                    isCanLoadNextPage = isCanLoadNextPage,
+                    page = if (isCanLoadNextPage) state.page + 1 else state.page
                 )
             }
-        )
-        state = state.copy(
-            showProgressBar = false
         )
     }
 
@@ -75,6 +93,29 @@ class HistoryViewModel(
                 pressureRecords = groupRecords,
                 showProgressBar = false
             )
+        }
+    }
+
+    fun onRefresh() {
+        viewModelScope.launch {
+            refresh()
+        }
+    }
+
+    private suspend fun refresh() {
+        state = state.copy(
+            isRefreshing = true,
+            page = 0
+        )
+        getPressureDiary()
+        state = state.copy(
+            isRefreshing = false
+        )
+    }
+
+    fun nextPagePressureDiary() {
+        viewModelScope.launch {
+            getPressureDiary()
         }
     }
 }

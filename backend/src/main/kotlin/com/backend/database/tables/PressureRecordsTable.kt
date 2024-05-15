@@ -7,7 +7,7 @@ import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.dao.id.UUIDTable
 import org.jetbrains.exposed.sql.javatime.CurrentDateTime
 import org.jetbrains.exposed.sql.javatime.datetime
-import java.util.*
+import java.util.UUID
 
 object PressureRecordsTable : UUIDTable("PressureRecords", "pressureRecordUUID") {
     val userUUID = reference("userUUID", UsersTable)

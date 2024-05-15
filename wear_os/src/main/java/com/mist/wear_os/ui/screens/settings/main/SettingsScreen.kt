@@ -22,13 +22,13 @@ import com.mist.wear_os.R
 import com.mist.wear_os.ui.common.PDBackgroundBlock
 import com.mist.wear_os.ui.common.PDBlockWithTitle
 import com.mist.wear_os.utils.ScalingLazyColumnPadding
-import org.koin.androidx.compose.getViewModel
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun SettingsScreen(
     modifier: Modifier = Modifier,
     navigateToSelectTheme: () -> Unit,
-    viewModel: SettingsViewModel = getViewModel()
+    viewModel: SettingsViewModel = koinViewModel()
 ) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
 

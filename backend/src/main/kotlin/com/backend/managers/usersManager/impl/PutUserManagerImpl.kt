@@ -4,11 +4,11 @@ import com.backend.database.tables.User
 import com.backend.database.tables.UsersTable
 import com.backend.managers.usersManager.PutUserManager
 import com.example.api.models.PutUserRequestModel
-import io.ktor.http.*
+import io.ktor.http.HttpStatusCode
 import kotlinx.coroutines.Dispatchers
 import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
 import org.jetbrains.exposed.sql.update
-import java.util.*
+import java.util.UUID
 
 class PutUserManagerImpl : PutUserManager {
     override suspend operator fun invoke(param: UUID, request: PutUserRequestModel): HttpStatusCode =

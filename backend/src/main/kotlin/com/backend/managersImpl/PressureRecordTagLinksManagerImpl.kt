@@ -6,7 +6,7 @@ import com.backend.managers.pressureRecordTagLinksManager.DeletePressureRecordTa
 import com.example.api.models.AddPressureRecordTagLinkModel
 import com.example.api.models.DeletePressureRecordTagLinkByRecordModel
 import com.example.api.models.DeletePressureRecordTagLinkByTagModel
-import io.ktor.http.*
+import io.ktor.http.HttpStatusCode
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 

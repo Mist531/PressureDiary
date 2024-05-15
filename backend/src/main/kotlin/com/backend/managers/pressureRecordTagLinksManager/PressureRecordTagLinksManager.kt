@@ -4,7 +4,7 @@ import com.example.api.models.AddPressureRecordTagLinkModel
 import com.example.api.models.DeletePressureRecordTagLinkByRecordModel
 import com.example.api.models.DeletePressureRecordTagLinkByTagModel
 import com.example.managers.SimpleManager
-import io.ktor.http.*
+import io.ktor.http.HttpStatusCode
 
 interface AddPressureRecordTagLinkManager : PressureRecordTagLinksManager<Unit, AddPressureRecordTagLinkModel, HttpStatusCode>
 interface DeletePressureRecordTagLinkByRecordManager : PressureRecordTagLinksManager<Unit, DeletePressureRecordTagLinkByRecordModel, HttpStatusCode>

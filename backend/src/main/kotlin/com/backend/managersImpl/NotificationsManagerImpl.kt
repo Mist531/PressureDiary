@@ -5,10 +5,10 @@ import com.backend.managers.notificationsManager.GetNextNotificationManager
 import com.backend.managers.notificationsManager.UpdateNotificationManager
 import com.example.api.models.NotificationModel
 import com.example.api.models.UpdateNotificationModel
-import io.ktor.http.*
+import io.ktor.http.HttpStatusCode
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
-import java.util.*
+import java.util.UUID
 
 interface NotificationsManager {
     suspend fun getAllNotifications(userId: UUID): List<NotificationModel>

@@ -3,7 +3,7 @@ package com.backend.managers.pressureRecordsManager.impl
 import com.backend.database.tables.PressureRecordsTable
 import com.backend.managers.pressureRecordsManager.DeletePressureRecordManager
 import com.example.api.models.DeletePressureRecordModel
-import io.ktor.http.*
+import io.ktor.http.HttpStatusCode
 import kotlinx.coroutines.Dispatchers
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.deleteWhere

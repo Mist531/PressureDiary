@@ -38,7 +38,7 @@ import com.mist.wear_os.utils.timeInFormat
 import com.mist.wear_os.utils.toast
 import de.palm.composestateevents.EventEffect
 import kotlinx.uuid.UUID
-import org.koin.androidx.compose.getViewModel
+import org.koin.androidx.compose.koinViewModel
 import org.koin.core.parameter.parametersOf
 
 @Composable
@@ -46,7 +46,7 @@ fun CreateOrUpdateEntryScreen(
     modifier: Modifier = Modifier,
     onGoBack: () -> Unit,
     id: UUID? = null,
-    viewModel: CreateOrUpdateEntryViewModel = getViewModel {
+    viewModel: CreateOrUpdateEntryViewModel = koinViewModel {
         parametersOf(
             id?.some() ?: none<UUID>()
         )

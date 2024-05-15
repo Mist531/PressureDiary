@@ -1,11 +1,21 @@
 package com.backend
 
-import com.backend.database.tables.*
+import com.backend.database.tables.PressureRecord
+import com.backend.database.tables.PressureRecordsTable
+import com.backend.database.tables.Tag
+import com.backend.database.tables.TagsTable
+import com.backend.database.tables.User
+import com.backend.database.tables.UsersTable
 import com.backend.managersImpl.PressureRecordManager
 import com.backend.managersImpl.PressureRecordTagLinksManager
 import com.backend.managersImpl.TagsManager
 import com.backend.managersImpl.UserManager
-import com.example.api.models.*
+import com.example.api.models.AddPressureRecordTagLinkModel
+import com.example.api.models.AddTagModel
+import com.example.api.models.DeviceType
+import com.example.api.models.Gender
+import com.example.api.models.PostPressureRecordModel
+import com.example.api.models.PostUserRequestModel
 import kotlinx.coroutines.Dispatchers
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction

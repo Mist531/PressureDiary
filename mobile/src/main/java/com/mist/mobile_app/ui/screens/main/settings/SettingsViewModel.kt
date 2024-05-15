@@ -1,5 +1,6 @@
 package com.mist.mobile_app.ui.screens.main.settings
 
+import androidx.compose.runtime.Immutable
 import androidx.lifecycle.viewModelScope
 import com.mist.common.data.stores.impl.TokensDataStore
 import com.mist.common.utils.BaseViewModel
@@ -9,6 +10,7 @@ import de.palm.composestateevents.triggered
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
+@Immutable
 data class SettingsState(
     val logOutEvent: StateEvent = consumed,
 )

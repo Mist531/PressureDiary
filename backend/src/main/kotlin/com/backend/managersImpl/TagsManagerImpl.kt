@@ -7,10 +7,10 @@ import com.backend.managers.tagsManager.PostTagForUserManager
 import com.example.api.models.AddTagModel
 import com.example.api.models.DeleteUserTagModel
 import com.example.api.models.TagModel
-import io.ktor.http.*
+import io.ktor.http.HttpStatusCode
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
-import java.util.*
+import java.util.UUID
 
 interface TagsManager {
     suspend fun getUserTagsList(userId: UUID): List<TagModel>

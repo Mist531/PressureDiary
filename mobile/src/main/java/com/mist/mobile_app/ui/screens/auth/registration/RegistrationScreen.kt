@@ -20,7 +20,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -28,19 +27,19 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.api.models.Gender
 import com.mist.common.ui.PDColors
 import com.mist.mobile_app.ui.components.PDButton
-import com.mist.mobile_app.ui.components.PDLoader
+import com.mist.mobile_app.ui.components.PDCircularLoader
 import com.mist.mobile_app.ui.components.PDPasswordTextField
 import com.mist.mobile_app.ui.components.PDTextField
 import com.mist.mobile_app.ui.theme.PDTheme
 import de.palm.composestateevents.EventEffect
-import org.koin.androidx.compose.getViewModel
+import org.koin.androidx.compose.koinViewModel
 import java.time.LocalDate
 
 @Composable
 fun RegistrationScreen(
     modifier: Modifier = Modifier,
     onGoToLogin: () -> Unit = {},
-    viewModel: RegistrationViewModel = getViewModel()
+    viewModel: RegistrationViewModel = koinViewModel()
 ) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
 
@@ -64,7 +63,7 @@ fun RegistrationScreen(
         ) { bool ->
             when (bool) {
                 true -> {
-                    PDLoader()
+                    PDCircularLoader()
                 }
 
                 false -> {
@@ -187,7 +186,7 @@ fun RegistrationScreenContent(
                      Не менее 6 и не более 15 символов
             """.trimIndent(),
                 textAlign = TextAlign.Start,
-                color = PDColors.Black,
+                color = PDColors.black,
             )
         }
 

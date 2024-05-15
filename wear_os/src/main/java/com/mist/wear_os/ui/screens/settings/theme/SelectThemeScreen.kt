@@ -24,12 +24,12 @@ import androidx.wear.compose.material.ToggleChip
 import androidx.wear.compose.material.ToggleChipDefaults
 import com.mist.wear_os.theme.Theme
 import com.mist.wear_os.utils.ScalingLazyColumnPadding
-import org.koin.androidx.compose.getViewModel
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun SelectThemeScreen(
     modifier: Modifier = Modifier,
-    viewModel: SelectThemeViewModel = getViewModel()
+    viewModel: SelectThemeViewModel = koinViewModel()
 ) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
 
@@ -51,7 +51,7 @@ fun SelectThemeScreen(
             verticalArrangement = Arrangement.spacedBy(10.dp),
             contentPadding = ScalingLazyColumnPadding
         ) {
-            items(Theme.values()) { theme ->
+            items(Theme.entries.toTypedArray()) { theme ->
                 ToggleChip(
                     modifier = Modifier.fillMaxWidth(),
                     checked = state.theme == theme,

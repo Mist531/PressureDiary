@@ -3,7 +3,7 @@ package com.backend.managers.pressureRecordsManager.impl
 import com.backend.database.tables.PressureRecordsTable
 import com.backend.managers.pressureRecordsManager.PutPressureRecordManager
 import com.example.api.models.PutPressureRecordModel
-import io.ktor.http.*
+import io.ktor.http.HttpStatusCode
 import kotlinx.coroutines.Dispatchers
 import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
 import org.jetbrains.exposed.sql.update

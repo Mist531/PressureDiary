@@ -1,10 +1,14 @@
 package com.backend.managers.usersManager
 
-import com.example.api.models.*
+import com.example.api.models.LoginModel
+import com.example.api.models.PostUserRequestModel
+import com.example.api.models.PutUserRequestModel
+import com.example.api.models.RefreshTokenModel
+import com.example.api.models.TokensModel
+import com.example.api.models.UserIdModel
 import com.example.managers.SimpleManager
-import io.ktor.http.*
-import io.ktor.server.application.*
-import java.util.*
+import io.ktor.http.HttpStatusCode
+import java.util.UUID
 
 interface UserManager<Param, Request, Response> : SimpleManager<Param, Request, Response>
 

@@ -7,7 +7,7 @@ import com.example.api.models.HistoryModel
 import com.example.api.models.RestoreHistoryModel
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
-import java.util.*
+import java.util.UUID
 
 interface HistoryManager {
     suspend fun getHistoryForRecordManagerImpl(

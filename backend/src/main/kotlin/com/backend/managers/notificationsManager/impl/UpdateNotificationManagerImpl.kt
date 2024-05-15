@@ -3,7 +3,7 @@ package com.backend.managers.notificationsManager.impl
 import com.backend.database.tables.NotificationsTable
 import com.backend.managers.notificationsManager.UpdateNotificationManager
 import com.example.api.models.UpdateNotificationModel
-import io.ktor.http.*
+import io.ktor.http.HttpStatusCode
 import kotlinx.coroutines.Dispatchers
 import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
 import org.jetbrains.exposed.sql.update

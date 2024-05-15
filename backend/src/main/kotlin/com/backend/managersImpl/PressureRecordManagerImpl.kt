@@ -4,11 +4,15 @@ import com.backend.managers.pressureRecordsManager.DeletePressureRecordManager
 import com.backend.managers.pressureRecordsManager.GetPaginatedPressureRecordsManager
 import com.backend.managers.pressureRecordsManager.PostPressureRecordManager
 import com.backend.managers.pressureRecordsManager.PutPressureRecordManager
-import com.example.api.models.*
-import io.ktor.http.*
+import com.example.api.models.DeletePressureRecordModel
+import com.example.api.models.GetPaginatedPressureRecordsModel
+import com.example.api.models.PostPressureRecordModel
+import com.example.api.models.PressureRecordModel
+import com.example.api.models.PutPressureRecordModel
+import io.ktor.http.HttpStatusCode
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
-import java.util.*
+import java.util.UUID
 
 interface PressureRecordManager {
     suspend fun addPressureRecord(userId: UUID, model: PostPressureRecordModel): HttpStatusCode

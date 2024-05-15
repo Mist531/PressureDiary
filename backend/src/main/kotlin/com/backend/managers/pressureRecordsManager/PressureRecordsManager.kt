@@ -1,9 +1,13 @@
 package com.backend.managers.pressureRecordsManager
 
-import com.example.api.models.*
+import com.example.api.models.DeletePressureRecordModel
+import com.example.api.models.GetPaginatedPressureRecordsModel
+import com.example.api.models.PostPressureRecordModel
+import com.example.api.models.PressureRecordModel
+import com.example.api.models.PutPressureRecordModel
 import com.example.managers.SimpleManager
-import io.ktor.http.*
-import java.util.*
+import io.ktor.http.HttpStatusCode
+import java.util.UUID
 
 interface PostPressureRecordManager : PressureRecordManager<UUID, PostPressureRecordModel, HttpStatusCode>
 interface DeletePressureRecordManager : PressureRecordManager<Unit, DeletePressureRecordModel, HttpStatusCode>

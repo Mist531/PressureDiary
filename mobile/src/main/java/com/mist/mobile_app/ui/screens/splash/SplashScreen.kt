@@ -5,14 +5,12 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.mist.common.data.stores.impl.TokensDataStore
-import com.mist.mobile_app.ui.components.PDLoader
+import com.mist.mobile_app.ui.components.PDCircularLoader
 import de.palm.composestateevents.EventEffect
-import kotlinx.coroutines.launch
 import org.koin.compose.getKoin
 
 @Composable
@@ -43,6 +41,6 @@ fun SplashScreen(
             .fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
-        PDLoader()
+        PDCircularLoader()
     }
 }

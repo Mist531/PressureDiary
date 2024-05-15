@@ -3,10 +3,9 @@ package com.backend.authorization
 import com.auth0.jwt.JWT
 import com.auth0.jwt.algorithms.Algorithm
 import com.auth0.jwt.exceptions.JWTVerificationException
-import io.ktor.http.*
-import io.ktor.server.auth.Principal
 import io.ktor.server.auth.jwt.JWTPrincipal
-import java.util.*
+import java.util.Date
+import java.util.UUID
 import kotlin.time.Duration.Companion.days
 
 object AuthUtil {

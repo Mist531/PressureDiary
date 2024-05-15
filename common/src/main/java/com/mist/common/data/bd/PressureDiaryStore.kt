@@ -1,6 +1,15 @@
 package com.mist.common.data.bd
 
-import androidx.room.*
+import androidx.room.ColumnInfo
+import androidx.room.Dao
+import androidx.room.Delete
+import androidx.room.Entity
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.PrimaryKey
+import androidx.room.Query
+import androidx.room.Transaction
+import androidx.room.Update
 import arrow.core.some
 import com.example.api.models.PressureRecordModel
 import com.mist.common.models.PressureDiaryModel

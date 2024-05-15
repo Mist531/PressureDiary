@@ -3,6 +3,7 @@ package com.mist.mobile_app.ui.screens.main.history
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -24,6 +25,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -42,19 +44,19 @@ enum class HistoryStatus(
     val id: Int
 ) {
     BLUE(
-        color = Color(0xFF16C8EF),
+        color = PDColors.blue,
         id = 0
     ),
     GREEN(
-        color = Color(0xFF23F15D),
+        color = PDColors.green,
         id = 1
     ),
     ORANGE(
-        color = Color(0xFFFF8934),
+        color = PDColors.orange,
         id = 2
     ),
     RED(
-        color = Color(0xFFF92D2D),
+        color = PDColors.red,
         id = 3
     ),
     DEFAULT(
@@ -63,7 +65,7 @@ enum class HistoryStatus(
     );
 
     companion object {
-        val countLine = 0..3
+        val lineRange = 0..3
     }
 }
 
@@ -85,6 +87,7 @@ fun PressureRecordModel.getInfoColor() = when {
 fun HistoryCard(
     modifier: Modifier = Modifier,
     record: PressureRecordModel,
+    onClick: () -> Unit,
 ) {
     val isNeedCommentBlock = remember(record.note) {
         record.note.isNotEmpty()
@@ -92,14 +95,20 @@ fun HistoryCard(
 
     Column(
         modifier = modifier
+            .clip(RoundedCornerShape(24.dp))
+            .clickable(
+                role = Role.Button,
+                onClick = remember {
+                    onClick
+                }
+            )
             .border(
                 width = 1.dp,
-                color = PDColors.GreyBOrder,
+                color = PDColors.greyBorder,
                 shape = RoundedCornerShape(24.dp)
             )
-            .clip(RoundedCornerShape(24.dp))
             .background(
-                PDColors.White
+                PDColors.white
             )
             .fillMaxWidth()
             .wrapContentHeight()
@@ -165,7 +174,7 @@ fun HistoryLineInfoStatus(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        HistoryStatus.countLine.forEach { index ->
+        HistoryStatus.lineRange.forEach { index ->
             LinearProgressIndicator(
                 modifier = Modifier
                     .height(6.dp)
@@ -247,7 +256,7 @@ fun HistoryCardItemTimeInfo(
         )
         Text(
             text = localTime,
-            color = PDColors.Black,
+            color = PDColors.black,
             textAlign = TextAlign.Start,
             overflow = TextOverflow.Ellipsis,
             fontWeight = FontWeight.Bold
@@ -289,14 +298,14 @@ fun HistoryCardDataItem(
                         bottom = 2.dp
                     ),
                 text = title,
-                color = PDColors.Black,
+                color = PDColors.black,
                 textAlign = TextAlign.Start,
                 overflow = TextOverflow.Ellipsis,
                 fontWeight = FontWeight.Bold
             )
             Text(
                 text = data.toString(),
-                color = PDColors.Black,
+                color = PDColors.black,
                 textAlign = TextAlign.Start,
                 overflow = TextOverflow.Ellipsis,
                 fontWeight = FontWeight.Bold
@@ -339,7 +348,7 @@ fun HistoryCardItemBottom(
             )
             Text(
                 text = "Комментарий",
-                color = PDColors.Black,
+                color = PDColors.black,
                 textAlign = TextAlign.Start,
                 overflow = TextOverflow.Ellipsis,
                 fontWeight = FontWeight.Bold
@@ -347,7 +356,7 @@ fun HistoryCardItemBottom(
         }
         Text(
             text = comment,
-            color = PDColors.Black,
+            color = PDColors.black,
             textAlign = TextAlign.Start,
             overflow = TextOverflow.Ellipsis,
             maxLines = 3,
@@ -368,7 +377,8 @@ fun PreviewHistoryCard() {
                 diastolic = 80,
                 pulse = 68,
                 note = "",
-            )
+            ),
+            onClick = {}
         )
     }
 }

@@ -1,12 +1,12 @@
 package com.backend.authorization
 
-import io.ktor.http.*
-import io.ktor.server.application.*
-import io.ktor.server.auth.*
-import io.ktor.server.auth.jwt.*
-import io.ktor.server.response.*
+import io.ktor.http.HttpStatusCode
+import io.ktor.server.application.ApplicationCall
+import io.ktor.server.auth.jwt.JWTPrincipal
+import io.ktor.server.auth.principal
+import io.ktor.server.response.respond
 import org.koin.core.component.KoinComponent
-import java.util.*
+import java.util.UUID
 
 class AuthRouteUtils : KoinComponent {
     suspend fun authUser(

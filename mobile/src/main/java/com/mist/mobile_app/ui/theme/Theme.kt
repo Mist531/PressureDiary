@@ -6,7 +6,7 @@ import androidx.compose.runtime.Composable
 import com.mist.common.ui.PDColors
 
 private val LightColorScheme = lightColorScheme(
-    background = PDColors.White
+    background = PDColors.white
 )
 
 @Composable

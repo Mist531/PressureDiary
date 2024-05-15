@@ -6,7 +6,7 @@ import com.backend.managers.notificationsManager.GetAllNotificationsManager
 import com.example.api.models.NotificationModel
 import kotlinx.coroutines.Dispatchers
 import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
-import java.util.*
+import java.util.UUID
 
 class GetAllNotificationsManagerImpl : GetAllNotificationsManager {
     override suspend fun invoke(param: UUID, request: Unit): List<NotificationModel> =

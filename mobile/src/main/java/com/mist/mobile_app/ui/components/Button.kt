@@ -27,7 +27,7 @@ fun PDButton(
         enabled = enabled,
         colors = ButtonDefaults.buttonColors(
             containerColor = remember(enabled) {
-                if (enabled) PDColors.Orange else PDColors.Grey
+                if (enabled) PDColors.orange else PDColors.grey
             }
         ),
         contentPadding = PaddingValues(

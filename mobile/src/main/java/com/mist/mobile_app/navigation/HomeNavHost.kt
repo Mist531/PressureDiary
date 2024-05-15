@@ -12,12 +12,16 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.mist.mobile_app.ui.screens.main.history.HistoryScreen
 import com.mist.mobile_app.ui.screens.main.settings.SettingsScreen
+import de.palm.composestateevents.StateEvent
+import de.palm.composestateevents.consumed
 
 @Composable
 fun HomeNavHost(
     modifier: Modifier = Modifier,
     globalNavController: NavHostController,
     childNavController: NavHostController,
+    historyEventRefreshData: StateEvent = consumed,
+    historyOnConsumedEventRefreshData: () -> Unit = {},
     parentPaddingValues: PaddingValues = PaddingValues(),
 ) {
     NavHost(
@@ -29,7 +33,9 @@ fun HomeNavHost(
 
         composable(Screens.HomeBottomNavItem.History.route) { backStackEntry ->
             HistoryScreen(
-                modifier = modifier
+                modifier = modifier,
+                onConsumedEventRefreshData = historyOnConsumedEventRefreshData,
+                eventRefreshData = historyEventRefreshData
             )
         }
 
@@ -47,6 +53,7 @@ fun HomeNavHost(
         }
 
         composable(Screens.HomeBottomNavItem.Statistics.route) { backStackEntry ->
+            //TODO
             Box(
                 modifier = modifier
                     .padding(

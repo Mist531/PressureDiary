@@ -6,7 +6,7 @@ import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.dao.id.UUIDTable
 import org.jetbrains.exposed.sql.javatime.date
 import org.jetbrains.exposed.sql.javatime.time
-import java.util.*
+import java.util.UUID
 
 object NotificationsTable : UUIDTable("Notifications", "notificationUUID") {
     val userUUID = reference("userUUID", UsersTable)

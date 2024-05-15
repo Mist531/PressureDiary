@@ -6,10 +6,10 @@ import com.backend.managers.deviceManager.PostDeviceForUserManager
 import com.example.api.models.DeleteUserDeviceModel
 import com.example.api.models.DeviceModel
 import com.example.api.models.PostDeviceForUserModel
-import io.ktor.http.*
+import io.ktor.http.HttpStatusCode
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
-import java.util.*
+import java.util.UUID
 
 interface DeviceManager {
     suspend fun getUserDevicesList(userId: UUID): List<DeviceModel>

@@ -4,8 +4,8 @@ import com.example.api.models.AddTagModel
 import com.example.api.models.DeleteUserTagModel
 import com.example.api.models.TagModel
 import com.example.managers.SimpleManager
-import io.ktor.http.*
-import java.util.*
+import io.ktor.http.HttpStatusCode
+import java.util.UUID
 
 interface GetUserTagsListManager : TagsManager<UUID, Unit, List<TagModel>>
 interface PostTagForUserManager : TagsManager<UUID, AddTagModel, HttpStatusCode>
