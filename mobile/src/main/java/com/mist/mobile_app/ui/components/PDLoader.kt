@@ -22,7 +22,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.mist.common.ui.PDColors
 
@@ -37,33 +36,22 @@ fun PDCircularLoader(
     )
 }
 
-@Preview
 @Composable
-fun PreviewPDCircularLoader() {
-    PDCircularLoader()
-}
-
-enum class GbLoaderSize(val dp: Dp) {
-    SMALL(4.dp),
-    MEDIUM(8.dp),
-    LARGE(12.dp)
-}
-
-@Composable
-fun GbLoaderIndicator(
+fun PDLoaderIndicator(
     modifier: Modifier = Modifier,
-    circleSize: GbLoaderSize = GbLoaderSize.MEDIUM,
     circleColor: Color
 ) {
+    val circleSize = 8.dp
+
     val density = LocalDensity.current
 
     val infiniteTransition = rememberInfiniteTransition(label = "")
 
-    val loaderSizeDp = remember(circleSize) { (circleSize.dp * 6) }
+    val loaderSizeDp = remember(circleSize) { (circleSize * 6) }
 
     val bouncingHeightPx = remember(circleSize) {
         with(density) {
-            val distance = (loaderSizeDp - circleSize.dp) / 2
+            val distance = (loaderSizeDp - circleSize) / 2
             distance.toPx()
         }
     }
@@ -88,25 +76,25 @@ fun GbLoaderIndicator(
         modifier = modifier.requiredSize(loaderSizeDp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(
-            space = circleSize.dp,
+            space = circleSize,
             alignment = Alignment.CenterHorizontally
         )
     ) {
         Box(
             modifier = Modifier
-                .size(circleSize.dp)
+                .size(circleSize)
                 .graphicsLayer { translationY = -circle1.value * bouncingHeightPx }
                 .background(color = circleColor, shape = CircleShape)
         )
         Box(
             modifier = Modifier
-                .size(circleSize.dp)
+                .size(circleSize)
                 .graphicsLayer { translationY = -circle2.value * bouncingHeightPx }
                 .background(color = circleColor, shape = CircleShape)
         )
         Box(
             modifier = Modifier
-                .size(circleSize.dp)
+                .size(circleSize)
                 .graphicsLayer { translationY = -circle3.value * bouncingHeightPx }
                 .background(color = circleColor, shape = CircleShape)
 
@@ -137,6 +125,12 @@ private fun rememberCircleAnimatedFloat(
 
 @Preview
 @Composable
-fun GbLoaderIndicatorPreview() {
-    GbLoaderIndicator(circleColor = Color.White)
+fun PDLoaderIndicatorPreview() {
+    PDLoaderIndicator(circleColor = Color.White)
+}
+
+@Preview
+@Composable
+fun PreviewPDCircularLoader() {
+    PDCircularLoader()
 }

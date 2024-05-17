@@ -25,7 +25,7 @@ interface DataStoreModel<T> {
 abstract class DataStore<DT : Any, M : DataStoreModel<DT>> {
     val dataStoreScope = CoroutineScope(Dispatchers.IO + SupervisorJob())
 
-    protected abstract val dataStore: DataStore<M>
+    protected open val dataStore: DataStore<M>? = null
 
     protected abstract val dataStoreFlow: Flow<M>
 

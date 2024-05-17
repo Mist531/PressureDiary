@@ -191,6 +191,7 @@ fun RegistrationScreenContent(
         }
 
         //TODO: select gender
+        //TODO нормы возратной групппы
 
         //TODO: add date picker
 

@@ -12,8 +12,7 @@ import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import com.mist.mobile_app.ui.components.GbLoaderIndicator
-import com.mist.mobile_app.ui.components.GbLoaderSize
+import com.mist.mobile_app.ui.components.PDLoaderIndicator
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filter
@@ -82,8 +81,7 @@ fun OnBottomReachedWithIndicator(
         contentAlignment = Alignment.Center
     ) {
         if (isCanAction) {
-            GbLoaderIndicator(
-                circleSize = GbLoaderSize.MEDIUM,
+            PDLoaderIndicator(
                 circleColor = Color.Black
             )
         }

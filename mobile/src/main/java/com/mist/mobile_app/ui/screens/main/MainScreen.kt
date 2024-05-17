@@ -19,8 +19,7 @@ import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ripple.rememberRipple
-import androidx.compose.material3.Divider
-import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.Scaffold
@@ -50,7 +49,6 @@ import com.mist.mobile_app.navigation.Screens
 import com.mist.mobile_app.ui.screens.main.records.new_rec.NewRecordBottomSheet
 import org.koin.androidx.compose.getViewModel
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainScreen(
     modifier: Modifier = Modifier,
@@ -96,7 +94,6 @@ fun MainScreen(
                 .fillMaxSize(),
             globalNavController = navController,
             childNavController = childNavController,
-            parentPaddingValues = paddingValues,
             historyEventRefreshData = state.eventRefreshData,
             historyOnConsumedEventRefreshData = viewModel::onConsumedRefreshData
         )
@@ -119,7 +116,7 @@ fun BottomNavigationBar(
                 .background(PDColors.white)
                 .align(Alignment.BottomCenter)
         ) {
-            Divider(
+            HorizontalDivider(
                 modifier = Modifier
                     .fillMaxWidth()
                     .requiredHeight(2.dp),

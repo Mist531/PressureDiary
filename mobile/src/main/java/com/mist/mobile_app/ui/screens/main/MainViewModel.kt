@@ -1,6 +1,5 @@
 package com.mist.mobile_app.ui.screens.main
 
-import com.mist.common.data.repository.PressureRecordRepository
 import com.mist.common.utils.BaseViewModel
 import de.palm.composestateevents.StateEvent
 import de.palm.composestateevents.consumed

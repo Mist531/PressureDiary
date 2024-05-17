@@ -14,4 +14,5 @@ object PDColors {
     val red = Color(0xFFF92D2D)
     val blue = Color(0xFF16C8EF)
     val green = Color(0xFF23F15D)
+    val lightBlue = Color(0xFF16B2F5)
 }

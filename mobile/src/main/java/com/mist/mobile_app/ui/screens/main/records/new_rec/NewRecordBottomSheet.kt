@@ -54,6 +54,7 @@ fun NewRecordBottomSheet(
         modifier = modifier,
         sheetState = sheetState,
         isVisible = isVisible,
+        isFillMaxSize = false,
         onDismissRequest = onCloseBottomSheet,
     ) {
         val defModifier = Modifier
@@ -95,7 +96,7 @@ fun NewRecordBottomSheet(
             )
         )
         PDButton(
-            modifier = Modifier,
+            modifier = defModifier,
             text = stringResource(R.string.btn_save),
             onClick = {
                 viewModel.onSaveRecord()

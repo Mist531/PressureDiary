@@ -7,6 +7,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
+import androidx.navigation.compose.rememberNavController
 import com.mist.mobile_app.ui.screens.auth.login.LoginScreen
 import com.mist.mobile_app.ui.screens.auth.registration.RegistrationScreen
 import com.mist.mobile_app.ui.screens.main.MainScreen
@@ -15,7 +16,7 @@ import com.mist.mobile_app.ui.screens.splash.SplashScreen
 @Composable
 fun MasterNavHost(
     modifier: Modifier = Modifier,
-    navController: NavHostController,
+    navController: NavHostController = rememberNavController(),
 ) {
     NavHost(
         navController = navController,
