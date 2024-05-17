@@ -92,9 +92,9 @@ fun PDTextField(
         maxLines = maxLines,
         shape = RoundedCornerShape(15.dp),
         colors = TextFieldDefaults.colors(
-            errorIndicatorColor = Color.Unspecified,
-            focusedIndicatorColor = Color.Unspecified,
-            unfocusedIndicatorColor = Color.Unspecified,
+            errorIndicatorColor = Color.Transparent,
+            focusedIndicatorColor = Color.Transparent,
+            unfocusedIndicatorColor = Color.Transparent,
             errorCursorColor = PDColors.error,
             focusedContainerColor = PDColors.white,
             disabledContainerColor = PDColors.white,
@@ -164,7 +164,7 @@ fun PDPasswordTextField(
     )
 }
 
-@Preview
+@Preview(showBackground = true, backgroundColor = 0xFFFFFFFF)
 @Composable
 fun PreviewPDTextField() {
     var text by remember {
