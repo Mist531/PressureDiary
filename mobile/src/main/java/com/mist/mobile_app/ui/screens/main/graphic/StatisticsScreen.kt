@@ -17,7 +17,6 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Divider
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.pullrefresh.PullRefreshIndicator
 import androidx.compose.material.pullrefresh.pullRefresh
@@ -52,7 +51,6 @@ import de.palm.composestateevents.StateEvent
 import de.palm.composestateevents.consumed
 import org.koin.androidx.compose.getViewModel
 
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun StatisticsScreen(
     modifier: Modifier = Modifier,
@@ -62,11 +60,6 @@ fun StatisticsScreen(
 ) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
 
-    val pullRefreshState = rememberPullRefreshState(
-        refreshing = state.isRefreshing,
-        onRefresh = viewModel::onRefresh
-    )
-
     EventEffect(
         event = eventRefreshData,
         onConsumed = onConsumedEventRefreshData
@@ -74,37 +67,6 @@ fun StatisticsScreen(
         viewModel.onRefresh()
     }
 
-    Box(
-        modifier = modifier
-            .pullRefresh(pullRefreshState)
-            .fillMaxSize(),
-        contentAlignment = Alignment.TopCenter
-    ) {
-        StatisticsScreenContent(
-            showProgressBar = state.showProgressBarChart,
-            selectedStatisticPage = state.selectedStatisticPage,
-            onSetStatisticPage = viewModel::onSetStatisticsPage,
-            records = state.allPressureRecords
-        )
-
-        PullRefreshIndicator(
-            modifier = Modifier.align(Alignment.TopCenter),
-            refreshing = state.isRefreshing,
-            state = pullRefreshState,
-            contentColor = Color.Black,
-            scale = true
-        )
-    }
-}
-
-@Composable
-fun StatisticsScreenContent(
-    modifier: Modifier = Modifier,
-    showProgressBar: Boolean,
-    selectedStatisticPage: StatisticPage,
-    onSetStatisticPage: (StatisticPage) -> Unit,
-    records: List<PressureRecordModel>,
-) {
     Column(
         modifier = modifier
             .fillMaxSize(),
@@ -112,11 +74,41 @@ fun StatisticsScreenContent(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         StatisticsPageBlock(
-            modifier = Modifier
-                .weight(1f, false),
-            selectedStatisticPage = selectedStatisticPage,
-            onSetStatisticPage = onSetStatisticPage
+            modifier = Modifier,
+            selectedStatisticPage = state.selectedStatisticPage,
+            onSetStatisticPage = viewModel::onSetStatisticsPage
         )
+
+        StatisticsScreenContent(
+            showProgressBar = state.showProgressBarChart,
+            selectedStatisticPage = state.selectedStatisticPage,
+            records = state.allPressureRecords,
+            onRefresh = viewModel::onRefresh,
+            isRefreshing = state.isRefreshing
+        )
+    }
+}
+
+@OptIn(ExperimentalMaterialApi::class)
+@Composable
+fun StatisticsScreenContent(
+    modifier: Modifier = Modifier,
+    showProgressBar: Boolean,
+    isRefreshing: Boolean,
+    onRefresh: () -> Unit,
+    selectedStatisticPage: StatisticPage,
+    records: List<PressureRecordModel>,
+) {
+    val pullRefreshState = rememberPullRefreshState(
+        refreshing = isRefreshing,
+        onRefresh = onRefresh
+    )
+
+    Box(
+        modifier = modifier
+            .fillMaxSize()
+            .pullRefresh(pullRefreshState),
+    ) {
         AnimatedContent(
             targetState = showProgressBar,
             label = ""
@@ -130,14 +122,23 @@ fun StatisticsScreenContent(
                     PDCircularLoader()
                 }
             } else {
-                Column(
+                Box(
                     modifier = Modifier
                         .verticalScroll(rememberScrollState())
-                        .fillMaxSize()
+                        .fillMaxSize(),
+                    contentAlignment = Alignment.TopCenter
                 ) {
                     StatisticsChartBlock(
                         records = records,
                         selectedStatisticPage = selectedStatisticPage
+                    )
+
+                    PullRefreshIndicator(
+                        modifier = Modifier.align(Alignment.TopCenter),
+                        refreshing = isRefreshing,
+                        state = pullRefreshState,
+                        contentColor = Color.Black,
+                        scale = true
                     )
                 }
             }

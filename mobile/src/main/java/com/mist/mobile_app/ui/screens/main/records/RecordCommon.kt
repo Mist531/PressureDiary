@@ -28,10 +28,13 @@ fun RecordContent(
     modifier: Modifier = Modifier,
     systolic: String,
     setSystolic: (String) -> Unit,
+    isSystolicError: Boolean,
     diastolic: String,
     setDiastolic: (String) -> Unit,
+    isDiastolicError: Boolean,
     pulse: String,
     setPulse: (String) -> Unit,
+    isPulseError: Boolean,
     note: String,
     setNote: (String) -> Unit,
     onSaveClick: () -> Unit,
@@ -50,6 +53,7 @@ fun RecordContent(
         ItemNewRecord(
             modifier = defModifier,
             value = systolic,
+            isError = isSystolicError,
             onValueChange = setSystolic,
             title = "Cистолическое",
             iconId = com.mist.common.R.drawable.ic_systolic,
@@ -58,6 +62,7 @@ fun RecordContent(
             modifier = defModifier,
             value = diastolic,
             onValueChange = setDiastolic,
+            isError = isDiastolicError,
             title = "Диастолическое",
             iconId = com.mist.common.R.drawable.ic_diastolic,
         )
@@ -66,6 +71,7 @@ fun RecordContent(
             value = pulse,
             onValueChange = setPulse,
             title = stringResource(R.string.new_record_pulse),
+            isError = isPulseError,
             iconId = com.mist.common.R.drawable.ic_heart
         )
         ItemNewRecord(
@@ -99,6 +105,7 @@ fun ItemNewRecord(
         keyboardType = KeyboardType.Number,
         imeAction = ImeAction.Next
     ),
+    isError: Boolean = false,
     maxLines: Int = 1,
 ) {
     Row(
@@ -121,6 +128,7 @@ fun ItemNewRecord(
             modifier = Modifier
                 .width(300.dp),
             value = value,
+            isError = isError,
             onValueChange = onValueChange,
             title = title,
             placeholder = null,

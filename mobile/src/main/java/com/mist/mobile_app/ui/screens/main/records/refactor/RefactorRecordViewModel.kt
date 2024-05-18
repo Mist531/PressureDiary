@@ -31,6 +31,9 @@ data class RefactorPressureRecordModel(
 data class RefactorRecordState(
     val pressureRecord: RefactorPressureRecordModel?,
     val showProgressBar: Boolean = false,
+    val isSystolicError: Boolean = false,
+    val isDiastolicError: Boolean = false,
+    val isPulseError: Boolean = false,
     val closeBottomSheetEvent: StateEvent = consumed
 ) {
     fun mapToPutPressureRecordModel() = pressureRecord?.let {
@@ -43,6 +46,8 @@ data class RefactorRecordState(
             note = pressureRecord.note
         )
     }
+
+    fun validateRecord() = !isPulseError && !isSystolicError && !isDiastolicError
 }
 
 class RefactorRecordViewModel(
@@ -65,9 +70,11 @@ class RefactorRecordViewModel(
 
     fun setSystolic(text: String) {
         if (text.isDigitsOnly() && text.length <= 3 || text.isEmpty()) {
+            val value = text.toIntOrNull()
+
             state = state.copy(
                 pressureRecord = state.pressureRecord?.copy(
-                    systolic = text.toIntOrNull()
+                    systolic = value
                 )
             )
         }
@@ -75,9 +82,11 @@ class RefactorRecordViewModel(
 
     fun setDiastolic(text: String) {
         if ((text.isDigitsOnly() && text.length <= 3) || text.isEmpty()) {
+            val value = text.toIntOrNull()
+
             state = state.copy(
                 pressureRecord = state.pressureRecord?.copy(
-                    diastolic = text.toIntOrNull()
+                    diastolic = value
                 )
             )
         }
@@ -85,9 +94,11 @@ class RefactorRecordViewModel(
 
     fun setPulse(text: String) {
         if (text.isDigitsOnly() && text.length <= 3 || text.isEmpty()) {
+            val value = text.toIntOrNull()
+
             state = state.copy(
                 pressureRecord = state.pressureRecord?.copy(
-                    pulse = text.toIntOrNull()
+                    pulse = value
                 )
             )
         }
@@ -101,9 +112,32 @@ class RefactorRecordViewModel(
         )
     }
 
+    private fun validateValues() {
+        val isPulseError = state.pressureRecord?.pulse?.let {
+            it !in 20..400
+        } ?: false
+
+        val isDiastolicError = state.pressureRecord?.diastolic?.let {
+            it !in 20..400
+        } ?: false
+
+        val isSystolicError = state.pressureRecord?.systolic?.let {
+            it !in 20..400
+        } ?: false
+
+        state = state.copy(
+            isSystolicError = isSystolicError,
+            isPulseError = isPulseError,
+            isDiastolicError = isDiastolicError
+        )
+    }
+
     fun onSaveRecord() {
         viewModelScope.launch {
-            saveRecord()
+            validateValues()
+            if (state.validateRecord()) {
+                saveRecord()
+            }
         }
     }
 

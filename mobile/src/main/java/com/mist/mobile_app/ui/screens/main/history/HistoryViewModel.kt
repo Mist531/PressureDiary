@@ -83,6 +83,8 @@ class HistoryViewModel(
                 val groupRecords = (if (state.page == 0) records
                 else (records + state.pressureRecords.flatMap { it.value }).distinctBy {
                     it.dateTimeRecord
+                }.sortedByDescending {
+                    it.dateTimeRecord
                 }).groupBy {
                     it.dateTimeRecord.toLocalDate()
                 }
@@ -113,7 +115,10 @@ class HistoryViewModel(
             },
             ifRight = { records ->
                 state = state.copy(
-                    allPressureRecords = records,
+                    allPressureRecords = records
+                        .sortedBy {
+                            it.dateTimeRecord
+                        },
                 )
             }
         )

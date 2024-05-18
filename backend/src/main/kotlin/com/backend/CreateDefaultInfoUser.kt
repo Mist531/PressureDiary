@@ -1,5 +1,6 @@
 package com.backend
 
+import arrow.fx.coroutines.parMap
 import com.backend.database.tables.PressureRecord
 import com.backend.database.tables.PressureRecordsTable
 import com.backend.database.tables.Tag
@@ -62,7 +63,7 @@ suspend fun createDefaultInfoUser(
                 User.find {
                     UsersTable.email eq userEmail
                 }.firstOrNull()?.let { userInfo ->
-                    mockPressureRecords.forEach { mockRecord ->
+                    mockPressureRecords.parMap { mockRecord ->
                         pressureRecordManager.addPressureRecord(
                             userInfo.id.value,
                             mockRecord

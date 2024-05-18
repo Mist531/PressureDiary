@@ -18,15 +18,18 @@ import com.patrykandpatrick.vico.compose.cartesian.CartesianChartHost
 import com.patrykandpatrick.vico.compose.cartesian.layer.rememberLineCartesianLayer
 import com.patrykandpatrick.vico.compose.cartesian.layer.rememberLineSpec
 import com.patrykandpatrick.vico.compose.cartesian.rememberCartesianChart
+import com.patrykandpatrick.vico.compose.cartesian.rememberVicoScrollState
 import com.patrykandpatrick.vico.compose.common.shader.color
-import com.patrykandpatrick.vico.core.cartesian.DefaultPointConnector
+import com.patrykandpatrick.vico.core.cartesian.Scroll
 import com.patrykandpatrick.vico.core.cartesian.data.CartesianChartModelProducer
 import com.patrykandpatrick.vico.core.cartesian.data.lineSeries
+import com.patrykandpatrick.vico.core.cartesian.decoration.HorizontalLine
 import com.patrykandpatrick.vico.core.common.shader.DynamicShader
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.time.LocalDateTime
 import java.util.UUID
+import kotlin.math.round
 import kotlin.random.Random
 
 enum class PDChartColors(
@@ -45,6 +48,12 @@ enum class PDChartColors(
     )
 }
 
+data class PressureRecordAverage(
+    val systolic: Float,
+    val diastolic: Float,
+    val pulse: Float,
+)
+
 sealed class PDChartType(
     val colors: List<Color>
 ) {
@@ -57,6 +66,12 @@ sealed class PDChartType(
     data class HeartRate(
         override val records: List<PressureRecordModel>
     ) : PDChartType(colors = PDChartColors.HEART_RATE.colors)
+
+    fun getAverageValues() = PressureRecordAverage(
+        pulse = round(records.map { it.pulse }.average()).toFloat(),
+        diastolic = round(records.map { it.diastolic }.average()).toFloat(),
+        systolic = round(records.map { it.systolic }.average()).toFloat()
+    )
 }
 
 @Composable
@@ -93,17 +108,46 @@ fun Chart(
         }
     }
 
+    @Composable
+    fun getDecoration(): List<HorizontalLine> {
+        val average = remember(info) {
+            info.getAverageValues()
+        }
+
+        return when (info) {
+            is PDChartType.BloodPressure -> {
+                listOf(
+                    rememberComposeHorizontalLine(
+                        color = PDColors.lightBlue,
+                        value = average.diastolic
+                    ),
+                    rememberComposeHorizontalLine(
+                        color = PDColors.darkGreen,
+                        value = average.systolic
+                    )
+                )
+            }
+
+            is PDChartType.HeartRate -> {
+                listOf(
+                    rememberComposeHorizontalLine(
+                        color = PDColors.error,
+                        value = average.pulse
+                    )
+                )
+            }
+        }
+    }
+
     CartesianChartHost(
         modifier = modifier
-            .height(
-                300.dp
-            ),
+            .height(300.dp),
         chart = rememberCartesianChart(
             rememberLineCartesianLayer(
                 lines = info.colors.map { color ->
                     rememberLineSpec(
                         shader = DynamicShader.color(color),
-                        pointConnector = DefaultPointConnector(cubicStrength = 0f),
+
                     )
                 },
                 spacing = 50.dp
@@ -118,10 +162,14 @@ fun Chart(
             endAxis = rememberEndAxis(),
             legend = rememberLegend(
                 colors = info.colors
-            )
+            ),
+            decorations = getDecoration()
         ),
         marker = rememberMarker(),
         modelProducer = modelProducer,
+        scrollState = rememberVicoScrollState(
+            initialScroll = Scroll.Absolute.End
+        ),
     )
 }
 

@@ -89,10 +89,13 @@ fun RefactorRecordBottomSheet(
                     RecordContent(
                         systolic = state.pressureRecord?.systolic?.toString() ?: "",
                         setSystolic = viewModel::setSystolic,
+                        isSystolicError = state.isSystolicError,
                         diastolic = state.pressureRecord?.diastolic?.toString() ?: "",
                         setDiastolic = viewModel::setDiastolic,
+                        isDiastolicError = state.isDiastolicError,
                         pulse = state.pressureRecord?.pulse?.toString() ?: "",
                         setPulse = viewModel::setPulse,
+                        isPulseError = state.isPulseError,
                         note = state.pressureRecord?.note ?: "",
                         setNote = viewModel::setNote,
                         onSaveClick = viewModel::onSaveRecord,

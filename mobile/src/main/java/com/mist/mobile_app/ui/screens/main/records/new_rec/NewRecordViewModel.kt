@@ -19,8 +19,11 @@ import java.time.LocalDateTime
 @Immutable
 data class NewRecordState(
     val systolic: Int? = null,
+    val isSystolicError: Boolean = false,
     val diastolic: Int? = null,
+    val isDiastolicError: Boolean = false,
     val pulse: Int? = null,
+    val isPulseError: Boolean = false,
     val note: String = "",
     val closeBottomSheetEvent: StateEvent = consumed,
     val showProgressBar: Boolean = false,
@@ -33,6 +36,8 @@ data class NewRecordState(
         note = note,
         deviceType = DeviceType.ANDROID
     )
+
+    fun validateRecord() = !isPulseError && !isSystolicError && !isDiastolicError
 }
 
 class NewRecordViewModel(
@@ -43,24 +48,30 @@ class NewRecordViewModel(
 
     fun setSystolic(text: String) {
         if (text.isDigitsOnly() && text.length <= 3 || text.isEmpty()) {
+            val value = text.toIntOrNull()
+
             state = state.copy(
-                systolic = text.toIntOrNull()
+                systolic = value
             )
         }
     }
 
     fun setDiastolic(text: String) {
         if (text.isDigitsOnly() && text.length <= 3 || text.isEmpty()) {
+            val value = text.toIntOrNull()
+
             state = state.copy(
-                diastolic = text.toIntOrNull()
+                diastolic = value,
             )
         }
     }
 
     fun setPulse(text: String) {
         if (text.isDigitsOnly() && text.length <= 3 || text.isEmpty()) {
+            val value = text.toIntOrNull()
+
             state = state.copy(
-                pulse = text.toIntOrNull()
+                pulse = value
             )
         }
     }
@@ -71,9 +82,32 @@ class NewRecordViewModel(
         )
     }
 
+    private fun validateValues() {
+        val isPulseError = state.pulse?.let {
+            it !in 20..400
+        } ?: false
+
+        val isDiastolicError = state.diastolic?.let {
+            it !in 20..400
+        } ?: false
+
+        val isSystolicError = state.systolic?.let {
+            it !in 20..400
+        } ?: false
+
+        state = state.copy(
+            isSystolicError = isSystolicError,
+            isPulseError = isPulseError,
+            isDiastolicError = isDiastolicError
+        )
+    }
+
     fun onSaveRecord() {
         viewModelScope.launch {
-            saveRecord()
+            validateValues()
+            if (state.validateRecord()) {
+                saveRecord()
+            }
         }
     }
 

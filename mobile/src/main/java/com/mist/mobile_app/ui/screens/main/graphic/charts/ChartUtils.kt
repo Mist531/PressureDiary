@@ -13,6 +13,7 @@ import androidx.compose.ui.unit.sp
 import com.example.api.models.PressureRecordModel
 import com.mist.common.ui.PDColors
 import com.patrykandpatrick.vico.compose.cartesian.axis.rememberAxisGuidelineComponent
+import com.patrykandpatrick.vico.compose.cartesian.decoration.rememberHorizontalLine
 import com.patrykandpatrick.vico.compose.common.component.fixed
 import com.patrykandpatrick.vico.compose.common.component.rememberLayeredComponent
 import com.patrykandpatrick.vico.compose.common.component.rememberLineComponent
@@ -33,6 +34,7 @@ import com.patrykandpatrick.vico.core.cartesian.axis.AxisPosition
 import com.patrykandpatrick.vico.core.cartesian.axis.VerticalAxis
 import com.patrykandpatrick.vico.core.cartesian.data.CartesianValueFormatter
 import com.patrykandpatrick.vico.core.cartesian.data.ChartValues
+import com.patrykandpatrick.vico.core.cartesian.decoration.HorizontalLine
 import com.patrykandpatrick.vico.core.cartesian.marker.CartesianMarker
 import com.patrykandpatrick.vico.core.cartesian.marker.DefaultCartesianMarker
 import com.patrykandpatrick.vico.core.common.Dimensions
@@ -127,9 +129,9 @@ fun rememberLegend(
                 typeface = Typeface.DEFAULT,
             ),
             labelText = when(chartColor){
-                PDColors.darkGreen -> "Систолическое"
+                PDColors.darkGreen -> "Сист."
                 PDColors.error -> "Пульс"
-                PDColors.lightBlue -> "Диастолическое"
+                PDColors.lightBlue -> "Диаст."
                 else -> ""
             },
         )
@@ -153,6 +155,30 @@ class DayFormatValueFormatter(
 fun LocalDateTime.toChartFormat(): String {
     val formatter = DateTimeFormatter.ofPattern("dd.MM")
     return this.format(formatter)
+}
+
+@Composable
+fun rememberComposeHorizontalLine(
+    color: Color,
+    value: Float,
+): HorizontalLine {
+    return rememberHorizontalLine(
+        y = { value },
+        line = rememberLineComponent(
+            color = color,
+            thickness = 2.dp,
+            shape = Shape.dashed(Shape.Rectangle, 16.dp, 9.dp)
+        ),
+        labelComponent = rememberTextComponent(
+            background = rememberShapeComponent(Shape.Pill, color),
+            padding = Dimensions.of(
+                6.dp,
+                3.dp,
+            ),
+            margins = Dimensions.of(4.dp),
+            typeface = Typeface.DEFAULT,
+        ),
+    )
 }
 
 @Composable
@@ -184,8 +210,7 @@ internal fun rememberMarker(
     val indicatorFrontComponent = rememberShapeComponent(Shape.Pill, MaterialTheme.colorScheme.surface)
     val indicatorCenterComponent = rememberShapeComponent(Shape.Pill)
     val indicatorRearComponent = rememberShapeComponent(Shape.Pill)
-    val indicator =
-        rememberLayeredComponent(
+    val indicator = rememberLayeredComponent(
             rear = indicatorRearComponent,
             front =
             rememberLayeredComponent(
