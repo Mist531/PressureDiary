@@ -1,9 +1,9 @@
 package com.backend.managers.tagsManager
 
+import com.backend.managers.SimpleManager
 import com.example.api.models.AddTagModel
 import com.example.api.models.DeleteUserTagModel
 import com.example.api.models.TagModel
-import com.example.managers.SimpleManager
 import io.ktor.http.HttpStatusCode
 import java.util.UUID
 

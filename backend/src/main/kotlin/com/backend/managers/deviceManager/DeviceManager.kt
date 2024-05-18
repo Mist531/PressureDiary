@@ -1,9 +1,9 @@
 package com.backend.managers.deviceManager
 
+import com.backend.managers.SimpleManager
 import com.example.api.models.DeleteUserDeviceModel
 import com.example.api.models.DeviceModel
 import com.example.api.models.PostDeviceForUserModel
-import com.example.managers.SimpleManager
 import io.ktor.http.HttpStatusCode
 import java.util.UUID
 

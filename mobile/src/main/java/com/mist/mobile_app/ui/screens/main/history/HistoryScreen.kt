@@ -19,7 +19,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -65,7 +64,7 @@ fun HistoryScreen(
         mutableStateOf(null)
     }
 
-    var isVisibleRefactorRecord by rememberSaveable {
+    var isVisibleRefactorRecord by remember {
         mutableStateOf(false)
     }
 
@@ -136,17 +135,6 @@ fun HistoryScreenContent(
         modifier = modifier,
         state = lazyListState
     ) {
-        item {
-            //TODO
-            Text(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(10.dp),
-                text = "History size: ${pressureRecords.size}",
-                color = PDColors.black,
-                fontWeight = FontWeight.Bold,
-            )
-        }
         pressureRecords.forEach { map ->
             item {
                 val date = remember(map.key) {

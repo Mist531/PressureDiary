@@ -46,6 +46,14 @@ data class GetPaginatedPressureRecordsModel(
 )
 
 @Serializable
+data class GetAllPressureRecordsModel(
+    @Serializable(with = LocalDateTimeSerializer::class)
+    val fromDateTime: LocalDateTime,
+    @Serializable(with = LocalDateTimeSerializer::class)
+    val toDateTime: LocalDateTime,
+)
+
+@Serializable
 data class PressureRecordModel(
     @Serializable(with = UUIDSerializer::class)
     val pressureRecordUUID: UUID,

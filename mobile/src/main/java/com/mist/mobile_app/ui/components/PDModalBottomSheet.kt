@@ -22,8 +22,8 @@ import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -74,7 +74,7 @@ fun PDModalBottomSheet(
             Column(
                 modifier = Modifier
                     .systemBarsPadding()
-                    .padding(top = 100.dp)
+
                     .let {
                         if (isFillMaxSize) {
                             it.fillMaxHeight()
@@ -121,7 +121,7 @@ fun PDModalBottomSheet(
 fun AppointmentConformationDialogPreview() {
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
 
-    var isVisible by rememberSaveable {
+    var isVisible by remember {
         mutableStateOf(true)
     }
 

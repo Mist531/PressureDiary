@@ -22,6 +22,7 @@ import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransacti
 import org.koin.java.KoinJavaComponent.getKoin
 import java.time.LocalDate
 import java.time.LocalDateTime
+import kotlin.random.Random
 
 suspend fun createDefaultInfoUser(
     userEmail: String = "test@mail.ru",
@@ -31,56 +32,18 @@ suspend fun createDefaultInfoUser(
     tagManager: TagsManager = getKoin().get(),
     pressureRecordTagLinksManager: PressureRecordTagLinksManager = getKoin().get(),
 ) {
-    val mockPressureRecords = listOf(
+    val mockPressureRecords = List(100){ index: Int ->
         PostPressureRecordModel(
-            dateTimeRecord = LocalDateTime.parse("2024-01-02T17:28:43.524462"),
-            systolic = 134,
-            diastolic = 83,
-            pulse = 86,
-            note = "Random note 29",
-            deviceType = DeviceType.ANDROID
-        ),
-        PostPressureRecordModel(
-            dateTimeRecord = LocalDateTime.parse("2024-01-09T17:28:43.524502"),
-            systolic = 115,
-            diastolic = 70,
-            pulse = 69,
-            note = "Random note 9",
-            deviceType = DeviceType.ANDROID
-        ),
-        PostPressureRecordModel(
-            dateTimeRecord = LocalDateTime.parse("2023-12-31T17:28:43.524520"),
-            systolic = 126,
-            diastolic = 82,
-            pulse = 61,
-            note = "Random note 3",
-            deviceType = DeviceType.ANDROID
-        ),
-        PostPressureRecordModel(
-            dateTimeRecord = LocalDateTime.parse("2023-12-15T17:28:43.524536"),
-            systolic = 132,
-            diastolic = 87,
-            pulse = 62,
-            note = "Random note 58",
-            deviceType = DeviceType.ANDROID
-        ),
-        PostPressureRecordModel(
-            dateTimeRecord = LocalDateTime.parse("2023-12-25T17:28:43.524552"),
-            systolic = 140,
-            diastolic = 90,
-            pulse = 74,
-            note = "Random note 79",
-            deviceType = DeviceType.ANDROID
-        ),
-        PostPressureRecordModel(
-            dateTimeRecord = LocalDateTime.parse("2023-12-25T17:28:43.524568"),
-            systolic = 135,
-            diastolic = 87,
-            pulse = 100,
-            note = "Random note 8",
+            dateTimeRecord = LocalDateTime.now().minusDays(index.toLong()),
+            systolic = Random.nextInt(100,145),
+            diastolic = Random.nextInt(59,90),
+            pulse = Random.nextInt(56,120),
+            note = if (Random.nextBoolean()){
+                "Random note $index"
+            } else "",
             deviceType = DeviceType.ANDROID
         )
-    )
+    }
 
     newSuspendedTransaction(Dispatchers.IO) {
         User.find(UsersTable.email eq userEmail).let { user ->

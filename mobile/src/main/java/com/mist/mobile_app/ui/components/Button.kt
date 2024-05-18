@@ -23,7 +23,9 @@ fun PDButton(
 ) {
     Button(
         modifier = modifier,
-        onClick = onClick,
+        onClick = remember {
+            onClick
+        },
         enabled = enabled,
         colors = ButtonDefaults.buttonColors(
             containerColor = remember(enabled) {

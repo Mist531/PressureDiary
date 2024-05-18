@@ -70,7 +70,8 @@ fun LoginScreen(
                         onLoginClicked = viewModel::onLogin,
                         loginButtonEnabled = state.isLoginButtonEnabled,
                         onGoToRegistration = onGoToRegistration,
-                        isEmailError = state.isEmailError
+                        isEmailError = state.isEmailError,
+                        isPasswordError = state.isPasswordError
                     )
                 }
             }
@@ -88,7 +89,8 @@ fun LoginScreenContent(
     onPasswordChanged: (String) -> Unit = {},
     onLoginClicked: () -> Unit = {},
     onGoToRegistration: () -> Unit = {},
-    isEmailError: Boolean = false
+    isEmailError: Boolean = false,
+    isPasswordError: Boolean = false,
 ) {
     Column(
         modifier = modifier
@@ -116,6 +118,7 @@ fun LoginScreenContent(
             title = "Password",
             placeholder = "Введите password",
             imeAction = ImeAction.Done,
+            isError = isPasswordError,
             keyboardActions = KeyboardActions(
                 onDone = {
                     onLoginClicked()

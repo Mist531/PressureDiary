@@ -3,6 +3,7 @@ package com.mist.common.data.repository
 import arrow.core.Either
 import com.example.api.ApiRoutes
 import com.example.api.models.DeletePressureRecordModel
+import com.example.api.models.GetAllPressureRecordsModel
 import com.example.api.models.GetPaginatedPressureRecordsModel
 import com.example.api.models.PostPressureRecordModel
 import com.example.api.models.PressureRecordModel
@@ -35,6 +36,10 @@ interface PressureRecordRepository {
 
     suspend fun getPaginatedPressureRecords(
         model: GetPaginatedPressureRecordsModel
+    ): Either<NetworkError, List<PressureRecordModel>>
+
+    suspend fun getAllPressureRecords(
+        model: GetAllPressureRecordsModel
     ): Either<NetworkError, List<PressureRecordModel>>
 }
 
@@ -73,6 +78,15 @@ class PressureRecordRepositoryImpl:
     ): Either<NetworkError, List<PressureRecordModel>> =
         withContext(repositoryScope.coroutineContext) {
             client.get(ApiRoutes.PressureRecord.GET_PAGINATED) {
+                setBody(model)
+            }.handleResponse<List<PressureRecordModel>>()
+        }
+
+    override suspend fun getAllPressureRecords(
+        model: GetAllPressureRecordsModel
+    ): Either<NetworkError, List<PressureRecordModel>> =
+        withContext(repositoryScope.coroutineContext) {
+            client.get(ApiRoutes.PressureRecord.GET_ALL) {
                 setBody(model)
             }.handleResponse<List<PressureRecordModel>>()
         }

@@ -27,6 +27,7 @@ import com.example.api.models.DeletePressureRecordTagLinkByRecordModel
 import com.example.api.models.DeletePressureRecordTagLinkByTagModel
 import com.example.api.models.DeleteUserDeviceModel
 import com.example.api.models.DeleteUserTagModel
+import com.example.api.models.GetAllPressureRecordsModel
 import com.example.api.models.GetHistoryPressureRecordModel
 import com.example.api.models.GetPaginatedPressureRecordsModel
 import com.example.api.models.LoginModel
@@ -56,6 +57,7 @@ import io.ktor.server.routing.routing
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.SchemaUtils
@@ -105,7 +107,8 @@ fun main() {
         //createTriggers()
         //createViews()
         //createProcedure()
-        //createDefaultInfoUser()
+        delay(10000)
+        createDefaultInfoUser()
     }
 
     embeddedServer(
@@ -244,6 +247,19 @@ fun Application.myApplicationModule() {
                             pressureRecordManager.getPaginatedPressureRecords(
                                 userId = id,
                                 model = call.receive<GetPaginatedPressureRecordsModel>()
+                            )
+                        )
+                    }
+                )
+            }
+            get(ApiRoutes.PressureRecord.GET_ALL) {
+                authRouteUtils.authUser(
+                    call = call,
+                    ifRight = { id ->
+                        call.respond(
+                            pressureRecordManager.getAllPressureRecords(
+                                userId = id,
+                                model = call.receive<GetAllPressureRecordsModel>()
                             )
                         )
                     }

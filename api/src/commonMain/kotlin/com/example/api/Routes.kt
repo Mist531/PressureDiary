@@ -14,6 +14,7 @@ object ApiRoutes {
         const val DELETE = ROOT
         const val EDIT = ROOT
         const val GET_PAGINATED = ROOT
+        const val GET_ALL = "$ROOT/all"
     }
 
     object Device {

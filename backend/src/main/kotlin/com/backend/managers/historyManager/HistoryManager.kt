@@ -1,9 +1,9 @@
 package com.backend.managers.historyManager
 
+import com.backend.managers.SimpleManager
 import com.example.api.models.GetHistoryPressureRecordModel
 import com.example.api.models.HistoryModel
 import com.example.api.models.RestoreHistoryModel
-import com.example.managers.SimpleManager
 import java.util.UUID
 
 interface GetHistoryForRecordManager : HistoryManager<GetHistoryPressureRecordModel, Unit, List<HistoryModel>>

@@ -3,7 +3,6 @@ package com.mist.mobile_app.utils
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyListState
-import androidx.compose.foundation.lazy.grid.LazyGridState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
@@ -20,26 +19,6 @@ import kotlinx.coroutines.flow.filter
 
 @Composable
 fun LazyListState.OnBottomReachedWithIndicator(
-    isCanAction: Boolean,
-    action: () -> Unit
-) {
-    val shouldLoadMore = remember {
-        derivedStateOf {
-            val lastVisibleItem = layoutInfo.visibleItemsInfo.lastOrNull()
-                ?: return@derivedStateOf true
-            lastVisibleItem.index == layoutInfo.totalItemsCount - 1
-        }
-    }
-
-    OnBottomReachedWithIndicator(
-        isCanAction = isCanAction,
-        shouldLoadMore = shouldLoadMore.value,
-        action = action
-    )
-}
-
-@Composable
-fun LazyGridState.OnBottomReachedWithIndicator(
     isCanAction: Boolean,
     action: () -> Unit
 ) {

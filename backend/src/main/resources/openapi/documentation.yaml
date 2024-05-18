@@ -178,6 +178,30 @@ paths:
             application/json:
               schema:
                 type: "object"
+  /api/pressureRecord/all:
+    get:
+      description: ""
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/GetAllPressureRecordsModel"
+        required: true
+      responses:
+        "401":
+          description: "Unauthorized"
+          content:
+            application/json:
+              schema:
+                type: "object"
+        "200":
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/PressureRecordModel"
   /api/pressureRecord:
     get:
       description: ""
@@ -652,6 +676,22 @@ components:
         pageSize:
           type: "integer"
           format: "int32"
+      required:
+        - "userUUID"
+        - "fromDateTime"
+        - "toDateTime"
+    GetAllPressureRecordsModel:
+      type: "object"
+      properties:
+        userUUID:
+          type: "string"
+          format: "uuid"
+        fromDateTime:
+          type: "string"
+          format: "date-time"
+        toDateTime:
+          type: "string"
+          format: "date-time"
       required:
         - "userUUID"
         - "fromDateTime"

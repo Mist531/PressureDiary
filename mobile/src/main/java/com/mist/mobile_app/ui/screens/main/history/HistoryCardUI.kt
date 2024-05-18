@@ -71,15 +71,15 @@ enum class HistoryStatus(
 
 //TODO: replace with settings value
 fun PressureRecordModel.getInfoColor() = when {
+    (this.diastolic >= 91 || this.systolic >= 141) -> HistoryStatus.RED
+
     this.diastolic <= 60 || this.systolic <= 90 -> HistoryStatus.BLUE
 
     (this.diastolic in 61..80 && this.systolic in 91..120) -> HistoryStatus.GREEN
 
     (this.diastolic in 81..90 && this.systolic in 121..140) -> HistoryStatus.ORANGE
 
-    (this.diastolic >= 91 || this.systolic >= 141) -> HistoryStatus.RED
-
-    else -> HistoryStatus.DEFAULT
+    else -> HistoryStatus.ORANGE
 }
 
 
@@ -176,18 +176,18 @@ fun HistoryLineInfoStatus(
     ) {
         HistoryStatus.lineRange.forEach { index ->
             LinearProgressIndicator(
-                modifier = Modifier
-                    .height(6.dp)
-                    .weight(1f),
-                progress = remember(selectColor) {
+                progress = {
                     if (selectColor.id == index) {
                         1f
                     } else
                         0f
                 },
+                modifier = Modifier
+                    .height(6.dp)
+                    .weight(1f),
                 color = selectColor.color,
                 trackColor = HistoryStatus.DEFAULT.color,
-                strokeCap = StrokeCap.Round
+                strokeCap = StrokeCap.Round,
             )
         }
     }
@@ -209,13 +209,13 @@ fun HistoryCardItemCenter(
             modifier = Modifier,
             iconId = R.drawable.ic_systolic,
             data = record.systolic,
-            title = "SYS."
+            title = "Сист."
         )
         HistoryCardDataItem(
             modifier = Modifier,
             iconId = R.drawable.ic_diastolic,
             data = record.diastolic,
-            title = "DIA."
+            title = "Диаст."
         )
         HistoryCardDataItem(
             modifier = Modifier,

@@ -5,8 +5,6 @@ import androidx.core.text.isDigitsOnly
 import androidx.lifecycle.viewModelScope
 import com.example.api.models.PressureRecordModel
 import com.example.api.models.PutPressureRecordModel
-import com.example.api.utils.LocalDateTimeSerializer
-import com.example.api.utils.UUIDSerializer
 import com.mist.common.data.repository.PressureRecordRepository
 import com.mist.common.utils.BaseViewModel
 import com.mist.common.utils.errorflow.NetworkErrorFlow
@@ -16,16 +14,12 @@ import de.palm.composestateevents.triggered
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import kotlinx.serialization.Serializable
 import java.time.LocalDateTime
 import java.util.UUID
 
 @Immutable
-@Serializable
 data class RefactorPressureRecordModel(
-    @Serializable(with = UUIDSerializer::class)
     val pressureRecordUUID: UUID,
-    @Serializable(with = LocalDateTimeSerializer::class)
     val dateTimeRecord: LocalDateTime?,
     val systolic: Int?,
     val diastolic: Int?,
@@ -36,6 +30,7 @@ data class RefactorPressureRecordModel(
 @Immutable
 data class RefactorRecordState(
     val pressureRecord: RefactorPressureRecordModel?,
+    val showProgressBar: Boolean = false,
     val closeBottomSheetEvent: StateEvent = consumed
 ) {
     fun mapToPutPressureRecordModel() = pressureRecord?.let {
@@ -119,6 +114,9 @@ class RefactorRecordViewModel(
     }
 
     private suspend fun saveRecord() = withContext(Dispatchers.IO) {
+        state = state.copy(
+            showProgressBar = true
+        )
         state.mapToPutPressureRecordModel()?.also { model ->
             pressureRecordRepository.editPressureRecord(
                 model = model
@@ -133,5 +131,8 @@ class RefactorRecordViewModel(
                 }
             )
         }
+        state = state.copy(
+            showProgressBar = false
+        )
     }
 }

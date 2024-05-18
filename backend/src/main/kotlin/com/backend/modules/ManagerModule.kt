@@ -23,10 +23,12 @@ import com.backend.managers.pressureRecordTagLinksManager.impl.AddPressureRecord
 import com.backend.managers.pressureRecordTagLinksManager.impl.DeletePressureRecordTagLinkByRecordManagerImpl
 import com.backend.managers.pressureRecordTagLinksManager.impl.DeletePressureRecordTagLinkByTagManagerImpl
 import com.backend.managers.pressureRecordsManager.DeletePressureRecordManager
+import com.backend.managers.pressureRecordsManager.GetAllPressureRecordsManager
 import com.backend.managers.pressureRecordsManager.GetPaginatedPressureRecordsManager
 import com.backend.managers.pressureRecordsManager.PostPressureRecordManager
 import com.backend.managers.pressureRecordsManager.PutPressureRecordManager
 import com.backend.managers.pressureRecordsManager.impl.DeletePressureRecordManagerImpl
+import com.backend.managers.pressureRecordsManager.impl.GetAllPressureRecordsManagerImpl
 import com.backend.managers.pressureRecordsManager.impl.GetPaginatedPressureRecordsManagerImpl
 import com.backend.managers.pressureRecordsManager.impl.PostPressureRecordManagerImpl
 import com.backend.managers.pressureRecordsManager.impl.PutPressureRecordManagerImpl
@@ -84,6 +86,9 @@ val managerModule = module {
     }
     singleOf(::PutPressureRecordManagerImpl) {
         bind<PutPressureRecordManager>()
+    }
+    singleOf(::GetAllPressureRecordsManagerImpl) {
+        bind<GetAllPressureRecordsManager>()
     }
     //endregion
 

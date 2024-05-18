@@ -22,7 +22,8 @@ data class NewRecordState(
     val diastolic: Int? = null,
     val pulse: Int? = null,
     val note: String = "",
-    val closeBottomSheetEvent: StateEvent = consumed
+    val closeBottomSheetEvent: StateEvent = consumed,
+    val showProgressBar: Boolean = false,
 ) {
     fun mapToPostPressureRecordModel() = PostPressureRecordModel(
         dateTimeRecord = LocalDateTime.now(),
@@ -83,6 +84,9 @@ class NewRecordViewModel(
     }
 
     private suspend fun saveRecord() = withContext(Dispatchers.IO) {
+        state = state.copy(
+            showProgressBar = true
+        )
         pressureRecordRepository.addPressureRecord(
             model = state.mapToPostPressureRecordModel()
         ).fold(
@@ -94,6 +98,9 @@ class NewRecordViewModel(
                     closeBottomSheetEvent = triggered
                 )
             }
+        )
+        state = state.copy(
+            showProgressBar = false
         )
     }
 }

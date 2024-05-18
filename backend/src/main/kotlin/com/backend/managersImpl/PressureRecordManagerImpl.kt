@@ -1,10 +1,12 @@
 package com.backend.managersImpl
 
 import com.backend.managers.pressureRecordsManager.DeletePressureRecordManager
+import com.backend.managers.pressureRecordsManager.GetAllPressureRecordsManager
 import com.backend.managers.pressureRecordsManager.GetPaginatedPressureRecordsManager
 import com.backend.managers.pressureRecordsManager.PostPressureRecordManager
 import com.backend.managers.pressureRecordsManager.PutPressureRecordManager
 import com.example.api.models.DeletePressureRecordModel
+import com.example.api.models.GetAllPressureRecordsModel
 import com.example.api.models.GetPaginatedPressureRecordsModel
 import com.example.api.models.PostPressureRecordModel
 import com.example.api.models.PressureRecordModel
@@ -21,6 +23,10 @@ interface PressureRecordManager {
     suspend fun getPaginatedPressureRecords(
         userId: UUID,
         model: GetPaginatedPressureRecordsModel
+    ): List<PressureRecordModel>
+    suspend fun getAllPressureRecords(
+        userId: UUID,
+        model: GetAllPressureRecordsModel
     ): List<PressureRecordModel>
 }
 
@@ -70,6 +76,19 @@ class PressureRecordManagerImpl : PressureRecordManager, KoinComponent {
         model: GetPaginatedPressureRecordsModel
     ): List<PressureRecordModel> {
         val manager: GetPaginatedPressureRecordsManager by inject()
+        return runCatching {
+            manager.invoke(userId, model)
+        }.getOrElse {
+            it.printStackTrace()
+            throw it
+        }
+    }
+
+    override suspend fun getAllPressureRecords(
+        userId: UUID,
+        model: GetAllPressureRecordsModel
+    ): List<PressureRecordModel> {
+        val manager: GetAllPressureRecordsManager by inject()
         return runCatching {
             manager.invoke(userId, model)
         }.getOrElse {

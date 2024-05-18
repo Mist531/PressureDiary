@@ -1,12 +1,12 @@
 package com.backend.managers.usersManager
 
+import com.backend.managers.SimpleManager
 import com.example.api.models.LoginModel
 import com.example.api.models.PostUserRequestModel
 import com.example.api.models.PutUserRequestModel
 import com.example.api.models.RefreshTokenModel
 import com.example.api.models.TokensModel
 import com.example.api.models.UserIdModel
-import com.example.managers.SimpleManager
 import io.ktor.http.HttpStatusCode
 import java.util.UUID
 

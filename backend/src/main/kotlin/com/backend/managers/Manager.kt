@@ -1,4 +1,4 @@
-package com.example.managers
+package com.backend.managers
 
 interface Manager
 
