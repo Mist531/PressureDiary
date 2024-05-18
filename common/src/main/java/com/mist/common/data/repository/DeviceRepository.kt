@@ -28,7 +28,7 @@ interface DeviceRepository {
     ): Either<NetworkError, Unit>
 }
 
-class DeviceRepositoryImpl: BaseRepository(), DeviceRepository {
+class DeviceRepositoryImpl : BaseRepository(), DeviceRepository {
     private val client: HttpClient by inject(named(HTTP_CLIENT_AUTH))
 
     override suspend fun getUserDevicesList(): Either<NetworkError, List<DeviceModel>> =

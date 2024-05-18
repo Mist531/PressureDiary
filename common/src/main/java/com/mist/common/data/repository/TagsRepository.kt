@@ -21,13 +21,15 @@ interface TagsRepository {
     suspend fun addTagForUser(
         addTagModel: AddTagModel
     ): Either<NetworkError, Unit>
+
     suspend fun deleteUserTag(
         deleteUserTagModel: DeleteUserTagModel
     ): Either<NetworkError, Unit>
+
     suspend fun deleteAllTagsForUser(): Either<NetworkError, Unit>
 }
 
-class TagsRepositoryImpl: BaseRepository(), TagsRepository {
+class TagsRepositoryImpl : BaseRepository(), TagsRepository {
     private val client: HttpClient by inject(named(HTTP_CLIENT_AUTH))
 
     override suspend fun getUserTagsList(): Either<NetworkError, List<TagModel>> =

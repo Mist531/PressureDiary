@@ -28,7 +28,7 @@ interface UserRepository {
     suspend fun refreshToken(model: RefreshTokenModel): Either<NetworkError, TokensModel>
 }
 
-class UserRepositoryImpl: BaseRepository(), UserRepository {
+class UserRepositoryImpl : BaseRepository(), UserRepository {
 
     private val clientAuth: HttpClient by inject(named(HTTP_CLIENT_AUTH))
 

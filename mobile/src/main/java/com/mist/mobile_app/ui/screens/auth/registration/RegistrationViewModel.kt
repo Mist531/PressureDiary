@@ -65,10 +65,10 @@ data class RegistrationState(
         val specialCharacterRequirement = password.any { it in "~!@#$%^&*()_+{}|:\"<>,.?;'[]\\/-" }
 
         return lengthRequirement &&
-        upperCaseLetterRequirement &&
-        lowerCaseLetterRequirement &&
-        digitRequirement &&
-        specialCharacterRequirement
+                upperCaseLetterRequirement &&
+                lowerCaseLetterRequirement &&
+                digitRequirement &&
+                specialCharacterRequirement
     }
 }
 

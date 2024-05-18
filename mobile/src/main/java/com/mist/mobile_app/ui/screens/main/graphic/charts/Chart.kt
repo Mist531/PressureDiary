@@ -147,7 +147,6 @@ fun Chart(
                 lines = info.colors.map { color ->
                     rememberLineSpec(
                         shader = DynamicShader.color(color),
-
                     )
                 },
                 spacing = 50.dp

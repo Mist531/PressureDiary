@@ -14,9 +14,11 @@ interface PressureRecordTagLinksManager {
     suspend fun addPressureRecordTagLink(
         addPressureRecordTagLinkModel: AddPressureRecordTagLinkModel
     ): HttpStatusCode
+
     suspend fun deletePressureRecordTagLinkByRecord(
         deletePressureRecordTagLinkByRecordModel: DeletePressureRecordTagLinkByRecordModel
     ): HttpStatusCode
+
     suspend fun deletePressureRecordTagLinkByTag(
         deletePressureRecordTagLinkByTagModel: DeletePressureRecordTagLinkByTagModel
     ): HttpStatusCode

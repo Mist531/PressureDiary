@@ -10,7 +10,10 @@ import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransacti
 import java.util.UUID
 
 class PostPressureRecordManagerImpl : PostPressureRecordManager {
-    override suspend operator fun invoke(param: UUID, request: PostPressureRecordModel): HttpStatusCode =
+    override suspend operator fun invoke(
+        param: UUID,
+        request: PostPressureRecordModel
+    ): HttpStatusCode =
         newSuspendedTransaction(Dispatchers.IO) {
             PressureRecordsTable.insert {
                 it[userUUID] = param

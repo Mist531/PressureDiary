@@ -29,7 +29,7 @@ interface PressureRecordTagLinksRepository {
     ): Either<NetworkError, Unit>
 }
 
-class PressureRecordTagLinksRepositoryImpl: BaseRepository(), PressureRecordTagLinksRepository {
+class PressureRecordTagLinksRepositoryImpl : BaseRepository(), PressureRecordTagLinksRepository {
     private val client: HttpClient by inject(named(HTTP_CLIENT_AUTH))
 
     override suspend fun addPressureRecordTagLink(

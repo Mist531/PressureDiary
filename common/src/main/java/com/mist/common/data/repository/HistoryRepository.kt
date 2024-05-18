@@ -21,7 +21,7 @@ interface HistoryRepository {
     suspend fun restoreRecordFromHistory(model: RestoreHistoryModel): Either<NetworkError, HistoryModel>
 }
 
-class HistoryRepositoryImpl: BaseRepository(), HistoryRepository {
+class HistoryRepositoryImpl : BaseRepository(), HistoryRepository {
     private val client: HttpClient by inject(named(HTTP_CLIENT_AUTH))
 
     override suspend fun getLastThreeHistoryForRecord(

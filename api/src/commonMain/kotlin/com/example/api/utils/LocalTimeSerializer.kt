@@ -11,6 +11,9 @@ import java.time.LocalTime
 object LocalTimeSerializer : KSerializer<LocalTime> {
     override fun deserialize(decoder: Decoder): LocalTime = LocalTime.parse(decoder.decodeString())
 
-    override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("LocalTime", PrimitiveKind.STRING)
-    override fun serialize(encoder: Encoder, value: LocalTime) = encoder.encodeString(value.toString())
+    override val descriptor: SerialDescriptor =
+        PrimitiveSerialDescriptor("LocalTime", PrimitiveKind.STRING)
+
+    override fun serialize(encoder: Encoder, value: LocalTime) =
+        encoder.encodeString(value.toString())
 }

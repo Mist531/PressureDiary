@@ -10,7 +10,10 @@ import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransacti
 import java.util.UUID
 
 class PostDeviceForUserManagerImpl : PostDeviceForUserManager {
-    override suspend operator fun invoke(param: UUID, request: PostDeviceForUserModel): HttpStatusCode =
+    override suspend operator fun invoke(
+        param: UUID,
+        request: PostDeviceForUserModel
+    ): HttpStatusCode =
         newSuspendedTransaction(Dispatchers.IO) {
             DevicesTable.insert {
                 it[userUUID] = param

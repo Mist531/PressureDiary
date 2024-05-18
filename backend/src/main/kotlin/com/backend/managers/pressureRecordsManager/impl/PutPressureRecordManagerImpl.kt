@@ -9,7 +9,10 @@ import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransacti
 import org.jetbrains.exposed.sql.update
 
 class PutPressureRecordManagerImpl : PutPressureRecordManager {
-    override suspend operator fun invoke(param: Unit, request: PutPressureRecordModel): HttpStatusCode =
+    override suspend operator fun invoke(
+        param: Unit,
+        request: PutPressureRecordModel
+    ): HttpStatusCode =
         newSuspendedTransaction(Dispatchers.IO) {
             val updatedRows = PressureRecordsTable.update(
                 { PressureRecordsTable.id eq request.pressureRecordUUID }

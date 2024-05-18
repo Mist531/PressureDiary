@@ -11,7 +11,10 @@ import org.jetbrains.exposed.sql.update
 import java.util.UUID
 
 class PutUserManagerImpl : PutUserManager {
-    override suspend operator fun invoke(param: UUID, request: PutUserRequestModel): HttpStatusCode =
+    override suspend operator fun invoke(
+        param: UUID,
+        request: PutUserRequestModel
+    ): HttpStatusCode =
         newSuspendedTransaction(Dispatchers.IO) {
             User.findById(param).let { existingUserRow ->
                 if (existingUserRow != null) {

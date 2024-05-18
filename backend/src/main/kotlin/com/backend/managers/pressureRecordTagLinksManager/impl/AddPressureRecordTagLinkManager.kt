@@ -11,7 +11,10 @@ import org.jetbrains.exposed.sql.selectAll
 import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
 
 class AddPressureRecordTagLinkManagerImpl : AddPressureRecordTagLinkManager {
-    override suspend operator fun invoke(param: Unit, request: AddPressureRecordTagLinkModel): HttpStatusCode =
+    override suspend operator fun invoke(
+        param: Unit,
+        request: AddPressureRecordTagLinkModel
+    ): HttpStatusCode =
         newSuspendedTransaction(Dispatchers.IO) {
             val exists = PressureRecordTagLinksTable.selectAll().where {
                 (PressureRecordTagLinksTable.pressureRecordUUID eq request.pressureRecordUUID) and

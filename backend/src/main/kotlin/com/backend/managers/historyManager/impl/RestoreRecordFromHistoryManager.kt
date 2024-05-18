@@ -14,7 +14,8 @@ import java.util.UUID
 class RestoreRecordFromHistoryManagerImpl : RestoreRecordFromHistoryManager {
     override suspend fun invoke(param: UUID, request: RestoreHistoryModel): HistoryModel =
         newSuspendedTransaction(Dispatchers.IO) {
-            val history = History.findById(request.historyUUID) ?: throw NotFoundException("История не найдена")
+            val history = History.findById(request.historyUUID)
+                ?: throw NotFoundException("История не найдена")
 
             PressureRecordsTable.update(
                 { PressureRecordsTable.id eq history.pressureRecordUUID.id }

@@ -43,15 +43,14 @@ interface PressureRecordRepository {
     ): Either<NetworkError, List<PressureRecordModel>>
 }
 
-class PressureRecordRepositoryImpl:
+class PressureRecordRepositoryImpl :
     PressureRecordRepository, BaseRepository() {
     private val client: HttpClient
-    by inject(named(HTTP_CLIENT_AUTH))
+            by inject(named(HTTP_CLIENT_AUTH))
 
     override suspend fun addPressureRecord(
         model: PostPressureRecordModel
-    ): Either<NetworkError, Unit>
-    = withContext(repositoryScope.coroutineContext) {
+    ): Either<NetworkError, Unit> = withContext(repositoryScope.coroutineContext) {
         client.post(ApiRoutes.PressureRecord.ADD) {
             setBody(model)
         }.handleResponse<Unit>()

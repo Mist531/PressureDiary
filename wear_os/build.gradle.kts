@@ -22,7 +22,7 @@ android {
             useSupportLibrary = true
         }
 
-        resourceConfigurations += listOf("ru","en")
+        resourceConfigurations += listOf("ru", "en")
     }
 
     buildTypes {

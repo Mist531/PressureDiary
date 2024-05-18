@@ -81,7 +81,10 @@ fun HistoryScreen(
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .padding(10.dp),
-                                text = stringResource(R.string.history_date, map.key.dateInFormat()),
+                                text = stringResource(
+                                    R.string.history_date,
+                                    map.key.dateInFormat()
+                                ),
                             )
                         }
                         items(map.value) { entry ->
@@ -133,9 +136,24 @@ fun HistoryInfoBlock(
                     .padding(10.dp),
                 text = """
                     ${stringResource(R.string.history_time, entry.time.timeInFormat())}
-                    ${stringResource(R.string.history_systolic, entry.systolic.getStringValueOptionInt())}
-                    ${stringResource(R.string.history_diastolic, entry.diastolic.getStringValueOptionInt())}
-                    ${stringResource(R.string.history_heart_rate, entry.pulse.getStringValueOptionInt())}
+                    ${
+                    stringResource(
+                        R.string.history_systolic,
+                        entry.systolic.getStringValueOptionInt()
+                    )
+                }
+                    ${
+                    stringResource(
+                        R.string.history_diastolic,
+                        entry.diastolic.getStringValueOptionInt()
+                    )
+                }
+                    ${
+                    stringResource(
+                        R.string.history_heart_rate,
+                        entry.pulse.getStringValueOptionInt()
+                    )
+                }
                     ${stringResource(R.string.history_comment, entry.comment)}
                 """.trimIndent(),
                 color = MaterialTheme.colors.background,

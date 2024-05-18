@@ -33,13 +33,13 @@ suspend fun createDefaultInfoUser(
     tagManager: TagsManager = getKoin().get(),
     pressureRecordTagLinksManager: PressureRecordTagLinksManager = getKoin().get(),
 ) {
-    val mockPressureRecords = List(100){ index: Int ->
+    val mockPressureRecords = List(100) { index: Int ->
         PostPressureRecordModel(
             dateTimeRecord = LocalDateTime.now().minusDays(index.toLong()),
-            systolic = Random.nextInt(100,145),
-            diastolic = Random.nextInt(59,90),
-            pulse = Random.nextInt(56,120),
-            note = if (Random.nextBoolean()){
+            systolic = Random.nextInt(100, 145),
+            diastolic = Random.nextInt(59, 90),
+            pulse = Random.nextInt(56, 120),
+            note = if (Random.nextBoolean()) {
                 "Random note $index"
             } else "",
             deviceType = DeviceType.ANDROID

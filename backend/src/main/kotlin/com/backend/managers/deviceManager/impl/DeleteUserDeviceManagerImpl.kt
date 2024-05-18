@@ -10,7 +10,10 @@ import org.jetbrains.exposed.sql.deleteWhere
 import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
 
 class DeleteUserDeviceManagerImpl : DeleteUserDeviceManager {
-    override suspend operator fun invoke(param: Unit, request: DeleteUserDeviceModel): HttpStatusCode =
+    override suspend operator fun invoke(
+        param: Unit,
+        request: DeleteUserDeviceModel
+    ): HttpStatusCode =
         newSuspendedTransaction(Dispatchers.IO) {
             DevicesTable.deleteWhere { DevicesTable.id eq request.deviceUUID }
             HttpStatusCode.OK

@@ -11,6 +11,8 @@ import java.util.UUID
 object UUIDSerializer : KSerializer<UUID> {
     override fun deserialize(decoder: Decoder): UUID = UUID.fromString(decoder.decodeString())
 
-    override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("UUID", PrimitiveKind.STRING)
+    override val descriptor: SerialDescriptor =
+        PrimitiveSerialDescriptor("UUID", PrimitiveKind.STRING)
+
     override fun serialize(encoder: Encoder, value: UUID) = encoder.encodeString(value.toString())
 }

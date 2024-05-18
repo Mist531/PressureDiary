@@ -13,6 +13,7 @@ interface HistoryManager {
     suspend fun getHistoryForRecordManagerImpl(
         getHistoryPressureRecordModel: GetHistoryPressureRecordModel
     ): List<HistoryModel>
+
     suspend fun restoreRecordFromHistory(
         userId: UUID,
         model: RestoreHistoryModel
@@ -30,7 +31,10 @@ class HistoryManagerImpl : HistoryManager, KoinComponent {
         }
     }
 
-    override suspend fun restoreRecordFromHistory(userId: UUID, model: RestoreHistoryModel): HistoryModel {
+    override suspend fun restoreRecordFromHistory(
+        userId: UUID,
+        model: RestoreHistoryModel
+    ): HistoryModel {
         val manager: RestoreRecordFromHistoryManager by inject()
         return runCatching {
             manager.invoke(userId, model)

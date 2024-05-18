@@ -107,8 +107,8 @@ fun main() {
         //createTriggers()
         //createViews()
         //createProcedure()
-        delay(10000)
-        createDefaultInfoUser()
+        //delay(10000)
+        //createDefaultInfoUser()
     }
 
     embeddedServer(

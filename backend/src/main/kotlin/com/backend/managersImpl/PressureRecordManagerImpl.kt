@@ -24,6 +24,7 @@ interface PressureRecordManager {
         userId: UUID,
         model: GetPaginatedPressureRecordsModel
     ): List<PressureRecordModel>
+
     suspend fun getAllPressureRecords(
         userId: UUID,
         model: GetAllPressureRecordsModel

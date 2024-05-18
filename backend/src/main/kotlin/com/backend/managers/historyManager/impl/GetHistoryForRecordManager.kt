@@ -10,7 +10,10 @@ import org.jetbrains.exposed.sql.SortOrder
 import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
 
 class GetHistoryForRecordManagerImpl : GetHistoryForRecordManager {
-    override suspend fun invoke(param: GetHistoryPressureRecordModel, request: Unit): List<HistoryModel> =
+    override suspend fun invoke(
+        param: GetHistoryPressureRecordModel,
+        request: Unit
+    ): List<HistoryModel> =
         newSuspendedTransaction(Dispatchers.IO) {
             History.find {
                 HistoryTable.pressureRecordUUID eq param.pressureRecordUUID

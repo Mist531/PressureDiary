@@ -10,7 +10,10 @@ import org.jetbrains.exposed.sql.deleteWhere
 import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
 
 class DeletePressureRecordManagerImpl : DeletePressureRecordManager {
-    override suspend operator fun invoke(param: Unit, request: DeletePressureRecordModel): HttpStatusCode =
+    override suspend operator fun invoke(
+        param: Unit,
+        request: DeletePressureRecordModel
+    ): HttpStatusCode =
         newSuspendedTransaction(Dispatchers.IO) {
             PressureRecordsTable.deleteWhere {
                 id eq request.pressureRecordUUID

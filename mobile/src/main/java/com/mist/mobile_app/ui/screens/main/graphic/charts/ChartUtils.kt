@@ -128,7 +128,7 @@ fun rememberLegend(
                 textSize = 14.sp,
                 typeface = Typeface.DEFAULT,
             ),
-            labelText = when(chartColor){
+            labelText = when (chartColor) {
                 PDColors.darkGreen -> "Сист."
                 PDColors.error -> "Пульс"
                 PDColors.lightBlue -> "Диаст."
@@ -207,19 +207,20 @@ internal fun rememberMarker(
             textAlignment = Layout.Alignment.ALIGN_CENTER,
             minWidth = TextComponent.MinWidth.fixed(40.dp),
         )
-    val indicatorFrontComponent = rememberShapeComponent(Shape.Pill, MaterialTheme.colorScheme.surface)
+    val indicatorFrontComponent = rememberShapeComponent(
+        Shape.Pill, MaterialTheme.colorScheme.surface
+    )
     val indicatorCenterComponent = rememberShapeComponent(Shape.Pill)
     val indicatorRearComponent = rememberShapeComponent(Shape.Pill)
     val indicator = rememberLayeredComponent(
-            rear = indicatorRearComponent,
-            front =
-            rememberLayeredComponent(
-                rear = indicatorCenterComponent,
-                front = indicatorFrontComponent,
-                padding = Dimensions.of(5.dp),
-            ),
-            padding = Dimensions.of(10.dp),
-        )
+        rear = indicatorRearComponent,
+        front = rememberLayeredComponent(
+            rear = indicatorCenterComponent,
+            front = indicatorFrontComponent,
+            padding = Dimensions.of(5.dp),
+        ),
+        padding = Dimensions.of(10.dp),
+    )
     val guideline = rememberAxisGuidelineComponent()
     return remember(label, labelPosition, indicator, showIndicator, guideline) {
         object : DefaultCartesianMarker(

@@ -40,19 +40,19 @@ sealed class Screens(
             )
         }
 
-         object History : HomeBottomNavItem(
+        object History : HomeBottomNavItem(
             icon = com.mist.common.R.drawable.ic_history,
             route = "history",
             screenName = "История"
         )
 
-         object Statistics : HomeBottomNavItem(
+        object Statistics : HomeBottomNavItem(
             icon = R.drawable.ic_statistics,
             route = "statistics",
             screenName = "Статистика"
         )
 
-         object Settings : HomeBottomNavItem(
+        object Settings : HomeBottomNavItem(
             icon = com.mist.common.R.drawable.ic_settings,
             route = "settings",
             screenName = "Настройки"

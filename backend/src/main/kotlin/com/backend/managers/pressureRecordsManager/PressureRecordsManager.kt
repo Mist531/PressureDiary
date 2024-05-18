@@ -10,9 +10,15 @@ import com.example.api.models.PutPressureRecordModel
 import io.ktor.http.HttpStatusCode
 import java.util.UUID
 
-interface PostPressureRecordManager : PressureRecordManager<UUID, PostPressureRecordModel, HttpStatusCode>
-interface DeletePressureRecordManager : PressureRecordManager<Unit, DeletePressureRecordModel, HttpStatusCode>
-interface PutPressureRecordManager : PressureRecordManager<Unit, PutPressureRecordModel, HttpStatusCode>
+interface PostPressureRecordManager :
+    PressureRecordManager<UUID, PostPressureRecordModel, HttpStatusCode>
+
+interface DeletePressureRecordManager :
+    PressureRecordManager<Unit, DeletePressureRecordModel, HttpStatusCode>
+
+interface PutPressureRecordManager :
+    PressureRecordManager<Unit, PutPressureRecordModel, HttpStatusCode>
+
 interface GetPaginatedPressureRecordsManager :
     PressureRecordManager<UUID, GetPaginatedPressureRecordsModel, List<PressureRecordModel>>
 

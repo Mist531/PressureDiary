@@ -25,7 +25,7 @@ interface NotificationsRepository {
     suspend fun getNextNotification(): Either<NetworkError, NotificationModel>
 }
 
-class NotificationsRepositoryImpl: BaseRepository(), NotificationsRepository {
+class NotificationsRepositoryImpl : BaseRepository(), NotificationsRepository {
     private val client: HttpClient by inject(named(HTTP_CLIENT_AUTH))
 
     override suspend fun getAllNotifications(): Either<NetworkError, List<NotificationModel>> =

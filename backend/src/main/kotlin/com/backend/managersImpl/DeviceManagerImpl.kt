@@ -36,7 +36,10 @@ class DeviceManagerImpl : DeviceManager, KoinComponent {
         }
     }
 
-    override suspend fun addDeviceForUser(userId: UUID, model: PostDeviceForUserModel): HttpStatusCode {
+    override suspend fun addDeviceForUser(
+        userId: UUID,
+        model: PostDeviceForUserModel
+    ): HttpStatusCode {
         val manager: PostDeviceForUserManager by inject()
         return runCatching {
             manager.invoke(userId, model)
