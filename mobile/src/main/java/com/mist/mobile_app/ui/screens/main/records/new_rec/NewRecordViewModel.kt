@@ -88,11 +88,11 @@ class NewRecordViewModel(
         } ?: false
 
         val isDiastolicError = state.diastolic?.let {
-            it !in 20..400
+            it !in 40..400
         } ?: false
 
         val isSystolicError = state.systolic?.let {
-            it !in 20..400
+            it !in 40..400
         } ?: false
 
         state = state.copy(

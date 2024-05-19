@@ -118,11 +118,11 @@ class RefactorRecordViewModel(
         } ?: false
 
         val isDiastolicError = state.pressureRecord?.diastolic?.let {
-            it !in 20..400
+            it !in 40..400
         } ?: false
 
         val isSystolicError = state.pressureRecord?.systolic?.let {
-            it !in 20..400
+            it !in 40..400
         } ?: false
 
         state = state.copy(
