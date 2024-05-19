@@ -191,22 +191,22 @@ internal fun rememberMarker(
     val clippingFreeShadowRadiusMultiplier = 1.4f
 
     val labelBackgroundShape = Shape.markerCornered(Corner.FullyRounded)
-    val labelBackground =
-        rememberShapeComponent(labelBackgroundShape, MaterialTheme.colorScheme.surface)
-            .setShadow(
-                radius = labelBackgroundShadowRadiusDp,
-                dy = labelBackgroundShadowDyDp,
-                applyElevationOverlay = true,
-            )
-    val label =
-        rememberTextComponent(
-            color = MaterialTheme.colorScheme.onSurface,
-            background = labelBackground,
-            padding = Dimensions.of(8.dp, 4.dp),
-            typeface = Typeface.DEFAULT,
-            textAlignment = Layout.Alignment.ALIGN_CENTER,
-            minWidth = TextComponent.MinWidth.fixed(40.dp),
-        )
+    val labelBackground = rememberShapeComponent(
+        labelBackgroundShape,
+        MaterialTheme.colorScheme.surface
+    ).setShadow(
+        radius = labelBackgroundShadowRadiusDp,
+        dy = labelBackgroundShadowDyDp,
+        applyElevationOverlay = true,
+    )
+    val label = rememberTextComponent(
+        color = PDColors.white,
+        background = labelBackground,
+        padding = Dimensions.of(8.dp, 4.dp),
+        typeface = Typeface.DEFAULT,
+        textAlignment = Layout.Alignment.ALIGN_CENTER,
+        minWidth = TextComponent.MinWidth.fixed(40.dp),
+    )
     val indicatorFrontComponent = rememberShapeComponent(
         Shape.Pill, MaterialTheme.colorScheme.surface
     )
@@ -245,12 +245,8 @@ internal fun rememberMarker(
                 horizontalDimensions: HorizontalDimensions,
             ) {
                 with(context) {
-                    outInsets.top =
-                        (
-                                clippingFreeShadowRadiusMultiplier * labelBackgroundShadowRadiusDp -
-                                        labelBackgroundShadowDyDp
-                                )
-                            .pixels
+                    outInsets.top = (clippingFreeShadowRadiusMultiplier *
+                            labelBackgroundShadowRadiusDp - labelBackgroundShadowDyDp).pixels
                     if (labelPosition == LabelPosition.AroundPoint) return
                     outInsets.top += label.getHeight(context) + labelBackgroundShape.tickSizeDp.pixels
                 }

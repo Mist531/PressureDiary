@@ -17,7 +17,8 @@ abstract class BaseViewModel<State : Any> : ViewModel() {
         _uiState.asStateFlow()
     }
 
-    protected var state: State
+    //protected
+    var state: State
         get() = _uiState.value
         set(newState) = _uiState.update { newState }
 }

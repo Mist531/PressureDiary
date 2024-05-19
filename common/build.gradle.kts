@@ -64,6 +64,13 @@ kotlin {
                 api("io.insert-koin:koin-test-junit4:$koinTestVersion")
                 //endregion
 
+                // UI Tests
+                api("androidx.compose.ui:ui-test-manifest")
+                api("androidx.compose.ui:ui-test-junit4")
+                api("androidx.test.ext:junit:1.1.5")
+                api("androidx.test.espresso:espresso-core:3.5.1")
+                //endregion
+
                 //region Room
                 api("androidx.legacy:legacy-support-v4:1.0.0")
                 api("androidx.room:room-runtime:$roomVersion")

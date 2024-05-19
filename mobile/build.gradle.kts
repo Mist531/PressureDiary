@@ -55,10 +55,16 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
+    testOptions {
+        unitTests {
+            isIncludeAndroidResources = true
+        }
+    }
 }
 
 dependencies {
     implementation(project(":common"))
+    implementation("androidx.test.ext:junit-ktx:1.1.5")
 
     implementation("androidx.compose.material:material")
     implementation("androidx.compose.material3:material3")

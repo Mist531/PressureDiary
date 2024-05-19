@@ -14,6 +14,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
@@ -40,9 +41,7 @@ fun RecordContent(
     onSaveClick: () -> Unit,
 ) {
     val defModifier = Modifier
-        .padding(
-            bottom = 15.dp
-        )
+        .padding(bottom = 15.dp)
 
     Column(
         modifier = modifier
@@ -57,6 +56,7 @@ fun RecordContent(
             onValueChange = setSystolic,
             title = "Cистолическое",
             iconId = com.mist.common.R.drawable.ic_systolic,
+            testTag = "SystolicInput"
         )
         ItemNewRecord(
             modifier = defModifier,
@@ -65,6 +65,7 @@ fun RecordContent(
             isError = isDiastolicError,
             title = "Диастолическое",
             iconId = com.mist.common.R.drawable.ic_diastolic,
+            testTag = "DiastolicInput"
         )
         ItemNewRecord(
             modifier = defModifier,
@@ -72,7 +73,8 @@ fun RecordContent(
             onValueChange = setPulse,
             title = stringResource(R.string.new_record_pulse),
             isError = isPulseError,
-            iconId = com.mist.common.R.drawable.ic_heart
+            iconId = com.mist.common.R.drawable.ic_heart,
+            testTag = "PulseInput"
         )
         ItemNewRecord(
             modifier = defModifier,
@@ -84,12 +86,13 @@ fun RecordContent(
             keyboardOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Text,
                 imeAction = ImeAction.Next
-            )
+            ),
+            testTag = "NoteInput"
         )
         PDButton(
-
             text = stringResource(R.string.btn_save),
-            onClick = onSaveClick
+            onClick = onSaveClick,
+            modifier = Modifier.testTag("SaveButton")
         )
     }
 }
@@ -107,6 +110,7 @@ fun ItemNewRecord(
     ),
     isError: Boolean = false,
     maxLines: Int = 1,
+    testTag: String
 ) {
     Row(
         modifier = modifier
@@ -126,7 +130,8 @@ fun ItemNewRecord(
         )
         PDTextField(
             modifier = Modifier
-                .width(300.dp),
+                .width(300.dp)
+                .testTag(testTag),
             value = value,
             isError = isError,
             onValueChange = onValueChange,

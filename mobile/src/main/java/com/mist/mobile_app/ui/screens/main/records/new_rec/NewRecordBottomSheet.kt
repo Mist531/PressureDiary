@@ -9,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.mist.mobile_app.ui.components.PDCircularLoader
@@ -40,7 +41,7 @@ fun NewRecordBottomSheet(
     )
 
     PDModalBottomSheet(
-        modifier = modifier,
+        modifier = modifier.testTag("NewRecordBottomSheet"),
         sheetState = sheetState,
         isVisible = isVisible,
         isFillMaxSize = false,
@@ -54,7 +55,7 @@ fun NewRecordBottomSheet(
         ) { showProgressBar ->
             if (showProgressBar) {
                 Box(
-                    modifier = modifier,
+                    modifier = modifier.testTag("ProgressBar"),
                     contentAlignment = Alignment.Center
                 ) {
                     PDCircularLoader()
@@ -79,4 +80,3 @@ fun NewRecordBottomSheet(
         }
     }
 }
-
