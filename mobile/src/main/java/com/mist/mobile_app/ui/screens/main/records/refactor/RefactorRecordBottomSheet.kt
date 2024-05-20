@@ -5,19 +5,25 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.material.Icon
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.api.models.PressureRecordModel
+import com.mist.common.ui.PDColors
 import com.mist.mobile_app.ui.components.PDCircularLoader
 import com.mist.mobile_app.ui.components.PDModalBottomSheet
 import com.mist.mobile_app.ui.screens.main.records.RecordContent
@@ -61,7 +67,7 @@ fun RefactorRecordBottomSheet(
         AnimatedContent(
             modifier = Modifier
                 .imePadding()
-                .height(400.dp),
+                .height(415.dp),
             targetState = state.showProgressBar,
             label = ""
         ) { showProgressBar ->
@@ -79,13 +85,36 @@ fun RefactorRecordBottomSheet(
                     verticalArrangement = Arrangement.Top,
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    Text(
+                    Box(
                         modifier = Modifier
+                            .fillMaxWidth()
+                            .wrapContentHeight()
                             .padding(
                                 bottom = 16.dp
-                            ),
-                        text = "Редактирование записи"
-                    )
+                            )
+                    ) {
+                        Text(
+                            modifier = Modifier
+                                .align(Alignment.Center),
+                            text = "Редактирование записи"
+                        )
+                        IconButton(
+                            modifier = Modifier
+                                .align(
+                                    Alignment.CenterEnd
+                                )
+                                .padding(
+                                    end = 20.dp
+                                ),
+                            onClick = viewModel::onDeleteRecord
+                        ) {
+                            Icon(
+                                painter = painterResource(id = com.mist.common.R.drawable.ic_delete),
+                                contentDescription = "",
+                                tint = PDColors.error
+                            )
+                        }
+                    }
                     RecordContent(
                         systolic = state.pressureRecord?.systolic?.toString() ?: "",
                         setSystolic = viewModel::setSystolic,

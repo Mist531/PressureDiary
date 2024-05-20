@@ -61,10 +61,14 @@ class TestUI : KoinTest {
             )
         }
 
-        composeTestRule.onNodeWithTag("SystolicInput").performTextInput("120")
-        composeTestRule.onNodeWithTag("DiastolicInput").performTextInput("80")
-        composeTestRule.onNodeWithTag("PulseInput").performTextInput("70")
-        composeTestRule.onNodeWithTag("NoteInput").performTextInput("Feeling good")
+        composeTestRule.onNodeWithTag("SystolicInput")
+            .performTextInput("120")
+        composeTestRule.onNodeWithTag("DiastolicInput")
+            .performTextInput("80")
+        composeTestRule.onNodeWithTag("PulseInput")
+            .performTextInput("70")
+        composeTestRule.onNodeWithTag("NoteInput")
+            .performTextInput("Feeling good")
 
         composeTestRule.runOnUiThread {
             assert(viewModel.state.systolic == 120)

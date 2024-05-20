@@ -46,6 +46,10 @@ class NewRecordViewModel(
 
     override val initialState = NewRecordState()
 
+    fun clearState() {
+        state = initialState
+    }
+
     fun setSystolic(text: String) {
         if (text.isDigitsOnly() && text.length <= 3 || text.isEmpty()) {
             val value = text.toIntOrNull()
@@ -85,15 +89,15 @@ class NewRecordViewModel(
     private fun validateValues() {
         val isPulseError = state.pulse?.let {
             it !in 20..400
-        } ?: false
+        } ?: true
 
         val isDiastolicError = state.diastolic?.let {
             it !in 40..400
-        } ?: false
+        } ?: true
 
         val isSystolicError = state.systolic?.let {
             it !in 40..400
-        } ?: false
+        } ?: true
 
         state = state.copy(
             isSystolicError = isSystolicError,
@@ -103,9 +107,9 @@ class NewRecordViewModel(
     }
 
     fun onSaveRecord() {
-        viewModelScope.launch {
-            validateValues()
-            if (state.validateRecord()) {
+        validateValues()
+        if (state.validateRecord()) {
+            viewModelScope.launch {
                 saveRecord()
             }
         }
@@ -116,7 +120,6 @@ class NewRecordViewModel(
             closeBottomSheetEvent = consumed
         )
     }
-
     private suspend fun saveRecord() = withContext(Dispatchers.IO) {
         state = state.copy(
             showProgressBar = true

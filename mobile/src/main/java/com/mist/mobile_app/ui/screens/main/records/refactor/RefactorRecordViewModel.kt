@@ -3,6 +3,7 @@ package com.mist.mobile_app.ui.screens.main.records.refactor
 import androidx.compose.runtime.Immutable
 import androidx.core.text.isDigitsOnly
 import androidx.lifecycle.viewModelScope
+import com.example.api.models.DeletePressureRecordModel
 import com.example.api.models.PressureRecordModel
 import com.example.api.models.PutPressureRecordModel
 import com.mist.common.data.repository.PressureRecordRepository
@@ -34,7 +35,8 @@ data class RefactorRecordState(
     val isSystolicError: Boolean = false,
     val isDiastolicError: Boolean = false,
     val isPulseError: Boolean = false,
-    val closeBottomSheetEvent: StateEvent = consumed
+    val closeBottomSheetEvent: StateEvent = consumed,
+    val logOutEvent: StateEvent = consumed,
 ) {
     fun mapToPutPressureRecordModel() = pressureRecord?.let {
         PutPressureRecordModel(
@@ -47,12 +49,18 @@ data class RefactorRecordState(
         )
     }
 
+    fun mapToDeletePressureRecordModel() = pressureRecord?.let {
+        DeletePressureRecordModel(
+            pressureRecordUUID = pressureRecord.pressureRecordUUID
+        )
+    }
+
     fun validateRecord() = !isPulseError && !isSystolicError && !isDiastolicError
 }
 
 class RefactorRecordViewModel(
     pressureRecordModel: PressureRecordModel?,
-    private val pressureRecordRepository: PressureRecordRepository
+    private val pressureRecordRepository: PressureRecordRepository,
 ) : BaseViewModel<RefactorRecordState>() {
 
     override val initialState = RefactorRecordState(
@@ -115,15 +123,15 @@ class RefactorRecordViewModel(
     private fun validateValues() {
         val isPulseError = state.pressureRecord?.pulse?.let {
             it !in 20..400
-        } ?: false
+        } ?: true
 
         val isDiastolicError = state.pressureRecord?.diastolic?.let {
             it !in 40..400
-        } ?: false
+        } ?: true
 
         val isSystolicError = state.pressureRecord?.systolic?.let {
             it !in 40..400
-        } ?: false
+        } ?: true
 
         state = state.copy(
             isSystolicError = isSystolicError,
@@ -168,5 +176,28 @@ class RefactorRecordViewModel(
         state = state.copy(
             showProgressBar = false
         )
+    }
+
+    fun onDeleteRecord() {
+        viewModelScope.launch {
+            deleteRecord()
+        }
+    }
+
+    private suspend fun deleteRecord() {
+        state.mapToDeletePressureRecordModel()?.let {
+            pressureRecordRepository.deletePressureRecord(
+                model = it
+            ).fold(
+                ifLeft = { error ->
+                    NetworkErrorFlow.pushError(error)
+                },
+                ifRight = {
+                    state = state.copy(
+                        closeBottomSheetEvent = triggered
+                    )
+                }
+            )
+        }
     }
 }

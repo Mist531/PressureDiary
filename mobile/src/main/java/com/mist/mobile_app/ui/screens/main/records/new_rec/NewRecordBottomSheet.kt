@@ -33,6 +33,7 @@ fun NewRecordBottomSheet(
         event = state.closeBottomSheetEvent,
         onConsumed = viewModel::onConsumedBottomSheetEvent
     ) {
+        viewModel.clearState()
         onDismissRequest()
     }
 
@@ -45,7 +46,10 @@ fun NewRecordBottomSheet(
         sheetState = sheetState,
         isVisible = isVisible,
         isFillMaxSize = false,
-        onDismissRequest = onCloseBottomSheet,
+        onDismissRequest = {
+            viewModel.clearState()
+            onCloseBottomSheet()
+        },
     ) {
         AnimatedContent(
             modifier = Modifier

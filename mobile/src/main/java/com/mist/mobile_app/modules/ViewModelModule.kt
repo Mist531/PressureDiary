@@ -21,8 +21,8 @@ val viewModelModule = module {
     viewModelOf(::MainViewModel)
     viewModel { (earningPeriodEndDate: PressureRecordModel?) ->
         RefactorRecordViewModel(
-            pressureRecordRepository = get(),
-            pressureRecordModel = earningPeriodEndDate
+            pressureRecordModel = earningPeriodEndDate,
+            pressureRecordRepository = get()
         )
     }
 }

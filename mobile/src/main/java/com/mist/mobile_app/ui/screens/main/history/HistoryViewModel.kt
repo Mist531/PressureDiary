@@ -160,7 +160,7 @@ class HistoryViewModel(
             launch {
                 getAllPressureDiary()
             }
-        }
+        }.join()
         state = state.copy(
             isRefreshing = false
         )

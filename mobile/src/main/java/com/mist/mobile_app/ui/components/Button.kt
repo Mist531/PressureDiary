@@ -7,6 +7,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -19,7 +20,8 @@ fun PDButton(
     modifier: Modifier = Modifier,
     text: String = "",
     onClick: () -> Unit = {},
-    enabled: Boolean = true
+    enabled: Boolean = true,
+    containerColor: Color = PDColors.orange
 ) {
     Button(
         modifier = modifier,
@@ -29,7 +31,7 @@ fun PDButton(
         enabled = enabled,
         colors = ButtonDefaults.buttonColors(
             containerColor = remember(enabled) {
-                if (enabled) PDColors.orange else PDColors.grey
+                if (enabled) containerColor else PDColors.grey
             }
         ),
         contentPadding = PaddingValues(
