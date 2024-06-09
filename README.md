@@ -134,5 +134,5 @@ class MainApplication : Application() {
 # Дизайн приложения
 
 ![pressure](https://github.com/Mist531/PressureDiary/blob/main/info_image/pressure.png)
-![pulse](https://github.com/[username]/[reponame]/blob/[branch]/image.jpg?raw=true)
-![refactor](https://github.com/[username]/[reponame]/blob/[branch]/image.jpg?raw=true)
+![pulse](https://github.com/Mist531/PressureDiary/blob/main/info_image/pulse.png)
+![refactor](https://github.com/Mist531/PressureDiary/blob/main/info_image/refactor.png)
