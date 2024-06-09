@@ -133,6 +133,8 @@ class MainApplication : Application() {
 
 # Дизайн приложения
 
-![pressure](https://github.com/Mist531/PressureDiary/blob/main/info_image/pressure.png)
-![pulse](https://github.com/Mist531/PressureDiary/blob/main/info_image/pulse.png)
-![refactor](https://github.com/Mist531/PressureDiary/blob/main/info_image/refactor.png)
+<div style="display: flex; justify-content: space-between;">
+    <img src="https://github.com/Mist531/PressureDiary/blob/main/info_image/pressure.png" alt="pressure" style="width: 32%;"/>
+    <img src="https://github.com/Mist531/PressureDiary/blob/main/info_image/pulse.png" alt="pulse" style="width: 32%;"/>
+    <img src="https://github.com/Mist531/PressureDiary/blob/main/info_image/refactor.png" alt="refactor" style="width: 32%;"/>
+</div>
