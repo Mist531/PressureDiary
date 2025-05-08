@@ -1,0 +1,187 @@
+[versions]
+#region Android
+    androidSdk-compile = "35"
+    androidSdk-min = "27"
+    androidSdk-target = "35"
+    h2 = "2.2.224"
+javaVersion = "17"
+#endregion
+
+activityCompose = "1.10.0"
+androidxJunit = "1.2.1"
+appcompat = "1.7.0"
+bcrypt = "0.10.2"
+compose = "2.0.0-alpha.19"
+composeBom = "2025.02.00"
+composeM2 = "2.0.0-alpha.19"
+composeM3 = "2.0.0-alpha.19"
+composeStateEvents = "2.1.1"
+core = "2.0.0-alpha.19"
+coreKtx = "1.15.0"
+datastorePreferences = "1.1.2"
+espressoCore = "3.6.1"
+exposed = "0.49.0"
+horologist = "0.4.4"
+janino = "3.1.6"
+junitKtx = "1.2.1"
+koinAndroidCompose = "3.5.0"
+koinAndroid = "3.5.0"
+koinKtor = "3.5.3"
+koinTest = "3.3.2"
+kotlinTestJunit = "1.9.23"
+kotlinxCoroutinesCore = "1.10.1"
+kotlinxSerializationJson = "1.8.0"
+kotlinxUuidCore = "0.0.22"
+ktor = "3.1.0"
+legacySupportV4 = "1.0.0"
+lifecycleRuntimeCompose = "2.8.7"
+lifecycleRuntimeKtx = "2.8.7"
+logbackClassic = "1.5.11"
+materialIconsExtended = "1.7.8"
+material = "1.12.0"
+navigationCompose = "2.8.7"
+playServicesWearable = "19.0.0"
+postgresql = "42.7.3"
+recyclerview = "1.4.0"
+recyclerviewSelection = "1.1.0"
+room = "2.6.1"
+views = "2.0.0-alpha.19"
+wearCompose = "1.5.0-alpha09"
+swaggerCcodegen = "3.0.67"
+androidGradlePlugin = "8.8.1"
+arrow = "1.2.1"
+
+kotlin = "2.1.10"
+ktorServerTestsJvm = "2.3.13"
+
+ksp = "2.1.10-1.0.30"
+
+[libraries]
+
+#region Common
+androidx-compose-bom = { module = "androidx.compose:compose-bom", version.ref = "composeBom" }
+androidx-compose-foundation = { module = "androidx.wear.compose:compose-foundation", version.ref = "wearCompose" }
+androidx-compose-material = { module = "androidx.wear.compose:compose-material", version.ref = "wearCompose" }
+androidx-compose-navigation = { module = "androidx.wear.compose:compose-navigation", version.ref = "wearCompose" }
+androidx-material = { module = "androidx.compose.material:material" }
+androidx-material-icons-extended = { module = "androidx.compose.material:material-icons-extended", version.ref = "materialIconsExtended" }
+androidx-material3 = { module = "androidx.compose.material3:material3" }
+androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
+androidx-recyclerview = { module = "androidx.recyclerview:recyclerview", version.ref = "recyclerview" }
+androidx-recyclerview-selection = { module = "androidx.recyclerview:recyclerview-selection", version.ref = "recyclerviewSelection" }
+arrow-stack = { module = "io.arrow-kt:arrow-stack", version.ref = "arrow" }
+arrow-core = { module = "io.arrow-kt:arrow-core" }
+arrow-fx-coroutines = { module = "io.arrow-kt:arrow-fx-coroutines" }
+arrow-fx-stm = { module = "io.arrow-kt:arrow-fx-stm" }
+arrow-kt-arrow-core = { module = "io.arrow-kt:arrow-core" }
+arrow-kt-arrow-fx-coroutines = { module = "io.arrow-kt:arrow-fx-coroutines" }
+arrow-kt-arrow-fx-stm = { module = "io.arrow-kt:arrow-fx-stm" }
+arrow-kt-arrow-optics = { module = "io.arrow-kt:arrow-optics" }
+arrow-optics = { module = "io.arrow-kt:arrow-optics" }
+
+compose = { module = "com.patrykandpatrick.vico:compose", version.ref = "compose" }
+compose-m2 = { module = "com.patrykandpatrick.vico:compose-m2", version.ref = "composeM2" }
+compose-m3 = { module = "com.patrykandpatrick.vico:compose-m3", version.ref = "composeM3" }
+compose-state-events = { module = "com.github.leonard-palm:compose-state-events", version.ref = "composeStateEvents" }
+core = { module = "com.patrykandpatrick.vico:core", version.ref = "core" }
+datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastorePreferences" }
+espresso-core = { module = "androidx.test.espresso:espresso-core", version.ref = "espressoCore" }
+h2 = { module = "com.h2database:h2", version.ref = "h2" }
+horologist-composables = { module = "com.google.android.horologist:horologist-composables", version.ref = "horologist" }
+horologist-compose-layout = { module = "com.google.android.horologist:horologist-compose-layout", version.ref = "horologist" }
+horologist-media-ui = { module = "com.google.android.horologist:horologist-media-ui", version.ref = "horologist" }
+junit = { module = "androidx.test.ext:junit", version.ref = "androidxJunit" }
+junit-ktx = { module = "androidx.test.ext:junit-ktx", version.ref = "junitKtx" }
+kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinxCoroutinesCore" }
+kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
+kotlinx-uuid-core = { module = "app.softwork:kotlinx-uuid-core", version.ref = "kotlinxUuidCore" }
+ktor-client-android = { module = "io.ktor:ktor-client-android", version.ref = "ktor" }
+ktor-client-auth = { module = "io.ktor:ktor-client-auth", version.ref = "ktor" }
+ktor-client-cio = { module = "io.ktor:ktor-client-cio", version.ref = "ktor" }
+ktor-client-content-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor" }
+ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
+ktor-client-logging = { module = "io.ktor:ktor-client-logging", version.ref = "ktor" }
+ktor-client-okhttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "ktor" }
+ktor-client-serialization = { module = "io.ktor:ktor-client-serialization", version.ref = "ktor" }
+ktor-serialization-gson-jvm = { module = "io.ktor:ktor-serialization-gson-jvm" }
+ktor-serialization-kotlinx-json = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor" }
+ktor-serialization-kotlinx-json-jvm = { module = "io.ktor:ktor-serialization-kotlinx-json-jvm" }
+#endregion
+
+#region backend
+bcrypt = { module = "at.favre.lib:bcrypt", version.ref = "bcrypt" }
+exposed-core = { module = "org.jetbrains.exposed:exposed-core", version.ref = "exposed" }
+exposed-dao = { module = "org.jetbrains.exposed:exposed-dao", version.ref = "exposed" }
+exposed-java-time = { module = "org.jetbrains.exposed:exposed-java-time", version.ref = "exposed" }
+exposed-jdbc = { module = "org.jetbrains.exposed:exposed-jdbc", version.ref = "exposed" }
+janino = { module = "org.codehaus.janino:janino", version.ref = "janino" }
+
+ktor-server-auth-jvm = { module = "io.ktor:ktor-server-auth-jvm" }
+ktor-server-auth-jwt-jvm = { module = "io.ktor:ktor-server-auth-jwt-jvm" }
+ktor-server-call-logging-jvm = { module = "io.ktor:ktor-server-call-logging-jvm" }
+ktor-server-content-negotiation-jvm = { module = "io.ktor:ktor-server-content-negotiation-jvm" }
+ktor-server-core-jvm = { module = "io.ktor:ktor-server-core-jvm" }
+ktor-server-cors-jvm = { module = "io.ktor:ktor-server-cors-jvm" }
+ktor-server-data-conversion = { module = "io.ktor:ktor-server-data-conversion" }
+ktor-server-netty-jvm = { module = "io.ktor:ktor-server-netty-jvm" }
+ktor-server-openapi = { module = "io.ktor:ktor-server-openapi", version.ref = "ktor" }
+ktor-server-test-host = { module = "io.ktor:ktor-server-test-host", version.ref = "ktor" }
+swagger-code-gen = { module = "io.swagger.codegen.v3:swagger-codegen-generators", version.ref = "swaggerCcodegen"}
+
+ktor-server-resources = { module = "io.ktor:ktor-server-resources" }
+ktor-server-status-pages = { module = "io.ktor:ktor-server-status-pages" }
+ktor-server-swagger-jvm = { module = "io.ktor:ktor-server-swagger-jvm" }
+ktor-server-tests-jvm = { module = "io.ktor:ktor-server-tests-jvm", version.ref = "ktorServerTestsJvm" }
+
+koin-ktor = { module = "io.insert-koin:koin-ktor", version.ref = "koinKtor" }
+
+legacy-support-v4 = { module = "androidx.legacy:legacy-support-v4", version.ref = "legacySupportV4" }
+lifecycle-runtime-compose = { module = "androidx.lifecycle:lifecycle-runtime-compose", version.ref = "lifecycleRuntimeCompose" }
+logback-classic = { module = "ch.qos.logback:logback-classic", version.ref = "logbackClassic" }
+play-services-wearable = { module = "com.google.android.gms:play-services-wearable", version.ref = "playServicesWearable" }
+postgresql = { module = "org.postgresql:postgresql", version.ref = "postgresql" }
+#endregion
+
+
+#region common Android
+appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
+core-ktx = { module = "androidx.core:core-ktx", version.ref = "coreKtx" }
+material = { module = "com.google.android.material:material", version.ref = "material" }
+
+##region Compose
+room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
+room-ktx = { module = "androidx.room:room-ktx", version.ref = "room" }
+room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
+ui = { module = "androidx.compose.ui:ui" }
+ui-graphics = { module = "androidx.compose.ui:ui-graphics" }
+ui-test-junit4 = { module = "androidx.compose.ui:ui-test-junit4" }
+ui-test-manifest = { module = "androidx.compose.ui:ui-test-manifest" }
+ui-tooling = { module = "androidx.compose.ui:ui-tooling" }
+ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview" }
+lifecycle-runtime-ktx = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
+activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activityCompose" }
+
+##endregion
+
+##region Koin
+koin-androidx-compose = { module = "io.insert-koin:koin-androidx-compose", version.ref = "koinAndroidCompose" }
+koin-test-junit4 = { module = "io.insert-koin:koin-test-junit4", version.ref = "koinTest" }
+koin-android = { module = "io.insert-koin:koin-android", version.ref = "koinAndroid" }
+##endregion
+
+#endregion
+
+koin-logger-slf4j = { module = "io.insert-koin:koin-logger-slf4j", version.ref = "koinKtor" }
+kotlin-test-junit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlinTestJunit" }
+views = { module = "com.patrykandpatrick.vico:views", version.ref = "views" }
+
+[plugins]
+kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+android-library = { id = "com.android.library", version.ref = "androidGradlePlugin" }
+kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform" }
+kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+ktor = { id = "io.ktor.plugin", version.ref = "ktor" }
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }

@@ -48,4 +48,4 @@ out/
 
 ### VS Code ###
 .vscode/
-/backend/logs/sql.log
+server/backend/logs/sql.log
